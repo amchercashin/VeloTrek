@@ -1,5 +1,5 @@
 {
-  "generated": "2026-02-23T12:02:20Z",
+  "generated": "2026-02-23T19:09:59Z",
   "routes": [
     {
       "filename": "01-moskva-reka-dorokhovo-zvenigorod.kml",
@@ -21,6 +21,116 @@
         "maxLat": 55.735803,
         "minLon": 36.246659,
         "maxLon": 36.881307
+      }
+    },
+    {
+      "filename": "2.kml",
+      "name": "02 - Москва-река (Звенигород-Красногорск)",
+      "description": "Избранные вело-однодневки Подмосковья https://bikelifeforms.ru/?p=8367",
+      "stats": {
+        "distance_km": 113.2,
+        "elevation_min_m": 129,
+        "elevation_max_m": 191,
+        "climb_m": 143,
+        "descent_m": 136,
+        "track_km": 113.3,
+        "span_km": 34.9
+      },
+      "poiCount": 35,
+      "segmentCount": 9,
+      "bbox": {
+        "minLat": 55.701043,
+        "maxLat": 55.814919,
+        "minLon": 36.78654,
+        "maxLon": 37.30523
+      }
+    },
+    {
+      "filename": "3.kml",
+      "name": "03 - Истра и Маглуша",
+      "description": "Избранные вело-однодневки Подмосковья https://bikelifeforms.ru/?p=8367",
+      "stats": {
+        "distance_km": 83.3,
+        "elevation_min_m": 140,
+        "elevation_max_m": 211,
+        "climb_m": 170,
+        "descent_m": 205,
+        "track_km": 83.1,
+        "span_km": 42.7
+      },
+      "poiCount": 38,
+      "segmentCount": 8,
+      "bbox": {
+        "minLat": 55.839362,
+        "maxLat": 56.00558,
+        "minLon": 36.536295,
+        "maxLon": 37.153583
+      }
+    },
+    {
+      "filename": "4.kml",
+      "name": "04 - Сестра и Яхрома",
+      "description": "Избранные вело-однодневки Подмосковья https://bikelifeforms.ru/?p=8367",
+      "stats": {
+        "distance_km": 133.5,
+        "elevation_min_m": 116,
+        "elevation_max_m": 149,
+        "climb_m": 107,
+        "descent_m": 93,
+        "track_km": 133.6,
+        "span_km": 49.1
+      },
+      "poiCount": 29,
+      "segmentCount": 8,
+      "bbox": {
+        "minLat": 56.286782,
+        "maxLat": 56.659609,
+        "minLon": 37.094052,
+        "maxLon": 37.521282
+      }
+    },
+    {
+      "filename": "5.kml",
+      "name": "05 - Дубна и Веля",
+      "description": "Избранные вело-однодневки Подмосковья https://bikelifeforms.ru/?p=8367",
+      "stats": {
+        "distance_km": 176.0,
+        "elevation_min_m": 130,
+        "elevation_max_m": 232,
+        "climb_m": 378,
+        "descent_m": 471,
+        "track_km": 176.1,
+        "span_km": 61.3
+      },
+      "poiCount": 34,
+      "segmentCount": 8,
+      "bbox": {
+        "minLat": 56.214365,
+        "maxLat": 56.573735,
+        "minLon": 37.519137,
+        "maxLon": 38.273108
+      }
+    },
+    {
+      "filename": "6.kml",
+      "name": "06 - Яхрома-Морозки-Мураново",
+      "description": "Избранные вело-однодневки Подмосковья https://bikelifeforms.ru/?p=8367",
+      "stats": {
+        "distance_km": 79.1,
+        "elevation_min_m": 146,
+        "elevation_max_m": 227,
+        "climb_m": 175,
+        "descent_m": 140,
+        "track_km": 79.1,
+        "span_km": 37.3
+      },
+      "poiCount": 20,
+      "segmentCount": 3,
+      "bbox": {
+        "minLat": 56.083052,
+        "maxLat": 56.306917,
+        "minLon": 37.498872,
+        "maxLon": 37.947555
       }
     }
   ]
