@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#1a73e8"/>
+  <g transform="translate(256,256)">
+    <!-- Велосипедное колесо -->
+    <circle cx="0" cy="40" r="100" fill="none" stroke="#fff" stroke-width="16"/>
+    <circle cx="0" cy="40" r="8" fill="#fff"/>
+    <!-- Спицы -->
+    <line x1="0" y1="-60" x2="0" y2="140" stroke="#fff" stroke-width="4" opacity="0.5"/>
+    <line x1="-100" y1="40" x2="100" y2="40" stroke="#fff" stroke-width="4" opacity="0.5"/>
+    <line x1="-70" y1="-30" x2="70" y2="110" stroke="#fff" stroke-width="4" opacity="0.5"/>
+    <line x1="70" y1="-30" x2="-70" y2="110" stroke="#fff" stroke-width="4" opacity="0.5"/>
+    <!-- Метка маршрута (pin) -->
+    <g transform="translate(0,-110)">
+      <path d="M0-60 C-25-60 -40-40 -40-20 C-40 10 0 40 0 40 C0 40 40 10 40-20 C40-40 25-60 0-60Z" fill="#fff"/>
+      <circle cx="0" cy="-22" r="12" fill="#1a73e8"/>
+    </g>
+  </g>
+</svg>

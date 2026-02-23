@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Claude Code local config
+.claude/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Editor
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Временные KMZ/KML в корне (маршруты кладём только в routes/)
+/*.kmz
+/*.kml

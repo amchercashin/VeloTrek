@@ -1,0 +1,27 @@
+{
+  "generated": "2026-02-23T11:31:19Z",
+  "routes": [
+    {
+      "filename": "01-moskva-reka-dorokhovo-zvenigorod.kml",
+      "name": "01 - Москва-река (Дорохово-Звенигород)",
+      "description": "Избранные вело-однодневки Подмосковья https://bikelifeforms.ru/?p=8367",
+      "stats": {
+        "distance_km": 136.0,
+        "elevation_min_m": 136,
+        "elevation_max_m": 224,
+        "climb_m": 273,
+        "descent_m": 371,
+        "track_km": 136.1,
+        "span_km": 45.5
+      },
+      "poiCount": 44,
+      "segmentCount": 8,
+      "bbox": {
+        "minLat": 55.538746,
+        "maxLat": 55.735803,
+        "minLon": 36.246659,
+        "maxLon": 36.881307
+      }
+    }
+  ]
+}

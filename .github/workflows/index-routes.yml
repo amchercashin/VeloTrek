@@ -1,0 +1,30 @@
+name: Генерация каталога маршрутов
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'routes/*.kml'
+      - 'routes/*.kmz'
+      - 'scripts/generate-index.py'
+  workflow_dispatch:  # Запустить вручную из интерфейса GitHub → Actions
+
+jobs:
+  generate-index:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Генерация routes/index.json
+        run: python3 scripts/generate-index.py
+
+      - name: Коммит обновлённого index.json
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: 'routes/index.json'
+          message: 'chore: обновить каталог маршрутов [skip ci]'
+          default_author: github_actions
