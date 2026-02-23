@@ -17,6 +17,7 @@
   <header class="header">
     <div class="header__inner">
       <span class="header__title">VeloTrek</span>
+      <a href="#" class="header__action" id="add-route-btn" title="Добавить маршрут">+</a>
     </div>
   </header>
 
@@ -54,6 +55,13 @@
         const routes = await App.loadCatalog();
         loading.classList.add('hidden');
         App.renderCatalog(routes, routeList);
+
+        // Кнопка «+ Добавить маршрут» → README#добавление-маршрута
+        const repo = App.detectRepo();
+        if (repo) {
+          document.getElementById('add-route-btn').href =
+            `https://github.com/${repo.owner}/${repo.repo}#добавление-маршрута`;
+        }
       } catch (e) {
         loading.classList.add('hidden');
         error.classList.remove('hidden');
