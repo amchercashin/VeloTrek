@@ -82,11 +82,11 @@ const App = (() => {
       const descent = stats.descent_m ? `${stats.descent_m} м` : '';
 
       const desc = route.description
-        ? escapeHtml(route.description).substring(0, 120)
+        ? linkify(escapeHtml(stripHtml(route.description)))
         : '';
 
       return `
-        <a href="route.html?route=${encodeURIComponent(route.filename)}" class="route-card">
+        <div class="route-card" data-route="${encodeURIComponent(route.filename)}">
           <h2 class="route-card__title">${escapeHtml(route.name)}</h2>
           ${desc ? `<p class="route-card__desc">${desc}</p>` : ''}
           <div class="route-card__stats">
@@ -98,15 +98,40 @@ const App = (() => {
             ${route.poiCount ? `<span class="stat" title="Точки интереса"><span class="stat__icon">📍</span> ${route.poiCount} точек</span>` : ''}
           </div>
           ${route.error ? `<p class="route-card__error">Ошибка загрузки</p>` : ''}
-        </a>
+        </div>
       `;
     }).join('');
+
+    // Навигация по клику на карточку (div вместо <a> для поддержки вложенных ссылок)
+    container.addEventListener('click', (e) => {
+      if (e.target.closest('a')) return; // Клик по ссылке в описании — не переходим
+      const card = e.target.closest('.route-card');
+      if (card && card.dataset.route) {
+        window.location.href = `route.html?route=${card.dataset.route}`;
+      }
+    });
   }
 
   function escapeHtml(str) {
     const div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
+  }
+
+  /** Извлекает чистый текст из HTML-описания (KML CDATA) */
+  function stripHtml(html) {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html.replace(/<br\s*\/?>/gi, ' ');
+    return (tmp.textContent || '').replace(/\s+/g, ' ').trim();
+  }
+
+  /** Превращает URL в тексте в кликабельные ссылки */
+  function linkify(text) {
+    return text.replace(/https?:\/\/[^\s<>"']+/g, url => {
+      const clean = url.replace(/[.,;:!?)]+$/, '');
+      const tail = url.slice(clean.length);
+      return `<a href="${clean}" target="_blank" rel="noopener noreferrer" class="desc-link">${clean}</a>${tail}`;
+    });
   }
 
   function detectRepo() {

@@ -120,6 +120,7 @@ body {
   box-shadow: var(--shadow);
   transition: transform var(--transition), box-shadow var(--transition);
   -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
 }
 
 .route-card:active {
@@ -459,6 +460,72 @@ body {
   line-height: 1.4;
 }
 
+/* === Ссылки в описании === */
+
+.desc-link {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-skip-ink: auto;
+}
+
+.desc-link:active {
+  color: var(--color-primary-dark);
+}
+
+/* === Кнопка полного экрана на карте === */
+
+.leaflet-fullscreen-btn {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 30px !important;
+  height: 30px !important;
+  cursor: pointer;
+}
+
+/* === Полноэкранный режим карты === */
+
+body.fullscreen-map .header {
+  display: none !important;
+}
+
+body.fullscreen-map .route-page {
+  height: 100vh;
+  height: 100dvh;
+  position: relative;
+}
+
+body.fullscreen-map .route-info,
+body.fullscreen-map .action-bar {
+  display: none !important;
+}
+
+body.fullscreen-map .gps-panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  border-top: none;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+}
+
+body.fullscreen-map .download-panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1002;
+  border-top: none;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+}
+
 /* Скрываем флаг в attribution Leaflet */
 .leaflet-attribution-flag {
   display: none !important;
@@ -480,6 +547,11 @@ body {
   .action-bar,
   .download-panel,
   .gps-panel {
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  }
+
+  body.fullscreen-map .gps-panel,
+  body.fullscreen-map .download-panel {
     padding-bottom: calc(10px + env(safe-area-inset-bottom));
   }
 }

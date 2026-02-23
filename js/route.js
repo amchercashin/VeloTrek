@@ -6,6 +6,21 @@ const RoutePage = (() => {
   let routeData = null;
   let downloadController = null;
 
+  /** Превращает URL в тексте в кликабельные ссылки */
+  function linkify(text) {
+    return text.replace(/https?:\/\/[^\s<>"']+/g, url => {
+      const clean = url.replace(/[.,;:!?)]+$/, '');
+      const tail = url.slice(clean.length);
+      return `<a href="${clean}" target="_blank" rel="noopener noreferrer" class="desc-link">${clean}</a>${tail}`;
+    });
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
   async function init() {
     const params = new URLSearchParams(window.location.search);
     const filename = params.get('route');
@@ -57,7 +72,8 @@ const RoutePage = (() => {
       const tmp = document.createElement('div');
       tmp.innerHTML = rawDesc.replace(/<br\s*\/?>/gi, ' ');
       const plainDesc = tmp.textContent || '';
-      descEl.textContent = plainDesc.replace(/\s+/g, ' ').trim();
+      const cleanDesc = plainDesc.replace(/\s+/g, ' ').trim();
+      descEl.innerHTML = linkify(escapeHtml(cleanDesc));
     } else {
       descEl.classList.add('hidden');
     }
@@ -78,6 +94,34 @@ const RoutePage = (() => {
   function initMap(data) {
     const map = VeloMap.init('map');
     VeloMap.showRoute(data);
+    initFullscreen(map);
+  }
+
+  function initFullscreen(map) {
+    const btn = VeloMap.getFullscreenBtn();
+    if (!btn) return;
+
+    const svgs = VeloMap.getFullscreenSVGs();
+
+    function toggle(enter) {
+      const isFs = typeof enter === 'boolean'
+        ? (enter ? document.body.classList.add('fullscreen-map') || true
+                  : document.body.classList.remove('fullscreen-map') || false)
+        : document.body.classList.toggle('fullscreen-map');
+      const on = document.body.classList.contains('fullscreen-map');
+
+      btn.innerHTML = on ? svgs.COLLAPSE_SVG : svgs.EXPAND_SVG;
+      btn.title = on ? 'Обычный режим' : 'Полный экран';
+      setTimeout(() => map.invalidateSize(), 50);
+    }
+
+    btn.addEventListener('click', () => toggle());
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.body.classList.contains('fullscreen-map')) {
+        toggle(false);
+      }
+    });
   }
 
   function initDownload(data) {
