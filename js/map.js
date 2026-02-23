@@ -88,6 +88,9 @@ const VeloMap = (() => {
     });
     tileLayer.addTo(map);
 
+    // Убираем флаг из attribution prefix (Leaflet 1.9+ добавляет 🇺🇦 SVG)
+    map.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>');
+
     // По умолчанию — центр России
     map.setView([55.75, 37.62], 6);
 
