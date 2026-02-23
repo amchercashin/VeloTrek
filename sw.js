@@ -1,4 +1,4 @@
-const CACHE_NAME = 'velotrek-v6';
+const CACHE_NAME = 'velotrek-v7';
 
 const SHELL_FILES = [
   './',
@@ -23,10 +23,22 @@ const CDN_FILES = [
 ];
 
 // Install — кэшируем shell и CDN
+// ВАЖНО: shell-файлы грузим с cache-buster чтобы старый активный SW
+// не отдал их из своего кэша (новый SW устанавливается пока старый ещё активен)
 self.addEventListener('install', event => {
+  const bust = '?_sw=' + CACHE_NAME;
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll([...SHELL_FILES, ...CDN_FILES]);
+      // CDN: обычный cache.add (cross-origin, версии зафиксированы)
+      const cdnPromise = cache.addAll(CDN_FILES);
+      // Shell: fetch с cache-buster → put без него, чтобы обход кэша старого SW
+      const shellPromise = Promise.all(
+        SHELL_FILES.map(url =>
+          fetch(url + bust, { cache: 'no-cache' })
+            .then(resp => { if (!resp.ok) throw new Error(url); return cache.put(url, resp); })
+        )
+      );
+      return Promise.all([cdnPromise, shellPromise]);
     })
   );
   self.skipWaiting();
