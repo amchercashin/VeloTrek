@@ -1,4 +1,4 @@
-const CACHE_NAME = 'velotrek-v5';
+const CACHE_NAME = 'velotrek-v6';
 
 const SHELL_FILES = [
   './',
