@@ -78,7 +78,8 @@ const App = (() => {
       const elevation = (stats.elevation_min_m && stats.elevation_max_m)
         ? `${stats.elevation_min_m}–${stats.elevation_max_m} м`
         : '';
-      const climb = stats.climb_m ? `${stats.climb_m} м` : '';
+      const climb   = stats.climb_m   ? `${stats.climb_m} м`   : '';
+      const descent = stats.descent_m ? `${stats.descent_m} м` : '';
 
       const desc = route.description
         ? escapeHtml(route.description).substring(0, 120)
@@ -92,7 +93,8 @@ const App = (() => {
             ${track ? `<span class="stat" title="Суммарная длина трека"><span class="stat__icon">🗺️</span> ${track}</span>` : ''}
             ${span  ? `<span class="stat" title="Размах (диагональ)"><span class="stat__icon">📏</span> ${span}</span>` : ''}
             ${elevation ? `<span class="stat" title="Высоты мин–макс"><span class="stat__icon">⛰</span> ${elevation}</span>` : ''}
-            ${climb ? `<span class="stat" title="Суммарный подъём"><span class="stat__icon">↗</span> ${climb}</span>` : ''}
+            ${climb   ? `<span class="stat" title="Суммарный подъём"><span class="stat__icon">↗</span> ${climb}</span>`   : ''}
+            ${descent ? `<span class="stat" title="Суммарный спуск"><span class="stat__icon">↘</span> ${descent}</span>` : ''}
             ${route.poiCount ? `<span class="stat" title="Точки интереса"><span class="stat__icon">📍</span> ${route.poiCount} точек</span>` : ''}
           </div>
           ${route.error ? `<p class="route-card__error">Ошибка загрузки</p>` : ''}
