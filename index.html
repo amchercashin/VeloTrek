@@ -34,9 +34,6 @@
     <div id="route-list"></div>
   </main>
 
-  <footer class="footer" id="footer" style="display:none">
-    <a href="#" class="footer__add-route" id="add-route-link">+ Добавить маршрут</a>
-  </footer>
 
   <!-- JSZip для поддержки KMZ -->
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
@@ -48,7 +45,6 @@
       const loading = document.getElementById('loading');
       const error = document.getElementById('error');
       const routeList = document.getElementById('route-list');
-      const footer = document.getElementById('footer');
 
       loading.classList.remove('hidden');
       error.classList.add('hidden');
@@ -58,14 +54,6 @@
         const routes = await App.loadCatalog();
         loading.classList.add('hidden');
         App.renderCatalog(routes, routeList);
-
-        // Показываем ссылку на добавление маршрута
-        const repo = App.detectRepo();
-        if (repo) {
-          const addLink = document.getElementById('add-route-link');
-          addLink.href = `https://github.com/${repo.owner}/${repo.repo}`;
-          footer.style.display = '';
-        }
       } catch (e) {
         loading.classList.add('hidden');
         error.classList.remove('hidden');

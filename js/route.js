@@ -125,14 +125,29 @@ const RoutePage = (() => {
             } else if (progress.phase === 'done') {
               progressFill.style.width = '100%';
               progressFill.classList.add('progress-bar__fill--done');
+              cancelBtn.classList.add('hidden');
+
               if (progress.cancelled) {
                 downloadStatus.textContent = 'Скачивание отменено';
+                // Через секунду — снова показываем кнопку скачивания
+                setTimeout(() => {
+                  downloadPanel.classList.add('hidden');
+                  downloadBtn.classList.remove('hidden');
+                }, 1200);
               } else {
+                const total = progress.completed + progress.cached;
                 downloadStatus.textContent =
-                  `Готово! Скачано ${progress.completed} тайлов` +
-                  (progress.cached ? `, ${progress.cached} из кэша` : '');
+                  `✓ Готово — ${total} тайлов в памяти`;
+                // Через 2 секунды скрываем панель, кнопка меняется на «✓ Карта скачана»
+                setTimeout(() => {
+                  downloadPanel.classList.add('hidden');
+                  downloadBtn.textContent = '✓ Карта скачана';
+                  downloadBtn.classList.remove('btn--primary');
+                  downloadBtn.classList.add('btn--success');
+                  downloadBtn.disabled = true;
+                  downloadBtn.classList.remove('hidden');
+                }, 2000);
               }
-              cancelBtn.classList.add('hidden');
             }
           }
         });
