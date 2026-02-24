@@ -1,5 +1,5 @@
 {
-  "generated": "2026-02-23T19:09:59Z",
+  "generated": "2026-02-24T09:32:46Z",
   "routes": [
     {
       "filename": "01-moskva-reka-dorokhovo-zvenigorod.kml",
@@ -21,6 +21,23 @@
         "maxLat": 55.735803,
         "minLon": 36.246659,
         "maxLon": 36.881307
+      }
+    },
+    {
+      "filename": "02-moskva-spb-yahroma-dubna.kmz",
+      "name": "ВЕЛО 1. Москва - Санкт-Петербург",
+      "description": "Источник: komoot.com",
+      "stats": {
+        "track_km": 1109.2,
+        "span_km": 654.8
+      },
+      "poiCount": 0,
+      "segmentCount": 1,
+      "bbox": {
+        "minLat": 55.747353,
+        "maxLat": 59.939197,
+        "minLon": 30.064645,
+        "maxLon": 37.817649
       }
     },
     {
@@ -109,28 +126,6 @@
         "maxLat": 56.573735,
         "minLon": 37.519137,
         "maxLon": 38.273108
-      }
-    },
-    {
-      "filename": "02-moskva-spb-yahroma-dubna.kmz",
-      "name": "ВЕЛО 1. Москва — Санкт-Петербург (полный)",
-      "description": "Полный маршрут Москва → Санкт-Петербург. Источник: komoot.com",
-      "stats": {
-        "distance_km": 1122.7,
-        "elevation_min_m": 10,
-        "elevation_max_m": 295,
-        "climb_m": 3358,
-        "descent_m": 3488,
-        "track_km": 1122.7,
-        "span_km": 653.4
-      },
-      "poiCount": 0,
-      "segmentCount": 1,
-      "bbox": {
-        "minLat": 55.746954,
-        "maxLat": 59.939197,
-        "minLon": 30.063920,
-        "maxLon": 37.818542
       }
     },
     {
