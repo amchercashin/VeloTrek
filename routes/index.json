@@ -1,5 +1,5 @@
 {
-  "generated": "2026-02-24T09:32:46Z",
+  "generated": "2026-02-24T09:41:42Z",
   "routes": [
     {
       "filename": "01-moskva-reka-dorokhovo-zvenigorod.kml",
@@ -38,6 +38,23 @@
         "maxLat": 59.939197,
         "minLon": 30.064645,
         "maxLon": 37.817649
+      }
+    },
+    {
+      "filename": "03-zelyonoe-kolco-moskvy.kmz",
+      "name": "Зелёное кольцо Москвы",
+      "description": "Городской веломаршрут, соединяющий зелёные зоны, метро, МЦД и МЦК по всей Москве. По пути — городские парки и достопримечательности. Источник: gucodd.ru/green-ring",
+      "stats": {
+        "track_km": 127.3,
+        "span_km": 37.5
+      },
+      "poiCount": 0,
+      "segmentCount": 1,
+      "bbox": {
+        "minLat": 55.61702,
+        "maxLat": 55.842941,
+        "minLon": 37.386917,
+        "maxLon": 37.82994768826549
       }
     },
     {
@@ -126,24 +143,6 @@
         "maxLat": 56.573735,
         "minLon": 37.519137,
         "maxLon": 38.273108
-      }
-    },
-    {
-      "filename": "03-zelyonoe-kolco-moskvy.kmz",
-      "name": "Зелёное кольцо Москвы",
-      "description": "Городской веломаршрут, соединяющий зелёные зоны, метро, МЦД и МЦК по всей Москве. По пути — городские парки и достопримечательности. Источник: gucodd.ru/green-ring",
-      "stats": {
-        "distance_km": 129.3,
-        "track_km": 129.3,
-        "span_km": 37.4
-      },
-      "poiCount": 0,
-      "segmentCount": 1,
-      "bbox": {
-        "minLat": 55.617020,
-        "maxLat": 55.842941,
-        "minLon": 37.386716,
-        "maxLon": 37.829997
       }
     },
     {
