@@ -75,14 +75,9 @@ const App = (() => {
     const climb   = stats.climb_m   ? `${stats.climb_m} м`   : '';
     const descent = stats.descent_m ? `${stats.descent_m} м` : '';
 
-    const desc = route.description
-      ? linkify(escapeHtml(stripHtml(route.description)))
-      : '';
-
     return `
       <div class="route-card" data-route="${encodeURIComponent(route.filename)}">
         <h2 class="route-card__title">${escapeHtml(route.name)}</h2>
-        ${desc ? `<p class="route-card__desc">${desc}</p>` : ''}
         <div class="route-card__stats">
           ${track ? `<span class="stat" title="Суммарная длина трека"><span class="stat__icon">🗺️</span> ${track}</span>` : ''}
           ${span  ? `<span class="stat" title="Размах (диагональ)"><span class="stat__icon">📏</span> ${span}</span>` : ''}

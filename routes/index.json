@@ -1,5 +1,5 @@
 {
-  "generated": "2026-02-24T14:13:46Z",
+  "generated": "2026-02-24T20:25:23Z",
   "sections": [
     {
       "name": "Велопутешествия",
@@ -7,7 +7,7 @@
         {
           "filename": "Велопутешествия/02-moskva-spb-yahroma-dubna.kmz",
           "name": "ВЕЛО 1. Москва - Санкт-Петербург",
-          "description": "Источник: komoot.com",
+          "description": "",
           "stats": {
             "track_km": 1109.2,
             "span_km": 654.8
@@ -29,7 +29,7 @@
         {
           "filename": "Москва/03-zelyonoe-kolco-moskvy.kmz",
           "name": "Зелёное кольцо Москвы",
-          "description": "Городской веломаршрут, соединяющий зелёные зоны, метро, МЦД и МЦК по всей Москве. По пути — городские парки и достопримечательности. Источник: gucodd.ru/green-ring",
+          "description": "",
           "stats": {
             "track_km": 127.3,
             "span_km": 37.5
@@ -49,9 +49,9 @@
       "name": "Однодневки Подмосковья",
       "routes": [
         {
-          "filename": "Однодневки Подмосковья/01-moskva-reka-dorokhovo-zvenigorod.kml",
-          "name": "01 - Москва-река (Дорохово-Звенигород)",
-          "description": "Запад. https://bikelifeforms.ru/?p=8367",
+          "filename": "Однодневки Подмосковья/01-moskva-reka-1.kml",
+          "name": "1) Запад. Вдоль Москвы-реки, часть 1",
+          "description": "",
           "stats": {
             "distance_km": 136.0,
             "elevation_min_m": 136,
@@ -71,9 +71,9 @@
           }
         },
         {
-          "filename": "Однодневки Подмосковья/2.kml",
-          "name": "02 - Москва-река (Звенигород-Красногорск)",
-          "description": "Запад. https://bikelifeforms.ru/?p=8367",
+          "filename": "Однодневки Подмосковья/02-moskva-reka-2.kml",
+          "name": "2) Запад. Вдоль Москвы-реки, часть 2",
+          "description": "",
           "stats": {
             "distance_km": 113.2,
             "elevation_min_m": 129,
@@ -93,9 +93,9 @@
           }
         },
         {
-          "filename": "Однодневки Подмосковья/3.kml",
-          "name": "03 - Истра и Маглуша",
-          "description": "Северо-запад. https://bikelifeforms.ru/?p=8367",
+          "filename": "Однодневки Подмосковья/03-istra-i-maglusha.kml",
+          "name": "3) Запад. Истра и Маглуша",
+          "description": "",
           "stats": {
             "distance_km": 83.3,
             "elevation_min_m": 140,
@@ -115,9 +115,9 @@
           }
         },
         {
-          "filename": "Однодневки Подмосковья/4.kml",
-          "name": "04 - Сестра и Яхрома",
-          "description": "Север. https://bikelifeforms.ru/?p=8367",
+          "filename": "Однодневки Подмосковья/04-sestra-i-yahroma.kml",
+          "name": "4) Север. Сестра и Яхрома",
+          "description": "",
           "stats": {
             "distance_km": 133.5,
             "elevation_min_m": 116,
@@ -137,9 +137,9 @@
           }
         },
         {
-          "filename": "Однодневки Подмосковья/5.kml",
-          "name": "05 - Дубна и Веля",
-          "description": "Северо-восток. https://bikelifeforms.ru/?p=8367",
+          "filename": "Однодневки Подмосковья/05-dubna-i-velya.kml",
+          "name": "5) Север. Дубна и Веля",
+          "description": "",
           "stats": {
             "distance_km": 176.0,
             "elevation_min_m": 130,
@@ -159,9 +159,9 @@
           }
         },
         {
-          "filename": "Однодневки Подмосковья/6.kml",
-          "name": "06 - Яхрома-Морозки-Мураново",
-          "description": "Север. https://bikelifeforms.ru/?p=8367",
+          "filename": "Однодневки Подмосковья/06-sorocany-kanal-muranovo.kml",
+          "name": "6) Север. Сорочаны, канал и Мураново",
+          "description": "",
           "stats": {
             "distance_km": 79.1,
             "elevation_min_m": 146,
@@ -178,6 +178,160 @@
             "maxLat": 56.306917,
             "minLon": 37.498872,
             "maxLon": 37.947555
+          }
+        },
+        {
+          "filename": "Однодневки Подмосковья/07-vorya-i-torgosha.kml",
+          "name": "7) Север/восток. Воря и Торгоша",
+          "description": "",
+          "stats": {
+            "distance_km": 94.1,
+            "elevation_min_m": 133,
+            "elevation_max_m": 200,
+            "climb_m": 211,
+            "descent_m": 162,
+            "track_km": 94.2,
+            "span_km": 43.5
+          },
+          "poiCount": 32,
+          "segmentCount": 4,
+          "bbox": {
+            "minLat": 55.943094,
+            "maxLat": 56.309591,
+            "minLon": 37.977335,
+            "maxLon": 38.218756
+          }
+        },
+        {
+          "filename": "Однодневки Подмосковья/08-meshchera-nerskaya.kml",
+          "name": "8) Восток. Мещера Нерская",
+          "description": "",
+          "stats": {
+            "distance_km": 68.7,
+            "elevation_min_m": 107,
+            "elevation_max_m": 153,
+            "climb_m": 82,
+            "descent_m": 74,
+            "track_km": 68.7,
+            "span_km": 41.0
+          },
+          "poiCount": 15,
+          "segmentCount": 1,
+          "bbox": {
+            "minLat": 55.427466,
+            "maxLat": 55.756245,
+            "minLon": 38.559461,
+            "maxLon": 38.853021
+          }
+        },
+        {
+          "filename": "Однодневки Подмосковья/09-vdol-severki.kml",
+          "name": "9) Юг. Вдоль Северки",
+          "description": "",
+          "stats": {
+            "distance_km": 78.0,
+            "elevation_min_m": 110,
+            "elevation_max_m": 161,
+            "climb_m": 96,
+            "descent_m": 144,
+            "track_km": 78.1,
+            "span_km": 57.3
+          },
+          "poiCount": 17,
+          "segmentCount": 1,
+          "bbox": {
+            "minLat": 55.171086,
+            "maxLat": 55.292832,
+            "minLon": 37.896046,
+            "maxLon": 38.772722
+          }
+        },
+        {
+          "filename": "Однодневки Подмосковья/10-talezh-i-shkin.kml",
+          "name": "10) Юг. Талеж и Шкинь",
+          "description": "",
+          "stats": {
+            "distance_km": 130.9,
+            "elevation_min_m": 114,
+            "elevation_max_m": 185,
+            "climb_m": 218,
+            "descent_m": 275,
+            "track_km": 130.9,
+            "span_km": 81.8
+          },
+          "poiCount": 20,
+          "segmentCount": 4,
+          "bbox": {
+            "minLat": 55.048958,
+            "maxLat": 55.326248,
+            "minLon": 37.494729,
+            "maxLon": 38.685935
+          }
+        },
+        {
+          "filename": "Однодневки Подмосковья/11-serpuhov-stupino.kml",
+          "name": "11) Юг. Серпухов-Ступино",
+          "description": "",
+          "stats": {
+            "distance_km": 110.8,
+            "elevation_min_m": 108,
+            "elevation_max_m": 189,
+            "climb_m": 254,
+            "descent_m": 234,
+            "track_km": 110.9,
+            "span_km": 54.4
+          },
+          "poiCount": 19,
+          "segmentCount": 5,
+          "bbox": {
+            "minLat": 54.840943,
+            "maxLat": 55.12125,
+            "minLon": 37.451633,
+            "maxLon": 38.148544
+          }
+        },
+        {
+          "filename": "Однодневки Подмосковья/12-istya-i-nara.kml",
+          "name": "12) Юг/юго-запад. Истья и Нара",
+          "description": "",
+          "stats": {
+            "distance_km": 141.3,
+            "elevation_min_m": 124,
+            "elevation_max_m": 216,
+            "climb_m": 201,
+            "descent_m": 264,
+            "track_km": 141.4,
+            "span_km": 62.3
+          },
+          "poiCount": 36,
+          "segmentCount": 10,
+          "bbox": {
+            "minLat": 55.029818,
+            "maxLat": 55.341251,
+            "minLon": 36.662195,
+            "maxLon": 37.477573
+          }
+        },
+        {
+          "filename": "Однодневки Подмосковья/13-meshchera-glubokaya.kml",
+          "name": "13) Восток. Мещера глубокая",
+          "description": "",
+          "stats": {
+            "distance_km": 82.2,
+            "elevation_min_m": 113,
+            "elevation_max_m": 164,
+            "climb_m": 38,
+            "descent_m": 70,
+            "track_km": 82.2,
+            "span_km": 43.0
+          },
+          "poiCount": 15,
+          "segmentCount": 4,
+          "bbox": {
+            "minLat": 55.57254,
+            "maxLat": 55.891679,
+            "minLon": 39.005467,
+            "maxLon": 39.391394
           }
         }
       ]

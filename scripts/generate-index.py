@@ -247,7 +247,7 @@ def generate_index():
                     route_entry = {
                         "filename": f"{section_name}/{filepath.name}",
                         "name": meta["name"] or filepath.stem.replace("-", " ").replace("_", " "),
-                        "description": meta["description"],
+                        "description": "",
                         "stats": meta["stats"],
                         "poiCount": len(meta["pois"]),
                         "segmentCount": meta["segmentCount"],

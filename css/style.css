@@ -578,6 +578,17 @@ body.fullscreen-map .download-panel {
   display: none !important;
 }
 
+/* === Описание маршрута (ниже карты и кнопок) === */
+
+.route-description {
+  padding: 12px 16px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--color-text);
+}
+.route-description p { margin: 0 0 8px; }
+.route-description a { color: var(--color-primary); text-decoration: underline; }
+
 /* === Скрытие элементов === */
 
 .hidden {

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
   <Document>
-    <name>06 - Яхрома-Морозки-Мураново</name>
-    <description><![CDATA[Север.<br>https://bikelifeforms.ru/?p=8367]]></description>
+    <name>6) Север. Сорочаны, канал и Мураново</name>
+    <description><![CDATA[<a href="https://bikelifeforms.ru/articles/velo-routes-podmoskovye" target="_blank">Источник: bikelifeforms.ru</a>
+<p>Полный вариант: ст. Яхрома – пл. Ашукинская, длина <b>73…77 км</b>. Короткий вариант: пл. Морозки – пл. Ашукинская, длина <b>50…54 км</b>.</p>
+<p>Грунт/асфальт: 20/80%, выраженная холмистость. 7 километров маршрута проходят по берегу канала им. Москвы. Купание также возможно в Икшинском/Пестовском водохранилище.</p>
+<p>Около Яхромы – красивые виды; от Хвойного Бора до Ашукино – малозагруженный асфальт.</p>]]></description>
     <Style id="icon-503-DB4436-nodesc-normal">
       <IconStyle>
         <color>ff3644db</color>

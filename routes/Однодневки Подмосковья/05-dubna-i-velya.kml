@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
   <Document>
-    <name>05 - Дубна и Веля</name>
-    <description><![CDATA[Северо-восток.<br>https://bikelifeforms.ru/?p=8367]]></description>
+    <name>5) Север. Дубна и Веля</name>
+    <description><![CDATA[<a href="https://bikelifeforms.ru/articles/velo-routes-podmoskovye" target="_blank">Источник: bikelifeforms.ru</a>
+<p>Преимущественно асфальтовый маршрут между Ярославским и Савеловским направлениями МЖД. Южная часть – очень холмистая (Клинско-Дмитровская гряда), северная – относительно ровная.</p>
+<p>Основная нитка: пл. 83 км (Яр.) – ст. Вербилки (Сав.), длина <b>72…75 км</b>.</p>
+<p>Точек схода нет. Рельеф непростой, так что рассчитывайте свои силы. Но где рельеф – там и красóты!</p>
+<p><b>POI:</b> старинные храмы, Загорская ГАЭС (гидроаккумулирующая электростанция), село Ольявидово на холме, старейший в России фарфоровый завод в Вербилках.</p>]]></description>
     <Style id="icon-503-DB4436-nodesc-normal">
       <IconStyle>
         <color>ff3644db</color>

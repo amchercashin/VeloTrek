@@ -64,18 +64,19 @@ const RoutePage = (() => {
     document.getElementById('route-name').textContent = data.name;
     document.getElementById('header-title').textContent = data.name;
 
+    // Описание не показываем вверху — только название и статистика
+    document.getElementById('route-desc').classList.add('hidden');
+
+    // Описание из KML рендерим ниже карты и кнопок
     const rawDesc = data.description || '';
-    const descEl = document.getElementById('route-desc');
-    if (rawDesc) {
-      // Описание в KML может содержать HTML (CDATA с <br> и др.)
-      // <br> заменяем на пробел ДО парсинга — textContent не добавляет разделитель вокруг <br>
-      const tmp = document.createElement('div');
-      tmp.innerHTML = rawDesc.replace(/<br\s*\/?>/gi, ' ');
-      const plainDesc = tmp.textContent || '';
-      const cleanDesc = plainDesc.replace(/\s+/g, ' ').trim();
-      descEl.innerHTML = linkify(escapeHtml(cleanDesc));
-    } else {
-      descEl.classList.add('hidden');
+    const descSection = document.getElementById('route-description');
+    if (rawDesc && rawDesc.includes('<')) {
+      // HTML-описание из CDATA — рендерим как HTML (санитизация: убираем script/iframe)
+      const sanitized = rawDesc
+        .replace(/<script[\s\S]*?<\/script>/gi, '')
+        .replace(/<iframe[\s\S]*?<\/iframe>/gi, '');
+      descSection.innerHTML = sanitized;
+      descSection.classList.remove('hidden');
     }
 
     const statsEl = document.getElementById('route-stats');
