@@ -7,7 +7,6 @@ const GPSTracker = (() => {
   let routeData = null;
   let watchId = null;
   let wakeLock = null;
-  let marker = null;
   let accuracyCircle = null;
   let headingMarker = null;
   let isTracking = false;
@@ -37,32 +36,25 @@ const GPSTracker = (() => {
       console.warn('Wake Lock недоступен:', e);
     }
 
-    // Маркер позиции
-    marker = L.circleMarker([0, 0], {
-      radius: 10,
-      fillColor: '#4285F4',
-      color: '#ffffff',
-      weight: 3,
-      fillOpacity: 1,
-      pane: 'markerPane'
-    }).addTo(map);
-
+    // Круг точности (ненавязчивый)
     accuracyCircle = L.circle([0, 0], {
       radius: 0,
-      fillColor: '#4285F4',
-      fillOpacity: 0.1,
-      color: '#4285F4',
-      weight: 1
+      fillColor: '#EA4335',
+      fillOpacity: 0.06,
+      color: '#EA4335',
+      weight: 0.5,
+      opacity: 0.25
     }).addTo(map);
 
-    // Направление движения (треугольник)
+    // Стрелка направления — основной маркер позиции
     headingMarker = L.marker([0, 0], {
       icon: L.divIcon({
         className: 'gps-heading',
         html: '<div class="gps-heading-arrow"></div>',
-        iconSize: [24, 24],
-        iconAnchor: [12, 12]
-      })
+        iconSize: [22, 28],
+        iconAnchor: [11, 14]
+      }),
+      zIndexOffset: 1000
     }).addTo(map);
 
     watchId = navigator.geolocation.watchPosition(
@@ -82,7 +74,6 @@ const GPSTracker = (() => {
     const { latitude, longitude, accuracy, heading, speed } = position.coords;
     const latlng = L.latLng(latitude, longitude);
 
-    marker.setLatLng(latlng);
     accuracyCircle.setLatLng(latlng);
     accuracyCircle.setRadius(accuracy);
     headingMarker.setLatLng(latlng);
@@ -176,11 +167,9 @@ const GPSTracker = (() => {
       wakeLock = null;
       document.removeEventListener('visibilitychange', reacquireWakeLock);
     }
-    if (marker) {
-      marker.remove();
+    if (headingMarker) {
       accuracyCircle.remove();
       headingMarker.remove();
-      marker = null;
       accuracyCircle = null;
       headingMarker = null;
     }
