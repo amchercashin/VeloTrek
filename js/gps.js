@@ -13,6 +13,7 @@ const GPSTracker = (() => {
   let followMode = true;
   let routePoints = [];
   let onUpdate = null;
+  let orientationHandler = null;
 
   function init(leafletMap, route, callback) {
     map = leafletMap;
@@ -51,11 +52,14 @@ const GPSTracker = (() => {
       icon: L.divIcon({
         className: 'gps-heading',
         html: '<div class="gps-heading-arrow"></div>',
-        iconSize: [22, 28],
-        iconAnchor: [11, 14]
+        iconSize: [12, 16],
+        iconAnchor: [6, 8]
       }),
       zIndexOffset: 1000
     }).addTo(map);
+
+    // Компас устройства — работает даже стоя на месте
+    await setupCompass();
 
     watchId = navigator.geolocation.watchPosition(
       onPosition,
@@ -70,6 +74,53 @@ const GPSTracker = (() => {
     isTracking = true;
   }
 
+  // Подключаем компас через DeviceOrientationEvent.
+  // iOS 13+ требует явного разрешения (вызывается из user gesture через start()).
+  async function setupCompass() {
+    const handler = (e) => {
+      let heading = null;
+      if (typeof e.webkitCompassHeading === 'number') {
+        // iOS: webkitCompassHeading — градусы от севера по часовой
+        heading = e.webkitCompassHeading;
+      } else if (e.absolute && typeof e.alpha === 'number') {
+        // Android: alpha — градусы против часовой от севера, конвертируем
+        heading = (360 - e.alpha) % 360;
+      }
+      if (heading !== null) {
+        rotateArrow(heading);
+      }
+    };
+
+    try {
+      if (typeof DeviceOrientationEvent !== 'undefined' &&
+          typeof DeviceOrientationEvent.requestPermission === 'function') {
+        // iOS 13+
+        const state = await DeviceOrientationEvent.requestPermission();
+        if (state === 'granted') {
+          orientationHandler = handler;
+          window.addEventListener('deviceorientation', handler);
+        }
+      } else if (typeof DeviceOrientationEvent !== 'undefined') {
+        // Android и остальные
+        orientationHandler = handler;
+        window.addEventListener('deviceorientationabsolute', handler, true);
+        window.addEventListener('deviceorientation', handler, true);
+      }
+    } catch (e) {
+      console.warn('Компас недоступен:', e);
+    }
+  }
+
+  function rotateArrow(heading) {
+    if (!headingMarker) return;
+    const el = headingMarker.getElement();
+    if (!el) return;
+    const arrowEl = el.querySelector('.gps-heading-arrow');
+    if (arrowEl) {
+      arrowEl.style.transform = `rotate(${heading}deg)`;
+    }
+  }
+
   function onPosition(position) {
     const { latitude, longitude, accuracy, heading, speed } = position.coords;
     const latlng = L.latLng(latitude, longitude);
@@ -78,12 +129,9 @@ const GPSTracker = (() => {
     accuracyCircle.setRadius(accuracy);
     headingMarker.setLatLng(latlng);
 
-    // Поворот стрелки направления
+    // GPS heading как запасной вариант (работает только при движении)
     if (heading !== null && !isNaN(heading)) {
-      const arrow = headingMarker.getElement();
-      if (arrow) {
-        arrow.querySelector('.gps-heading-arrow').style.transform = `rotate(${heading}deg)`;
-      }
+      rotateArrow(heading);
     }
 
     if (followMode) {
@@ -118,7 +166,6 @@ const GPSTracker = (() => {
     let minDist = Infinity;
     let nearestPoint = null;
 
-    // Sample route points for performance
     const step = Math.max(1, Math.floor(routePoints.length / 1000));
     for (let i = 0; i < routePoints.length; i += step) {
       const point = routePoints[i];
@@ -129,7 +176,6 @@ const GPSTracker = (() => {
       }
     }
 
-    // Refine search near the nearest found point
     if (nearestPoint) {
       const idx = routePoints.indexOf(nearestPoint);
       const start = Math.max(0, idx - step);
@@ -166,6 +212,11 @@ const GPSTracker = (() => {
       wakeLock.release();
       wakeLock = null;
       document.removeEventListener('visibilitychange', reacquireWakeLock);
+    }
+    if (orientationHandler) {
+      window.removeEventListener('deviceorientationabsolute', orientationHandler, true);
+      window.removeEventListener('deviceorientation', orientationHandler, true);
+      orientationHandler = null;
     }
     if (headingMarker) {
       accuracyCircle.remove();
