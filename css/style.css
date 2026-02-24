@@ -530,7 +530,8 @@ body.fullscreen-map .route-page {
 }
 
 body.fullscreen-map .route-info,
-body.fullscreen-map .action-bar {
+body.fullscreen-map .action-bar,
+body.fullscreen-map .route-description {
   display: none !important;
 }
 

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-02-24T20:25:42Z",
+  "generated": "2026-02-24T20:44:47Z",
   "sections": [
     {
       "name": "Велопутешествия",
@@ -50,7 +50,7 @@
       "routes": [
         {
           "filename": "Однодневки Подмосковья/01-moskva-reka-1.kml",
-          "name": "1) Запад. Вдоль Москвы-реки, часть 1",
+          "name": "1. Запад. Вдоль Москвы-реки, часть 1",
           "description": "",
           "stats": {
             "distance_km": 136.0,
@@ -72,7 +72,7 @@
         },
         {
           "filename": "Однодневки Подмосковья/02-moskva-reka-2.kml",
-          "name": "2) Запад. Вдоль Москвы-реки, часть 2",
+          "name": "2. Запад. Вдоль Москвы-реки, часть 2",
           "description": "",
           "stats": {
             "distance_km": 113.2,
@@ -94,7 +94,7 @@
         },
         {
           "filename": "Однодневки Подмосковья/03-istra-i-maglusha.kml",
-          "name": "3) Запад. Истра и Маглуша",
+          "name": "3. Запад. Истра и Маглуша",
           "description": "",
           "stats": {
             "distance_km": 83.3,
@@ -116,7 +116,7 @@
         },
         {
           "filename": "Однодневки Подмосковья/04-sestra-i-yahroma.kml",
-          "name": "4) Север. Сестра и Яхрома",
+          "name": "4. Север. Сестра и Яхрома",
           "description": "",
           "stats": {
             "distance_km": 133.5,
@@ -138,7 +138,7 @@
         },
         {
           "filename": "Однодневки Подмосковья/05-dubna-i-velya.kml",
-          "name": "5) Север. Дубна и Веля",
+          "name": "5. Север. Дубна и Веля",
           "description": "",
           "stats": {
             "distance_km": 176.0,
@@ -160,7 +160,7 @@
         },
         {
           "filename": "Однодневки Подмосковья/06-sorocany-kanal-muranovo.kml",
-          "name": "6) Север. Сорочаны, канал и Мураново",
+          "name": "6. Север. Сорочаны, канал и Мураново",
           "description": "",
           "stats": {
             "distance_km": 79.1,
@@ -182,7 +182,7 @@
         },
         {
           "filename": "Однодневки Подмосковья/07-vorya-i-torgosha.kml",
-          "name": "7) Север/восток. Воря и Торгоша",
+          "name": "7. Север/восток. Воря и Торгоша",
           "description": "",
           "stats": {
             "distance_km": 94.1,
@@ -204,7 +204,7 @@
         },
         {
           "filename": "Однодневки Подмосковья/08-meshchera-nerskaya.kml",
-          "name": "8) Восток. Мещера Нерская",
+          "name": "8. Восток. Мещера Нерская",
           "description": "",
           "stats": {
             "distance_km": 68.7,
@@ -226,7 +226,7 @@
         },
         {
           "filename": "Однодневки Подмосковья/09-vdol-severki.kml",
-          "name": "9) Юг. Вдоль Северки",
+          "name": "9. Юг. Вдоль Северки",
           "description": "",
           "stats": {
             "distance_km": 78.0,
@@ -248,7 +248,7 @@
         },
         {
           "filename": "Однодневки Подмосковья/10-talezh-i-shkin.kml",
-          "name": "10) Юг. Талеж и Шкинь",
+          "name": "10. Юг. Талеж и Шкинь",
           "description": "",
           "stats": {
             "distance_km": 130.9,
@@ -270,7 +270,7 @@
         },
         {
           "filename": "Однодневки Подмосковья/11-serpuhov-stupino.kml",
-          "name": "11) Юг. Серпухов-Ступино",
+          "name": "11. Юг. Серпухов-Ступино",
           "description": "",
           "stats": {
             "distance_km": 110.8,
@@ -292,7 +292,7 @@
         },
         {
           "filename": "Однодневки Подмосковья/12-istya-i-nara.kml",
-          "name": "12) Юг/юго-запад. Истья и Нара",
+          "name": "12. Юг/юго-запад. Истья и Нара",
           "description": "",
           "stats": {
             "distance_km": 141.3,
@@ -314,7 +314,7 @@
         },
         {
           "filename": "Однодневки Подмосковья/13-meshchera-glubokaya.kml",
-          "name": "13) Восток. Мещера глубокая",
+          "name": "13. Восток. Мещера глубокая",
           "description": "",
           "stats": {
             "distance_km": 82.2,

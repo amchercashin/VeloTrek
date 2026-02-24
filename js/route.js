@@ -213,6 +213,11 @@ const RoutePage = (() => {
 
     gpsBtn.addEventListener('click', async () => {
       if (!gpsStarted) {
+        // iOS 13+: запрашиваем разрешение компаса первым, до любых других await
+        if (typeof DeviceOrientationEvent !== 'undefined' &&
+            typeof DeviceOrientationEvent.requestPermission === 'function') {
+          try { await DeviceOrientationEvent.requestPermission(); } catch (e) {}
+        }
         try {
           GPSTracker.init(VeloMap.getMap(), data, (update) => {
             if (update.error) {
