@@ -14,6 +14,13 @@ const GPSTracker = (() => {
   let routePoints = [];
   let onUpdate = null;
   let orientationHandler = null;
+  let compassHeading = null;
+
+  // Пороги для доверия GPS heading:
+  // - скорость выше ~5 км/ч (GPS вектор движения стабилен)
+  // - точность лучше 50м (при глушении accuracy резко падает)
+  const GPS_SPEED_MIN_MS = 1.5;   // м/с ≈ 5 км/ч
+  const GPS_ACCURACY_MAX_M = 50;  // метров
 
   function init(leafletMap, route, callback) {
     map = leafletMap;
@@ -87,6 +94,7 @@ const GPSTracker = (() => {
         heading = (360 - e.alpha) % 360;
       }
       if (heading !== null) {
+        compassHeading = heading;
         rotateArrow(heading);
       }
     };
@@ -129,10 +137,16 @@ const GPSTracker = (() => {
     accuracyCircle.setRadius(accuracy);
     headingMarker.setLatLng(latlng);
 
-    // GPS heading как запасной вариант (работает только при движении)
-    if (heading !== null && !isNaN(heading)) {
+    // GPS heading — только при хорошем сигнале и достаточной скорости.
+    // При глушении accuracy резко растёт, при малой скорости heading ненадёжен.
+    const gpsHeadingReliable = heading !== null && !isNaN(heading)
+      && (speed || 0) >= GPS_SPEED_MIN_MS
+      && accuracy <= GPS_ACCURACY_MAX_M;
+
+    if (gpsHeadingReliable) {
       rotateArrow(heading);
     }
+    // Иначе компас (обновляется непрерывно через DeviceOrientationEvent)
 
     if (followMode) {
       map.panTo(latlng, { animate: true, duration: 0.5 });
@@ -218,6 +232,7 @@ const GPSTracker = (() => {
       window.removeEventListener('deviceorientation', orientationHandler, true);
       orientationHandler = null;
     }
+    compassHeading = null;
     if (headingMarker) {
       accuracyCircle.remove();
       headingMarker.remove();
