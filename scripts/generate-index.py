@@ -245,7 +245,7 @@ def generate_index():
                 try:
                     meta = load_route_file(filepath)
                     route_entry = {
-                        "filename": filepath.name,
+                        "filename": f"{section_name}/{filepath.name}",
                         "name": meta["name"] or filepath.stem.replace("-", " ").replace("_", " "),
                         "description": meta["description"],
                         "stats": meta["stats"],
@@ -262,7 +262,7 @@ def generate_index():
                     print(f"ОШИБКА: {e}", file=sys.stderr)
                     # Добавляем запись с ошибкой, чтобы файл всё равно попал в каталог
                     routes.append({
-                        "filename": filepath.name,
+                        "filename": f"{section_name}/{filepath.name}",
                         "name": filepath.stem.replace("-", " ").replace("_", " "),
                         "description": "",
                         "stats": {},

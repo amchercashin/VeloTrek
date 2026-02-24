@@ -1,11 +1,11 @@
 {
-  "generated": "2026-02-24T10:19:10Z",
+  "generated": "2026-02-24T14:13:25Z",
   "sections": [
     {
       "name": "Велопутешествия",
       "routes": [
         {
-          "filename": "02-moskva-spb-yahroma-dubna.kmz",
+          "filename": "Велопутешествия/02-moskva-spb-yahroma-dubna.kmz",
           "name": "ВЕЛО 1. Москва - Санкт-Петербург",
           "description": "Источник: komoot.com",
           "stats": {
@@ -27,7 +27,7 @@
       "name": "Москва",
       "routes": [
         {
-          "filename": "03-zelyonoe-kolco-moskvy.kmz",
+          "filename": "Москва/03-zelyonoe-kolco-moskvy.kmz",
           "name": "Зелёное кольцо Москвы",
           "description": "Городской веломаршрут, соединяющий зелёные зоны, метро, МЦД и МЦК по всей Москве. По пути — городские парки и достопримечательности. Источник: gucodd.ru/green-ring",
           "stats": {
@@ -49,7 +49,7 @@
       "name": "Однодневки Подмосковья",
       "routes": [
         {
-          "filename": "01-moskva-reka-dorokhovo-zvenigorod.kml",
+          "filename": "Однодневки Подмосковья/01-moskva-reka-dorokhovo-zvenigorod.kml",
           "name": "01 - Москва-река (Дорохово-Звенигород)",
           "description": "Запад. https://bikelifeforms.ru/?p=8367",
           "stats": {
@@ -71,7 +71,7 @@
           }
         },
         {
-          "filename": "2.kml",
+          "filename": "Однодневки Подмосковья/2.kml",
           "name": "02 - Москва-река (Звенигород-Красногорск)",
           "description": "Запад. https://bikelifeforms.ru/?p=8367",
           "stats": {
@@ -93,7 +93,7 @@
           }
         },
         {
-          "filename": "3.kml",
+          "filename": "Однодневки Подмосковья/3.kml",
           "name": "03 - Истра и Маглуша",
           "description": "Северо-запад. https://bikelifeforms.ru/?p=8367",
           "stats": {
@@ -115,7 +115,7 @@
           }
         },
         {
-          "filename": "4.kml",
+          "filename": "Однодневки Подмосковья/4.kml",
           "name": "04 - Сестра и Яхрома",
           "description": "Север. https://bikelifeforms.ru/?p=8367",
           "stats": {
@@ -137,7 +137,7 @@
           }
         },
         {
-          "filename": "5.kml",
+          "filename": "Однодневки Подмосковья/5.kml",
           "name": "05 - Дубна и Веля",
           "description": "Северо-восток. https://bikelifeforms.ru/?p=8367",
           "stats": {
@@ -159,7 +159,7 @@
           }
         },
         {
-          "filename": "6.kml",
+          "filename": "Однодневки Подмосковья/6.kml",
           "name": "06 - Яхрома-Морозки-Мураново",
           "description": "Север. https://bikelifeforms.ru/?p=8367",
           "stats": {
