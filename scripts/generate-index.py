@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 VeloTrek — генератор каталога маршрутов.
-Сканирует папку routes/, парсит KML/KMZ файлы, создаёт routes/index.json.
+Сканирует подпапки routes/, парсит KML/KMZ файлы, создаёт routes/index.json.
+Имя подпапки = название раздела каталога.
 
 Запуск локально:   python3 scripts/generate-index.py
 Запуск в Actions:  python3 scripts/generate-index.py
@@ -217,51 +218,69 @@ def generate_index():
         print(f"Папка {ROUTES_DIR} не найдена", file=sys.stderr)
         sys.exit(1)
 
-    route_files = sorted([
-        f for f in ROUTES_DIR.iterdir()
-        if f.is_file() and f.suffix.lower() in (".kml", ".kmz")
+    # Сканируем подпапки — каждая папка = раздел каталога
+    section_dirs = sorted([
+        d for d in ROUTES_DIR.iterdir()
+        if d.is_dir()
     ])
 
-    if not route_files:
-        print("Маршруты не найдены в папке routes/")
-        routes = []
+    if not section_dirs:
+        print("Подпапки с маршрутами не найдены в routes/")
+        sections = []
     else:
-        routes = []
-        for filepath in route_files:
-            print(f"  Обработка: {filepath.name} ...", end=" ")
-            try:
-                meta = load_route_file(filepath)
-                route_entry = {
-                    "filename": filepath.name,
-                    "name": meta["name"] or filepath.stem.replace("-", " ").replace("_", " "),
-                    "description": meta["description"],
-                    "stats": meta["stats"],
-                    "poiCount": len(meta["pois"]),
-                    "segmentCount": meta["segmentCount"],
-                    "bbox": meta["bbox"],
-                }
-                routes.append(route_entry)
-                track = meta["stats"].get("track_km", "?")
-                span = meta["stats"].get("span_km", "?")
-                poi = len(meta["pois"])
-                print(f"OK (трек {track} км, размах {span} км, {poi} POI)")
-            except Exception as e:
-                print(f"ОШИБКА: {e}", file=sys.stderr)
-                # Добавляем запись с ошибкой, чтобы файл всё равно попал в каталог
-                routes.append({
-                    "filename": filepath.name,
-                    "name": filepath.stem.replace("-", " ").replace("_", " "),
-                    "description": "",
-                    "stats": {},
-                    "poiCount": 0,
-                    "segmentCount": 0,
-                    "bbox": None,
-                    "error": str(e),
-                })
+        sections = []
+        for section_dir in section_dirs:
+            section_name = section_dir.name
+            route_files = sorted([
+                f for f in section_dir.iterdir()
+                if f.is_file() and f.suffix.lower() in (".kml", ".kmz")
+            ])
+            if not route_files:
+                continue
 
+            print(f"\n[{section_name}]")
+            routes = []
+            for filepath in route_files:
+                print(f"  Обработка: {filepath.name} ...", end=" ")
+                try:
+                    meta = load_route_file(filepath)
+                    route_entry = {
+                        "filename": filepath.name,
+                        "name": meta["name"] or filepath.stem.replace("-", " ").replace("_", " "),
+                        "description": meta["description"],
+                        "stats": meta["stats"],
+                        "poiCount": len(meta["pois"]),
+                        "segmentCount": meta["segmentCount"],
+                        "bbox": meta["bbox"],
+                    }
+                    routes.append(route_entry)
+                    track = meta["stats"].get("track_km", "?")
+                    span = meta["stats"].get("span_km", "?")
+                    poi = len(meta["pois"])
+                    print(f"OK (трек {track} км, размах {span} км, {poi} POI)")
+                except Exception as e:
+                    print(f"ОШИБКА: {e}", file=sys.stderr)
+                    # Добавляем запись с ошибкой, чтобы файл всё равно попал в каталог
+                    routes.append({
+                        "filename": filepath.name,
+                        "name": filepath.stem.replace("-", " ").replace("_", " "),
+                        "description": "",
+                        "stats": {},
+                        "poiCount": 0,
+                        "segmentCount": 0,
+                        "bbox": None,
+                        "error": str(e),
+                    })
+
+            sections.append({
+                "name": section_name,
+                "routes": routes,
+            })
+
+    total_routes = sum(len(s["routes"]) for s in sections)
     index = {
         "generated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "routes": routes,
+        "sections": sections,
     }
 
     OUTPUT_FILE.write_text(
@@ -269,7 +288,7 @@ def generate_index():
         encoding="utf-8"
     )
     print(f"\nГотово: {OUTPUT_FILE}")
-    print(f"Маршрутов: {len(routes)}")
+    print(f"Разделов: {len(sections)}, маршрутов всего: {total_routes}")
 
 
 if __name__ == "__main__":

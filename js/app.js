@@ -31,17 +31,17 @@ const App = (() => {
       if (!cached) return null;
       const data = JSON.parse(cached);
       if (Date.now() - data.timestamp > CACHE_TTL) return null;
-      return data.routes;
+      return data.sections;
     } catch {
       return null;
     }
   }
 
-  function setCachedCatalog(routes) {
+  function setCachedCatalog(sections) {
     try {
       localStorage.setItem(CACHE_KEY, JSON.stringify({
         timestamp: Date.now(),
-        routes
+        sections
       }));
     } catch {
       // localStorage недоступен или заполнен
@@ -55,9 +55,9 @@ const App = (() => {
       const response = await fetch('routes/index.json');
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
-      const routes = data.routes || [];
-      setCachedCatalog(routes);
-      return routes;
+      const sections = data.sections || [];
+      setCachedCatalog(sections);
+      return sections;
     } catch (e) {
       // При ошибке сети — используем кэш
       if (cached) return cached;
@@ -65,42 +65,48 @@ const App = (() => {
     }
   }
 
-  function renderCatalog(routes, container) {
-    if (routes.length === 0) {
+  function renderRouteCard(route) {
+    const stats = route.stats || {};
+    const track = stats.track_km ? `${stats.track_km} км` : '';
+    const span  = stats.span_km  ? `${stats.span_km} км`  : '';
+    const elevation = (stats.elevation_min_m && stats.elevation_max_m)
+      ? `${stats.elevation_min_m}–${stats.elevation_max_m} м`
+      : '';
+    const climb   = stats.climb_m   ? `${stats.climb_m} м`   : '';
+    const descent = stats.descent_m ? `${stats.descent_m} м` : '';
+
+    const desc = route.description
+      ? linkify(escapeHtml(stripHtml(route.description)))
+      : '';
+
+    return `
+      <div class="route-card" data-route="${encodeURIComponent(route.filename)}">
+        <h2 class="route-card__title">${escapeHtml(route.name)}</h2>
+        ${desc ? `<p class="route-card__desc">${desc}</p>` : ''}
+        <div class="route-card__stats">
+          ${track ? `<span class="stat" title="Суммарная длина трека"><span class="stat__icon">🗺️</span> ${track}</span>` : ''}
+          ${span  ? `<span class="stat" title="Размах (диагональ)"><span class="stat__icon">📏</span> ${span}</span>` : ''}
+          ${elevation ? `<span class="stat" title="Высоты мин–макс"><span class="stat__icon">⛰</span> ${elevation}</span>` : ''}
+          ${climb   ? `<span class="stat" title="Суммарный подъём"><span class="stat__icon">↗</span> ${climb}</span>`   : ''}
+          ${descent ? `<span class="stat" title="Суммарный спуск"><span class="stat__icon">↘</span> ${descent}</span>` : ''}
+          ${route.poiCount ? `<span class="stat" title="Точки интереса"><span class="stat__icon">📍</span> ${route.poiCount} точек</span>` : ''}
+        </div>
+        ${route.error ? `<p class="route-card__error">Ошибка загрузки</p>` : ''}
+      </div>
+    `;
+  }
+
+  function renderCatalog(sections, container) {
+    const totalRoutes = sections.reduce((n, s) => n + (s.routes || []).length, 0);
+    if (totalRoutes === 0) {
       container.innerHTML = '<p class="empty-state">Маршруты не найдены. Добавьте KML-файл в папку <code>routes/</code> репозитория.</p>';
       return;
     }
 
-    container.innerHTML = routes.map(route => {
-      const stats = route.stats || {};
-      const track = stats.track_km ? `${stats.track_km} км` : '';
-      const span  = stats.span_km  ? `${stats.span_km} км`  : '';
-      const elevation = (stats.elevation_min_m && stats.elevation_max_m)
-        ? `${stats.elevation_min_m}–${stats.elevation_max_m} м`
-        : '';
-      const climb   = stats.climb_m   ? `${stats.climb_m} м`   : '';
-      const descent = stats.descent_m ? `${stats.descent_m} м` : '';
-
-      const desc = route.description
-        ? linkify(escapeHtml(stripHtml(route.description)))
-        : '';
-
-      return `
-        <div class="route-card" data-route="${encodeURIComponent(route.filename)}">
-          <h2 class="route-card__title">${escapeHtml(route.name)}</h2>
-          ${desc ? `<p class="route-card__desc">${desc}</p>` : ''}
-          <div class="route-card__stats">
-            ${track ? `<span class="stat" title="Суммарная длина трека"><span class="stat__icon">🗺️</span> ${track}</span>` : ''}
-            ${span  ? `<span class="stat" title="Размах (диагональ)"><span class="stat__icon">📏</span> ${span}</span>` : ''}
-            ${elevation ? `<span class="stat" title="Высоты мин–макс"><span class="stat__icon">⛰</span> ${elevation}</span>` : ''}
-            ${climb   ? `<span class="stat" title="Суммарный подъём"><span class="stat__icon">↗</span> ${climb}</span>`   : ''}
-            ${descent ? `<span class="stat" title="Суммарный спуск"><span class="stat__icon">↘</span> ${descent}</span>` : ''}
-            ${route.poiCount ? `<span class="stat" title="Точки интереса"><span class="stat__icon">📍</span> ${route.poiCount} точек</span>` : ''}
-          </div>
-          ${route.error ? `<p class="route-card__error">Ошибка загрузки</p>` : ''}
-        </div>
-      `;
-    }).join('');
+    container.innerHTML = sections.map(section => `
+      <h2 class="section-header">${escapeHtml(section.name)}</h2>
+      ${(section.routes || []).map(renderRouteCard).join('')}
+    `).join('');
 
     // Навигация по клику на карточку (div вместо <a> для поддержки вложенных ссылок)
     container.addEventListener('click', (e) => {

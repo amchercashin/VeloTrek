@@ -110,6 +110,22 @@ body {
   padding: 16px;
 }
 
+/* === Заголовок раздела каталога === */
+
+.section-header {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-secondary);
+  padding: 8px 0 4px;
+  margin-top: 8px;
+}
+
+.section-header:first-child {
+  margin-top: 0;
+}
+
 .route-card {
   display: block;
   background: var(--color-surface);

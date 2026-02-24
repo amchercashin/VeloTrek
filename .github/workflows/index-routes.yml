@@ -4,8 +4,8 @@ on:
   push:
     branches: [main]
     paths:
-      - 'routes/*.kml'
-      - 'routes/*.kmz'
+      - 'routes/**/*.kml'
+      - 'routes/**/*.kmz'
       - 'scripts/generate-index.py'
   workflow_dispatch:  # Запустить вручную из интерфейса GitHub → Actions
 
