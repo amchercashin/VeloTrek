@@ -129,6 +129,24 @@
       }
     },
     {
+      "filename": "03-zelyonoe-kolco-moskvy.kmz",
+      "name": "Зелёное кольцо Москвы",
+      "description": "Городской веломаршрут, соединяющий зелёные зоны, метро, МЦД и МЦК по всей Москве. По пути — городские парки и достопримечательности. Источник: gucodd.ru/green-ring",
+      "stats": {
+        "distance_km": 129.3,
+        "track_km": 129.3,
+        "span_km": 37.4
+      },
+      "poiCount": 0,
+      "segmentCount": 1,
+      "bbox": {
+        "minLat": 55.617020,
+        "maxLat": 55.842941,
+        "minLon": 37.386716,
+        "maxLon": 37.829997
+      }
+    },
+    {
       "filename": "6.kml",
       "name": "06 - Яхрома-Морозки-Мураново",
       "description": "Избранные вело-однодневки Подмосковья https://bikelifeforms.ru/?p=8367",
