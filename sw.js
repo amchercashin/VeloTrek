@@ -1,4 +1,4 @@
-const CACHE_NAME = 'velotrek-v8';
+const CACHE_NAME = 'velotrek-v9';
 
 const SHELL_FILES = [
   './',
@@ -11,8 +11,8 @@ const SHELL_FILES = [
   './js/kml-parser.js',
   './js/offline.js',
   './js/gps.js',
-  './manifest.json',
-  './routes/index.json'
+  './manifest.json'
+  // index.json намеренно исключён из shell — он network-first (часто меняется)
 ];
 
 const CDN_FILES = [
@@ -69,6 +69,21 @@ self.addEventListener('fetch', event => {
 
   // GitHub API — network only (кэшируется в localStorage через app.js)
   if (url.hostname === 'api.github.com') {
+    return;
+  }
+
+  // index.json — network-first (каталог маршрутов часто обновляется)
+  if (url.pathname.endsWith('/routes/index.json') ||
+      url.pathname.endsWith('index.json')) {
+    event.respondWith(
+      fetch(event.request, { cache: 'no-cache' })
+        .then(response => {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+          return response;
+        })
+        .catch(() => caches.match(event.request))
+    );
     return;
   }
 
