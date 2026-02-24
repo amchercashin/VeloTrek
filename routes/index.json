@@ -112,6 +112,28 @@
       }
     },
     {
+      "filename": "02-moskva-spb-yahroma-dubna.kmz",
+      "name": "ВЕЛО 1. Москва — Санкт-Петербург (полный)",
+      "description": "Полный маршрут Москва → Санкт-Петербург. Источник: komoot.com",
+      "stats": {
+        "distance_km": 1122.7,
+        "elevation_min_m": 10,
+        "elevation_max_m": 295,
+        "climb_m": 3358,
+        "descent_m": 3488,
+        "track_km": 1122.7,
+        "span_km": 653.4
+      },
+      "poiCount": 0,
+      "segmentCount": 1,
+      "bbox": {
+        "minLat": 55.746954,
+        "maxLat": 59.939197,
+        "minLon": 30.063920,
+        "maxLon": 37.818542
+      }
+    },
+    {
       "filename": "6.kml",
       "name": "06 - Яхрома-Морозки-Мураново",
       "description": "Избранные вело-однодневки Подмосковья https://bikelifeforms.ru/?p=8367",
