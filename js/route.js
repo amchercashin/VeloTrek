@@ -204,6 +204,11 @@ const RoutePage = (() => {
     if (kmlCached && tileStatus.ratio >= 0.95) {
       indicator.textContent = '\u2705 Готово оффлайн';
       indicator.className = 'offline-indicator offline-indicator--ready';
+      // Переименовать кнопку скачивания если карта уже полностью скачана
+      const downloadBtn = document.getElementById('btn-download');
+      if (downloadBtn && !downloadBtn.disabled) {
+        downloadBtn.textContent = downloadBtn.textContent.replace('Скачать карту', 'Обновить карту');
+      }
     } else if (kmlCached && tileStatus.ratio > 0) {
       const pct = Math.round(tileStatus.ratio * 100);
       indicator.textContent = '\uD83D\uDCE6 Частично (' + pct + '% карты)';
