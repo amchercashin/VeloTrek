@@ -254,6 +254,8 @@ body:has(.route-page) {
   flex-direction: column;
   flex: 1;
   min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .route-info {
@@ -289,8 +291,9 @@ body:has(.route-page) {
 /* === Карта === */
 
 #map {
-  flex: 1;
+  height: 45dvh;
   min-height: 200px;
+  flex-shrink: 0;
 }
 
 /* === Панель действий === */
@@ -527,6 +530,12 @@ body.fullscreen-map .route-page {
   height: 100vh;
   height: 100dvh;
   position: relative;
+  overflow: hidden;
+}
+
+body.fullscreen-map #map {
+  height: 100%;
+  min-height: 0;
 }
 
 body.fullscreen-map .route-info,
