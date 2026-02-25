@@ -153,3 +153,48 @@ const App = (() => {
 
   return { loadCatalog, renderCatalog, detectRepo };
 })();
+
+/**
+ * Обновление Service Worker.
+ * Проверяет обновления при загрузке и каждый час.
+ * Показывает тост «Доступно обновление» при смене контроллера.
+ */
+const SWUpdater = (() => {
+  let hadController = !!(navigator.serviceWorker && navigator.serviceWorker.controller);
+
+  async function init() {
+    if (!('serviceWorker' in navigator)) return;
+
+    try {
+      const reg = await navigator.serviceWorker.register('sw.js');
+      console.log('SW:', reg.scope);
+
+      // Проверить обновления прямо сейчас
+      reg.update().catch(() => {});
+
+      // Периодическая проверка — каждый час
+      setInterval(() => { reg.update().catch(() => {}); }, 60 * 60 * 1000);
+    } catch (err) {
+      console.warn('SW ошибка:', err);
+    }
+
+    // Когда новый SW берёт контроль — показать тост (но не при первой установке)
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (hadController) showToast();
+      hadController = true;
+    });
+  }
+
+  function showToast() {
+    if (document.querySelector('.update-toast')) return;
+    const toast = document.createElement('div');
+    toast.className = 'update-toast';
+    toast.innerHTML =
+      '<span>Доступно обновление</span>' +
+      '<button class="update-toast__btn" onclick="location.reload()">Обновить</button>' +
+      '<button class="update-toast__close" onclick="this.parentElement.remove()">\u00d7</button>';
+    document.body.appendChild(toast);
+  }
+
+  return { init };
+})();

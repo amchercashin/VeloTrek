@@ -1,4 +1,6 @@
-const CACHE_NAME = 'velotrek-v11';
+const SHELL_VERSION = 12;
+const SHELL_CACHE = 'velotrek-shell-v' + SHELL_VERSION;
+const ROUTES_CACHE = 'velotrek-routes';
 
 const SHELL_FILES = [
   './',
@@ -12,7 +14,6 @@ const SHELL_FILES = [
   './js/offline.js',
   './js/gps.js',
   './manifest.json'
-  // index.json намеренно исключён из shell — он network-first (часто меняется)
 ];
 
 const CDN_FILES = [
@@ -23,15 +24,11 @@ const CDN_FILES = [
 ];
 
 // Install — кэшируем shell и CDN
-// ВАЖНО: shell-файлы грузим с cache-buster чтобы старый активный SW
-// не отдал их из своего кэша (новый SW устанавливается пока старый ещё активен)
 self.addEventListener('install', event => {
-  const bust = '?_sw=' + CACHE_NAME;
+  const bust = '?_sw=' + SHELL_CACHE;
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      // CDN: обычный cache.add (cross-origin, версии зафиксированы)
+    caches.open(SHELL_CACHE).then(cache => {
       const cdnPromise = cache.addAll(CDN_FILES);
-      // Shell: fetch с cache-buster → put без него, чтобы обход кэша старого SW
       const shellPromise = Promise.all(
         SHELL_FILES.map(url =>
           fetch(url + bust, { cache: 'no-cache' })
@@ -44,17 +41,55 @@ self.addEventListener('install', event => {
   self.skipWaiting();
 });
 
-// Activate — удаляем старые кэши
+// Activate — миграция маршрутов из старого кэша, очистка
 self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(keys => {
-      return Promise.all(
-        keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
-      );
-    })
-  );
-  self.clients.claim();
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+
+    // Миграция: перенести KML/KMZ/index.json из старого единого кэша velotrek-vN
+    for (const key of keys) {
+      if (/^velotrek-v\d+$/.test(key)) {
+        await migrateRoutesFromOldCache(key);
+      }
+    }
+
+    // Удалить все кэши кроме текущего shell и routes
+    const allKeys = await caches.keys();
+    await Promise.all(
+      allKeys
+        .filter(k => k !== SHELL_CACHE && k !== ROUTES_CACHE)
+        .map(k => caches.delete(k))
+    );
+
+    await self.clients.claim();
+
+    // Уведомить клиентов об обновлении
+    const clients = await self.clients.matchAll({ type: 'window' });
+    for (const client of clients) {
+      client.postMessage({ type: 'SW_UPDATED', version: SHELL_VERSION });
+    }
+  })());
 });
+
+async function migrateRoutesFromOldCache(oldCacheName) {
+  const oldCache = await caches.open(oldCacheName);
+  const routesCache = await caches.open(ROUTES_CACHE);
+  const requests = await oldCache.keys();
+
+  for (const request of requests) {
+    const url = new URL(request.url);
+    const isRoute = url.pathname.endsWith('.kml') ||
+                    url.pathname.endsWith('.kmz') ||
+                    url.pathname.endsWith('index.json') ||
+                    url.hostname === 'raw.githubusercontent.com';
+    if (isRoute) {
+      const response = await oldCache.match(request);
+      if (response) {
+        await routesCache.put(request, response);
+      }
+    }
+  }
+}
 
 // Fetch
 self.addEventListener('fetch', event => {
@@ -72,61 +107,83 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // index.json — network-first (каталог маршрутов часто обновляется)
+  // index.json — network-first → ROUTES_CACHE
   if (url.pathname.endsWith('/routes/index.json') ||
       url.pathname.endsWith('index.json')) {
-    event.respondWith(
-      fetch(event.request, { cache: 'no-cache' })
-        .then(response => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-          return response;
-        })
-        .catch(() => caches.match(event.request))
-    );
+    event.respondWith(networkFirst(event.request, ROUTES_CACHE));
     return;
   }
 
-  // KML/KMZ файлы из routes/ — network-first
+  // KML/KMZ файлы из routes/ — network-first → ROUTES_CACHE
   if (url.pathname.includes('/routes/') &&
       (url.pathname.endsWith('.kml') || url.pathname.endsWith('.kmz'))) {
-    event.respondWith(
-      fetch(event.request)
-        .then(response => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-          return response;
-        })
-        .catch(() => caches.match(event.request))
-    );
+    event.respondWith(networkFirst(event.request, ROUTES_CACHE));
     return;
   }
 
-  // Raw GitHub content (для загрузки маршрутов) — network-first
+  // Raw GitHub content (маршруты) — network-first → ROUTES_CACHE
   if (url.hostname === 'raw.githubusercontent.com') {
-    event.respondWith(
-      fetch(event.request)
-        .then(response => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-          return response;
-        })
-        .catch(() => caches.match(event.request))
-    );
+    event.respondWith(networkFirst(event.request, ROUTES_CACHE));
     return;
   }
 
-  // Всё остальное — cache-first
+  // Всё остальное — cache-first (app shell)
   event.respondWith(
     caches.match(event.request).then(cached => {
       if (cached) return cached;
       return fetch(event.request).then(response => {
         if (response.ok) {
           const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+          caches.open(SHELL_CACHE).then(cache => cache.put(event.request, clone));
         }
         return response;
       });
     })
   );
+});
+
+function networkFirst(request, cacheName) {
+  return fetch(request, { cache: 'no-cache' })
+    .then(response => {
+      const clone = response.clone();
+      caches.open(cacheName).then(cache => cache.put(request, clone));
+      return response;
+    })
+    .catch(() => caches.match(request));
+}
+
+// Message API — запросы от клиентов
+self.addEventListener('message', event => {
+  const { type, payload } = event.data || {};
+  const port = (event.ports && event.ports[0]) || null;
+
+  function reply(data) {
+    if (port) port.postMessage(data);
+    else if (event.source) event.source.postMessage(data);
+  }
+
+  if (type === 'CHECK_ROUTE_CACHED') {
+    event.waitUntil((async () => {
+      const cache = await caches.open(ROUTES_CACHE);
+      const response = await cache.match(payload.url);
+      reply({ type: 'ROUTE_CACHE_STATUS', payload: { url: payload.url, cached: !!response } });
+    })());
+  }
+
+  if (type === 'CACHE_ROUTE') {
+    event.waitUntil((async () => {
+      try {
+        const cache = await caches.open(ROUTES_CACHE);
+        const response = await fetch(payload.url);
+        if (response.ok) {
+          await cache.put(payload.url, response);
+          reply({ type: 'ROUTE_CACHED', payload: { url: payload.url, success: true } });
+        } else {
+          reply({ type: 'ROUTE_CACHED', payload: { url: payload.url, success: false } });
+        }
+      } catch (e) {
+        reply({ type: 'ROUTE_CACHED', payload: { url: payload.url, success: false, error: e.message } });
+      }
+    })());
+  }
 });

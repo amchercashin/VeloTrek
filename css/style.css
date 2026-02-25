@@ -599,6 +599,74 @@ body.fullscreen-map .download-panel {
 .route-description p { margin: 0 0 8px; }
 .route-description a { color: var(--color-primary); text-decoration: underline; }
 
+/* === Тост обновления === */
+
+.update-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.88rem;
+  z-index: 9999;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  animation: toast-in 0.3s ease;
+  max-width: calc(100vw - 32px);
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.update-toast__btn {
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.update-toast__close {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+/* === Офлайн-индикатор === */
+
+.offline-indicator {
+  font-size: 0.8rem;
+  padding: 4px 0;
+  margin-top: 6px;
+}
+
+.offline-indicator--ready {
+  color: var(--color-success);
+}
+
+.offline-indicator--partial {
+  color: var(--color-warning);
+}
+
+.offline-indicator--online {
+  color: var(--color-text-secondary);
+}
+
 /* === Скрытие элементов === */
 
 .hidden {
@@ -621,5 +689,9 @@ body.fullscreen-map .download-panel {
   body.fullscreen-map .gps-panel,
   body.fullscreen-map .download-panel {
     padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  }
+
+  .update-toast {
+    bottom: calc(24px + env(safe-area-inset-bottom));
   }
 }

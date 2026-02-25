@@ -40,6 +40,7 @@
       <h1 class="route-info__name" id="route-name"></h1>
       <p class="route-info__desc" id="route-desc"></p>
       <div class="route-info__stats" id="route-stats"></div>
+      <div class="offline-indicator hidden" id="offline-indicator"></div>
     </div>
 
     <div id="map"></div>
@@ -92,9 +93,7 @@
   <script src="js/route.js"></script>
 
   <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').catch(() => {});
-    }
+    SWUpdater.init();
   </script>
 </body>
 </html>

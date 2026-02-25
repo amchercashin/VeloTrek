@@ -36,8 +36,9 @@ const RoutePage = (() => {
       routeData = await loadRoute(filename);
       render(routeData);
       initMap(routeData);
-      initDownload(routeData);
+      initDownload(routeData, filename);
       initGPS(routeData);
+      checkOfflineStatus(routeData, filename);
     } catch (e) {
       showError(`Ошибка загрузки маршрута: ${e.message}`);
     }
@@ -125,7 +126,101 @@ const RoutePage = (() => {
     });
   }
 
-  function initDownload(data) {
+  /** Построить URL KML-файла (тот же формат что и loadRoute) */
+  function getRouteUrl(filename) {
+    const repo = App.detectRepo();
+    if (repo) {
+      return `https://raw.githubusercontent.com/${repo.owner}/${repo.repo}/main/routes/${filename}`;
+    }
+    return new URL(`routes/${filename}`, location.href).href;
+  }
+
+  /** Спросить SW: закэширован ли KML? */
+  function isKmlCached(filename) {
+    if (!navigator.serviceWorker || !navigator.serviceWorker.controller) {
+      return Promise.resolve(false);
+    }
+    const url = getRouteUrl(filename);
+    return new Promise(resolve => {
+      const ch = new MessageChannel();
+      ch.port1.onmessage = e => resolve(e.data?.payload?.cached || false);
+      setTimeout(() => resolve(false), 2000);
+      navigator.serviceWorker.controller.postMessage(
+        { type: 'CHECK_ROUTE_CACHED', payload: { url } },
+        [ch.port2]
+      );
+    });
+  }
+
+  /** Попросить SW явно закэшировать KML */
+  function cacheKmlFile(filename) {
+    if (!navigator.serviceWorker || !navigator.serviceWorker.controller) {
+      return Promise.resolve(false);
+    }
+    const url = getRouteUrl(filename);
+    return new Promise(resolve => {
+      const ch = new MessageChannel();
+      ch.port1.onmessage = e => resolve(e.data?.payload?.success || false);
+      setTimeout(() => resolve(false), 10000);
+      navigator.serviceWorker.controller.postMessage(
+        { type: 'CACHE_ROUTE', payload: { url } },
+        [ch.port2]
+      );
+    });
+  }
+
+  /** Проверить выборку тайлов (быстрая оценка покрытия) */
+  async function sampleTilesCoverage(data) {
+    const allTiles = OfflineTiles.getTilesForRoute(data, 10, 16);
+    if (allTiles.length === 0) return { ratio: 0, total: 0 };
+
+    const sampleSize = Math.min(50, allTiles.length);
+    const step = Math.max(1, Math.floor(allTiles.length / sampleSize));
+    let cached = 0;
+    let checked = 0;
+
+    for (let i = 0; i < allTiles.length && checked < sampleSize; i += step) {
+      const tile = await OfflineTiles.getTile(allTiles[i]);
+      if (tile) cached++;
+      checked++;
+    }
+
+    return {
+      ratio: checked > 0 ? cached / checked : 0,
+      total: allTiles.length
+    };
+  }
+
+  /** Проверить и показать офлайн-статус маршрута */
+  async function checkOfflineStatus(data, filename) {
+    const indicator = document.getElementById('offline-indicator');
+    if (!indicator) return;
+
+    const [kmlCached, tileStatus] = await Promise.all([
+      isKmlCached(filename),
+      sampleTilesCoverage(data)
+    ]);
+
+    if (kmlCached && tileStatus.ratio >= 0.95) {
+      indicator.textContent = '\u2705 Готово оффлайн';
+      indicator.className = 'offline-indicator offline-indicator--ready';
+    } else if (kmlCached && tileStatus.ratio > 0) {
+      const pct = Math.round(tileStatus.ratio * 100);
+      indicator.textContent = '\uD83D\uDCE6 Частично (' + pct + '% карты)';
+      indicator.className = 'offline-indicator offline-indicator--partial';
+    } else if (kmlCached) {
+      indicator.textContent = '\uD83D\uDCE6 Маршрут сохранён, карта не скачана';
+      indicator.className = 'offline-indicator offline-indicator--partial';
+    } else {
+      indicator.textContent = '\uD83D\uDCE1 Только онлайн';
+      indicator.className = 'offline-indicator offline-indicator--online';
+    }
+
+    indicator.classList.remove('hidden');
+    return { kmlCached, tileRatio: tileStatus.ratio };
+  }
+
+  function initDownload(data, filename) {
     const downloadBtn = document.getElementById('btn-download');
     const downloadPanel = document.getElementById('download-panel');
     const downloadStatus = document.getElementById('download-status');
@@ -149,6 +244,9 @@ const RoutePage = (() => {
       });
 
       try {
+        // Явно кэшируем KML перед скачиванием тайлов
+        cacheKmlFile(filename);
+
         const result = await OfflineTiles.downloadTiles(data, VeloMap.getTileUrl(), {
           zoomMin: 10,
           zoomMax: 16,
@@ -174,7 +272,6 @@ const RoutePage = (() => {
 
               if (progress.cancelled) {
                 downloadStatus.textContent = 'Скачивание отменено';
-                // Через секунду — снова показываем кнопку скачивания
                 setTimeout(() => {
                   downloadPanel.classList.add('hidden');
                   downloadBtn.classList.remove('hidden');
@@ -183,7 +280,8 @@ const RoutePage = (() => {
                 const total = progress.completed + progress.cached;
                 downloadStatus.textContent =
                   `✓ Готово — ${total} тайлов в памяти`;
-                // Через 2 секунды скрываем панель, кнопка меняется на «✓ Карта скачана»
+                // Обновить офлайн-индикатор
+                checkOfflineStatus(data, filename);
                 setTimeout(() => {
                   downloadPanel.classList.add('hidden');
                   downloadBtn.textContent = '✓ Карта скачана';
