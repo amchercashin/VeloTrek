@@ -132,9 +132,9 @@ const VeloMap = (() => {
     const routeLines = routeData.segments.map(segment => {
       const latlngs = segment.map(([lat, lon]) => [lat, lon]);
       return L.polyline(latlngs, {
-        color: '#0288D1',
+        color: '#40916C',
         weight: 5,
-        opacity: 0.85,
+        opacity: 0.9,
         lineCap: 'round',
         lineJoin: 'round'
       });
@@ -145,7 +145,7 @@ const VeloMap = (() => {
     const poiMarkers = routeData.pois.map(poi => {
       return L.circleMarker([poi.lat, poi.lon], {
         radius: 7,
-        fillColor: '#DB4436',
+        fillColor: '#E76F51',
         color: '#ffffff',
         weight: 2,
         fillOpacity: 0.9
