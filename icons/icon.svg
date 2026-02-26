@@ -1,18 +1,65 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="96" fill="#1a73e8"/>
-  <g transform="translate(256,256)">
-    <!-- Велосипедное колесо -->
-    <circle cx="0" cy="40" r="100" fill="none" stroke="#fff" stroke-width="16"/>
-    <circle cx="0" cy="40" r="8" fill="#fff"/>
-    <!-- Спицы -->
-    <line x1="0" y1="-60" x2="0" y2="140" stroke="#fff" stroke-width="4" opacity="0.5"/>
-    <line x1="-100" y1="40" x2="100" y2="40" stroke="#fff" stroke-width="4" opacity="0.5"/>
-    <line x1="-70" y1="-30" x2="70" y2="110" stroke="#fff" stroke-width="4" opacity="0.5"/>
-    <line x1="70" y1="-30" x2="-70" y2="110" stroke="#fff" stroke-width="4" opacity="0.5"/>
-    <!-- Метка маршрута (pin) -->
-    <g transform="translate(0,-110)">
-      <path d="M0-60 C-25-60 -40-40 -40-20 C-40 10 0 40 0 40 C0 40 40 10 40-20 C40-40 25-60 0-60Z" fill="#fff"/>
-      <circle cx="0" cy="-22" r="12" fill="#1a73e8"/>
-    </g>
-  </g>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2D6A4F"/>
+      <stop offset="100%" stop-color="#1B4332"/>
+    </linearGradient>
+    <radialGradient id="hl" cx="28%" cy="22%" r="55%">
+      <stop offset="0%" stop-color="#52B788" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#52B788" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Фон: тёмно-зелёный скруглённый квадрат -->
+  <rect width="512" height="512" rx="108" fill="url(#bg)"/>
+  <!-- Мягкий блик вверху слева -->
+  <rect width="512" height="512" rx="108" fill="url(#hl)"/>
+
+  <!-- ══════ ВЕЛОСИПЕД ══════ -->
+
+  <!-- Заднее колесо: cx=152, cy=320, r=78 -->
+  <circle cx="152" cy="320" r="78" fill="none" stroke="#FFFFFF" stroke-width="22"/>
+  <!-- Втулка -->
+  <circle cx="152" cy="320" r="13" fill="#FFFFFF"/>
+  <!-- 2 спицы крест-накрест (тонкие, ненавязчивые) -->
+  <line x1="97" y1="265" x2="207" y2="375" stroke="#FFFFFF" stroke-width="5" opacity="0.28"/>
+  <line x1="207" y1="265" x2="97" y2="375" stroke="#FFFFFF" stroke-width="5" opacity="0.28"/>
+
+  <!-- Переднее колесо: cx=360, cy=320, r=78 -->
+  <circle cx="360" cy="320" r="78" fill="none" stroke="#FFFFFF" stroke-width="22"/>
+  <!-- Втулка -->
+  <circle cx="360" cy="320" r="13" fill="#FFFFFF"/>
+  <!-- 2 спицы крест-накрест -->
+  <line x1="305" y1="265" x2="415" y2="375" stroke="#FFFFFF" stroke-width="5" opacity="0.28"/>
+  <line x1="415" y1="265" x2="305" y2="375" stroke="#FFFFFF" stroke-width="5" opacity="0.28"/>
+
+  <!-- ══════ РАМА ══════ -->
+  <!-- Задняя вилка (chain stay): ось заднего колеса → каретка -->
+  <line x1="152" y1="320" x2="248" y2="320" stroke="#FFFFFF" stroke-width="22" stroke-linecap="round"/>
+  <!-- Подседельная труба: каретка → узел подседельной трубы -->
+  <line x1="248" y1="320" x2="222" y2="192" stroke="#FFFFFF" stroke-width="22" stroke-linecap="round"/>
+  <!-- Нижняя труба (down tube): рулевой стакан → каретка -->
+  <line x1="360" y1="192" x2="248" y2="320" stroke="#FFFFFF" stroke-width="22" stroke-linecap="round"/>
+  <!-- Верхняя труба: седельный узел → рулевой стакан -->
+  <line x1="222" y1="192" x2="360" y2="192" stroke="#FFFFFF" stroke-width="20" stroke-linecap="round"/>
+  <!-- Перо (seat stay): ось заднего колеса → седельный узел -->
+  <line x1="152" y1="320" x2="222" y2="192" stroke="#FFFFFF" stroke-width="17" stroke-linecap="round"/>
+
+  <!-- ══════ СЕДЛО ══════ -->
+  <!-- Подседельный штырь -->
+  <line x1="222" y1="192" x2="207" y2="152" stroke="#FFFFFF" stroke-width="19" stroke-linecap="round"/>
+  <!-- Седло (горизонтальная линия) -->
+  <line x1="184" y1="148" x2="244" y2="148" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round"/>
+
+  <!-- ══════ РУЛЬ ══════ -->
+  <!-- Вынос руля -->
+  <line x1="360" y1="192" x2="368" y2="157" stroke="#FFFFFF" stroke-width="19" stroke-linecap="round"/>
+  <!-- Руль -->
+  <line x1="344" y1="153" x2="396" y2="153" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round"/>
+
+  <!-- ══════ ОРАНЖЕВЫЙ МАРШРУТНЫЙ ПИН ══════ -->
+  <!-- Центр пина: x=284, расположен в пространстве между седлом и рулём, над верхней трубой -->
+  <path d="M284,52 C260,52 240,72 240,96 C240,122 284,152 284,152 C284,152 328,122 328,96 C328,72 308,52 284,52Z" fill="#F4A261"/>
+  <!-- Внутренний кружок пина (цвет фона) -->
+  <circle cx="284" cy="93" r="16" fill="#1B4332"/>
 </svg>

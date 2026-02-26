@@ -1,102 +1,128 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#2D6A4F">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="icon" href="icons/icon-192.png">
-  <title>VeloTrek — Маршрут</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <header class="header">
-    <div class="header__inner">
-      <a href="index.html" class="header__back" aria-label="Назад">&larr;</a>
-      <span class="header__title" id="header-title">Маршрут</span>
-      <span></span>
-    </div>
-  </header>
-
-  <!-- Загрузка -->
-  <div class="loading" id="loading">
-    <div class="loading__spinner"></div>
-    <p>Загрузка маршрута...</p>
-  </div>
-
-  <!-- Ошибка -->
-  <div class="error-msg hidden" id="error">
-    <p class="error-msg__text"></p>
-    <a href="index.html" class="error-msg__retry">Назад к каталогу</a>
-  </div>
-
-  <!-- Контент маршрута -->
-  <div class="route-page hidden" id="route-content">
-    <div class="route-info">
-      <h1 class="route-info__name" id="route-name"></h1>
-      <p class="route-info__desc" id="route-desc"></p>
-      <div class="route-info__stats" id="route-stats"></div>
-      <div class="offline-indicator hidden" id="offline-indicator"></div>
-    </div>
-
-    <div id="map"></div>
-
-    <!-- Панель действий -->
-    <div class="action-bar">
-      <button class="btn btn--primary" id="btn-download">Скачать карту</button>
-      <button class="btn btn--success" id="btn-gps">Навигация</button>
-    </div>
-
-    <!-- Прогресс скачивания -->
-    <div class="download-panel hidden" id="download-panel">
-      <p class="download-panel__status" id="download-status">Подготовка...</p>
-      <div class="progress-bar">
-        <div class="progress-bar__fill" id="progress-fill"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#2D6A4F" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="icons/icon-192.png" />
+    <link rel="icon" href="icons/icon-192.png" />
+    <title>ВелоТропа — Маршрут</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__inner">
+        <a href="index.html" class="header__back" aria-label="Назад">&larr;</a>
+        <span class="header__title" id="header-title">Маршрут</span>
+        <span></span>
       </div>
-      <button class="btn btn--secondary" id="btn-cancel-download" style="margin-top:4px">Отмена</button>
+    </header>
+
+    <!-- Загрузка -->
+    <div class="loading" id="loading">
+      <div class="loading__spinner"></div>
+      <p>Загрузка маршрута...</p>
     </div>
 
-    <!-- GPS-панель -->
-    <div class="gps-panel hidden" id="gps-panel">
-      <div class="gps-panel__info">
-        <div class="gps-panel__item">
-          <span class="gps-panel__value" id="gps-speed">—</span>
-          <span class="gps-panel__label">км/ч</span>
-        </div>
-        <div class="gps-panel__item">
-          <span class="gps-panel__value" id="gps-distance">—</span>
-          <span class="gps-panel__label">до маршрута</span>
-        </div>
+    <!-- Ошибка -->
+    <div class="error-msg hidden" id="error">
+      <p class="error-msg__text"></p>
+      <a href="index.html" class="error-msg__retry">Назад к каталогу</a>
+    </div>
+
+    <!-- Контент маршрута -->
+    <div class="route-page hidden" id="route-content">
+      <div class="route-info">
+        <h1 class="route-info__name" id="route-name"></h1>
+        <p class="route-info__desc" id="route-desc"></p>
+        <div class="route-info__stats" id="route-stats"></div>
+        <div class="offline-indicator hidden" id="offline-indicator"></div>
       </div>
-      <button class="btn btn--secondary btn--center" id="btn-center" title="Центрировать">&#9678;</button>
+
+      <div id="map"></div>
+
+      <!-- Панель действий -->
+      <div class="action-bar">
+        <button class="btn btn--primary" id="btn-download">
+          Скачать карту
+        </button>
+        <button class="btn btn--success" id="btn-gps">Навигация</button>
+      </div>
+
+      <!-- Прогресс скачивания -->
+      <div class="download-panel hidden" id="download-panel">
+        <p class="download-panel__status" id="download-status">Подготовка...</p>
+        <div class="progress-bar">
+          <div class="progress-bar__fill" id="progress-fill"></div>
+        </div>
+        <button
+          class="btn btn--secondary"
+          id="btn-cancel-download"
+          style="margin-top: 4px"
+        >
+          Отмена
+        </button>
+      </div>
+
+      <!-- GPS-панель -->
+      <div class="gps-panel hidden" id="gps-panel">
+        <div class="gps-panel__info">
+          <div class="gps-panel__item">
+            <span class="gps-panel__value" id="gps-speed">—</span>
+            <span class="gps-panel__label">км/ч</span>
+          </div>
+          <div class="gps-panel__item">
+            <span class="gps-panel__value" id="gps-distance">—</span>
+            <span class="gps-panel__label">до маршрута</span>
+          </div>
+        </div>
+        <button
+          class="btn btn--secondary btn--center"
+          id="btn-center"
+          title="Центрировать"
+        >
+          &#9678;
+        </button>
+      </div>
+
+      <!-- Описание маршрута -->
+      <div class="route-description hidden" id="route-description"></div>
     </div>
 
-    <!-- Описание маршрута -->
-    <div class="route-description hidden" id="route-description"></div>
-  </div>
+    <!-- Библиотеки -->
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/idb@8/build/umd.js"></script>
 
-  <!-- Библиотеки -->
-  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/idb@8/build/umd.js"></script>
+    <!-- Приложение -->
+    <script src="js/kml-parser.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/offline.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/gps.js"></script>
+    <script src="js/route.js"></script>
 
-  <!-- Приложение -->
-  <script src="js/kml-parser.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/offline.js"></script>
-  <script src="js/map.js"></script>
-  <script src="js/gps.js"></script>
-  <script src="js/route.js"></script>
-
-  <script>
-    SWUpdater.init();
-  </script>
-</body>
+    <script>
+      SWUpdater.init();
+    </script>
+  </body>
 </html>
