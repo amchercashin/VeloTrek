@@ -23,32 +23,55 @@ OUTPUT_FILE = ROUTES_DIR / "index.json"
 KML_NS = "http://www.opengis.net/kml/2.2"
 
 
-def parse_stats(description_html: str) -> dict:
-    """Извлекает числовую статистику из HTML-описания маршрута."""
-    stats = {}
-    text = re.sub(r"<[^>]+>", " ", description_html)  # стрипаем HTML теги
+def calc_elevation_stats(segments: list) -> dict:
+    """Вычисляет статистику высот из координат треков.
 
-    m = re.search(r"[Рр]асстояние[:\s]*([\d,.]+)\s*км", text)
-    if m:
-        stats["distance_km"] = float(m.group(1).replace(",", "."))
+    Применяет скользящее среднее (окно 5 точек) перед суммированием
+    подъёмов/спусков. Точки треков расположены через ~200–300 м, окно
+    сглаживает суб-километровые артефакты SRTM-интерполяции, сохраняя
+    реальный рельеф.
+    """
+    WINDOW = 5
+    climb = 0.0
+    descent = 0.0
+    min_ele = float("inf")
+    max_ele = float("-inf")
+    has_ele = False
 
-    m = re.search(r"[Мм]инимальная высота[:\s]*(\d+)\s*м", text)
-    if m:
-        stats["elevation_min_m"] = int(m.group(1))
+    for seg in segments:
+        eles = [pt[2] for pt in seg if len(pt) > 2 and pt[2]]
+        if len(eles) < 2:
+            continue
+        has_ele = True
+        for e in eles:
+            if e < min_ele:
+                min_ele = e
+            if e > max_ele:
+                max_ele = e
 
-    m = re.search(r"[Мм]аксимальная высота[:\s]*(\d+)\s*м", text)
-    if m:
-        stats["elevation_max_m"] = int(m.group(1))
+        # Скользящее среднее
+        half = WINDOW // 2
+        smoothed = []
+        for i in range(len(eles)):
+            s = max(0, i - half)
+            e_idx = min(len(eles) - 1, i + half)
+            smoothed.append(sum(eles[s:e_idx + 1]) / (e_idx - s + 1))
 
-    m = re.search(r"[Оо]бщий подъ[её]м[:\s]*(\d+)\s*м", text)
-    if m:
-        stats["climb_m"] = int(m.group(1))
+        for i in range(1, len(smoothed)):
+            diff = smoothed[i] - smoothed[i - 1]
+            if diff > 0:
+                climb += diff
+            else:
+                descent -= diff
 
-    m = re.search(r"[Оо]бщий спуск[:\s]*(\d+)\s*м", text)
-    if m:
-        stats["descent_m"] = int(m.group(1))
-
-    return stats
+    if not has_ele:
+        return {}
+    return {
+        "elevation_min_m": round(min_ele),
+        "elevation_max_m": round(max_ele),
+        "climb_m": round(climb),
+        "descent_m": round(descent),
+    }
 
 
 def haversine_km(lat1, lon1, lat2, lon2) -> float:
@@ -77,14 +100,16 @@ def bbox_span_km(bbox: dict) -> float:
 
 
 def parse_coordinates(coords_text: str):
-    """Парсит строку координат KML (lon,lat,ele ...) в список [lat, lon]."""
+    """Парсит строку координат KML (lon,lat,ele ...) в список (lat, lon, ele)."""
     points = []
     for triplet in coords_text.strip().split():
         parts = triplet.split(",")
         if len(parts) >= 2:
             try:
-                lon, lat = float(parts[0]), float(parts[1])
-                points.append((lat, lon))
+                lon = float(parts[0])
+                lat = float(parts[1])
+                ele = float(parts[2]) if len(parts) >= 3 else 0.0
+                points.append((lat, lon, ele))
             except ValueError:
                 pass
     return points
@@ -112,9 +137,8 @@ def parse_kml(kml_text: str) -> dict:
     doc_desc = desc_el.text.strip() if desc_el is not None and desc_el.text else ""
 
     pois = []
-    segments = []
-    stats = {}
-    track_km = 0.0  # суммарная длина всех сегментов из координат
+    segments = []  # список сегментов: каждый — list of (lat, lon, ele)
+    track_km = 0.0
     bbox = {"minLat": 90, "maxLat": -90, "minLon": 180, "maxLon": -180}
 
     def update_bbox(lat, lon):
@@ -134,7 +158,7 @@ def parse_kml(kml_text: str) -> dict:
             if coords_el is not None and coords_el.text:
                 pts = parse_coordinates(coords_el.text)
                 if pts:
-                    lat, lon = pts[0]
+                    lat, lon = pts[0][0], pts[0][1]
                     name_el = pm.find(f"{{{KML_NS}}}name")
                     pois.append({
                         "name": name_el.text.strip() if name_el is not None and name_el.text else "",
@@ -144,45 +168,36 @@ def parse_kml(kml_text: str) -> dict:
                     update_bbox(lat, lon)
 
         elif multi is not None:
-            # Читаем статистику из описания
-            desc_el = pm.find(f"{{{KML_NS}}}description")
-            if desc_el is not None and desc_el.text:
-                pm_stats = parse_stats(desc_el.text)
-                if pm_stats:
-                    stats = pm_stats
-
             for ls in multi.iter(f"{{{KML_NS}}}LineString"):
                 coords_el = ls.find(f"{{{KML_NS}}}coordinates")
                 if coords_el is not None and coords_el.text:
                     pts = parse_coordinates(coords_el.text)
                     if pts:
-                        segments.append(len(pts))
+                        segments.append(pts)
                         track_km += segment_length_km(pts)
-                        for lat, lon in pts:
-                            update_bbox(lat, lon)
+                        for pt in pts:
+                            update_bbox(pt[0], pt[1])
 
         elif line is not None:
-            desc_el = pm.find(f"{{{KML_NS}}}description")
-            if desc_el is not None and desc_el.text and not stats:
-                stats = parse_stats(desc_el.text)
-
             coords_el = line.find(f"{{{KML_NS}}}coordinates")
             if coords_el is not None and coords_el.text:
                 pts = parse_coordinates(coords_el.text)
                 if pts:
-                    segments.append(len(pts))
+                    segments.append(pts)
                     track_km += segment_length_km(pts)
-                    for lat, lon in pts:
-                        update_bbox(lat, lon)
+                    for pt in pts:
+                        update_bbox(pt[0], pt[1])
 
     # Если bbox не обновился — нет координат
     if bbox["minLat"] == 90:
         bbox = None
 
-    # Добавляем вычисленные из координат показатели
+    # Все статистики из координат
+    stats = {}
     stats["track_km"] = round(track_km, 1)
     if bbox:
         stats["span_km"] = round(bbox_span_km(bbox), 1)
+    stats.update(calc_elevation_stats(segments))
 
     return {
         "name": doc_name,

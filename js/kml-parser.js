@@ -45,9 +45,6 @@ const KMLParser = (() => {
           updateBBox(result.bbox, poi.lat, poi.lon);
         }
       } else if (multiGeo) {
-        const desc = getTextNS(pm, 'description') || '';
-        result.stats = parseStats(desc);
-
         const lineStrings = multiGeo.getElementsByTagNameNS(KML_NS, 'LineString');
         for (const ls of lineStrings) {
           const segment = parseCoordinates(ls);
@@ -59,10 +56,6 @@ const KMLParser = (() => {
           }
         }
       } else if (lineString) {
-        const desc = getTextNS(pm, 'description') || '';
-        if (!result.stats.distance_km) {
-          result.stats = parseStats(desc);
-        }
         const segment = parseCoordinates(lineString);
         if (segment.length > 0) {
           result.segments.push(segment);
@@ -92,6 +85,9 @@ const KMLParser = (() => {
       const dlonKm  = (bb.maxLon - bb.minLon) * 111.32 * Math.cos(midLat * Math.PI / 180);
       result.stats.span_km = Math.round(Math.sqrt(dlatKm * dlatKm + dlonKm * dlonKm) * 10) / 10;
     }
+
+    // Вычисляем статистику высот из координат трека
+    Object.assign(result.stats, calcElevationStats(result.segments));
 
     return result;
   }
@@ -146,25 +142,48 @@ const KMLParser = (() => {
     });
   }
 
-  function parseStats(descHtml) {
-    const stats = {};
+  function calcElevationStats(segments) {
+    // Скользящее среднее (окно 5 точек) перед суммированием подъёмов/спусков.
+    // Точки треков расположены через ~200–300 м, окно сглаживает суб-километровые
+    // артефакты SRTM-интерполяции, сохраняя реальный рельеф.
+    const WINDOW = 5;
+    const HALF = Math.floor(WINDOW / 2);
+    let climb = 0, descent = 0;
+    let minEle = Infinity, maxEle = -Infinity;
+    let hasEle = false;
 
-    const distMatch = descHtml.match(/[Рр]асстояние[:\s]*([\d,.]+)\s*км/i);
-    if (distMatch) stats.distance_km = parseFloat(distMatch[1].replace(',', '.'));
+    for (const seg of segments) {
+      const eles = seg.map(p => p[2]).filter(e => e);
+      if (eles.length < 2) continue;
+      hasEle = true;
+      for (const e of eles) {
+        if (e < minEle) minEle = e;
+        if (e > maxEle) maxEle = e;
+      }
 
-    const minEleMatch = descHtml.match(/[Мм]инимальная высота[:\s]*(\d+)\s*м/i);
-    if (minEleMatch) stats.elevation_min_m = parseInt(minEleMatch[1]);
+      // Скользящее среднее
+      const smoothed = eles.map((_, i) => {
+        const s = Math.max(0, i - HALF);
+        const end = Math.min(eles.length - 1, i + HALF);
+        let sum = 0;
+        for (let j = s; j <= end; j++) sum += eles[j];
+        return sum / (end - s + 1);
+      });
 
-    const maxEleMatch = descHtml.match(/[Мм]аксимальная высота[:\s]*(\d+)\s*м/i);
-    if (maxEleMatch) stats.elevation_max_m = parseInt(maxEleMatch[1]);
+      for (let i = 1; i < smoothed.length; i++) {
+        const diff = smoothed[i] - smoothed[i - 1];
+        if (diff > 0) climb += diff;
+        else descent -= diff;
+      }
+    }
 
-    const climbMatch = descHtml.match(/[Оо]бщий подъ[её]м[:\s]*(\d+)\s*м/i);
-    if (climbMatch) stats.climb_m = parseInt(climbMatch[1]);
-
-    const descentMatch = descHtml.match(/[Оо]бщий спуск[:\s]*(\d+)\s*м/i);
-    if (descentMatch) stats.descent_m = parseInt(descentMatch[1]);
-
-    return stats;
+    if (!hasEle) return {};
+    return {
+      elevation_min_m: Math.round(minEle),
+      elevation_max_m: Math.round(maxEle),
+      climb_m: Math.round(climb),
+      descent_m: Math.round(descent),
+    };
   }
 
   function updateBBox(bbox, lat, lon) {

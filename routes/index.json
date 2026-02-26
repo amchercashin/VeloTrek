@@ -1,5 +1,5 @@
 {
-  "generated": "2026-02-25T20:41:48Z",
+  "generated": "2026-02-26T10:57:18Z",
   "sections": [
     {
       "name": "Велопутешествия",
@@ -10,7 +10,11 @@
           "description": "",
           "stats": {
             "track_km": 1109.2,
-            "span_km": 654.8
+            "span_km": 654.8,
+            "elevation_min_m": 10,
+            "elevation_max_m": 295,
+            "climb_m": 2376,
+            "descent_m": 2500
           },
           "poiCount": 0,
           "segmentCount": 1,
@@ -53,13 +57,12 @@
           "name": "1. Запад. Вдоль Москвы-реки, часть 1",
           "description": "",
           "stats": {
-            "distance_km": 136.0,
-            "elevation_min_m": 136,
-            "elevation_max_m": 224,
-            "climb_m": 273,
-            "descent_m": 371,
             "track_km": 136.1,
-            "span_km": 45.5
+            "span_km": 45.5,
+            "elevation_min_m": 134,
+            "elevation_max_m": 229,
+            "climb_m": 521,
+            "descent_m": 625
           },
           "poiCount": 44,
           "segmentCount": 8,
@@ -75,13 +78,12 @@
           "name": "2. Запад. Вдоль Москвы-реки, часть 2",
           "description": "",
           "stats": {
-            "distance_km": 113.2,
-            "elevation_min_m": 129,
-            "elevation_max_m": 191,
-            "climb_m": 143,
-            "descent_m": 136,
             "track_km": 113.3,
-            "span_km": 34.9
+            "span_km": 34.9,
+            "elevation_min_m": 127,
+            "elevation_max_m": 204,
+            "climb_m": 332,
+            "descent_m": 372
           },
           "poiCount": 35,
           "segmentCount": 9,
@@ -97,11 +99,6 @@
           "name": "3. Запад. Истра и Маглуша",
           "description": "",
           "stats": {
-            "distance_km": 83.3,
-            "elevation_min_m": 140,
-            "elevation_max_m": 211,
-            "climb_m": 170,
-            "descent_m": 205,
             "track_km": 83.1,
             "span_km": 42.7
           },
@@ -119,13 +116,12 @@
           "name": "4. Север. Сестра и Яхрома",
           "description": "",
           "stats": {
-            "distance_km": 133.5,
-            "elevation_min_m": 116,
-            "elevation_max_m": 149,
-            "climb_m": 107,
-            "descent_m": 93,
             "track_km": 133.6,
-            "span_km": 49.1
+            "span_km": 49.1,
+            "elevation_min_m": 114,
+            "elevation_max_m": 156,
+            "climb_m": 199,
+            "descent_m": 178
           },
           "poiCount": 29,
           "segmentCount": 8,
@@ -141,13 +137,12 @@
           "name": "5. Север. Дубна и Веля",
           "description": "",
           "stats": {
-            "distance_km": 176.0,
-            "elevation_min_m": 130,
-            "elevation_max_m": 232,
-            "climb_m": 378,
-            "descent_m": 471,
             "track_km": 176.1,
-            "span_km": 61.3
+            "span_km": 61.3,
+            "elevation_min_m": 123,
+            "elevation_max_m": 239,
+            "climb_m": 720,
+            "descent_m": 850
           },
           "poiCount": 34,
           "segmentCount": 8,
@@ -163,13 +158,12 @@
           "name": "6. Север. Сорочаны, канал и Мураново",
           "description": "",
           "stats": {
-            "distance_km": 79.1,
-            "elevation_min_m": 146,
-            "elevation_max_m": 227,
-            "climb_m": 175,
-            "descent_m": 140,
             "track_km": 79.1,
-            "span_km": 37.3
+            "span_km": 37.3,
+            "elevation_min_m": 140,
+            "elevation_max_m": 240,
+            "climb_m": 322,
+            "descent_m": 267
           },
           "poiCount": 20,
           "segmentCount": 3,
@@ -185,13 +179,12 @@
           "name": "7. Север/восток. Воря и Торгоша",
           "description": "",
           "stats": {
-            "distance_km": 94.1,
-            "elevation_min_m": 133,
-            "elevation_max_m": 200,
-            "climb_m": 211,
-            "descent_m": 162,
             "track_km": 94.2,
-            "span_km": 43.5
+            "span_km": 43.5,
+            "elevation_min_m": 132,
+            "elevation_max_m": 232,
+            "climb_m": 434,
+            "descent_m": 373
           },
           "poiCount": 32,
           "segmentCount": 4,
@@ -207,13 +200,12 @@
           "name": "8. Восток. Мещера Нерская",
           "description": "",
           "stats": {
-            "distance_km": 68.7,
-            "elevation_min_m": 107,
-            "elevation_max_m": 153,
-            "climb_m": 82,
-            "descent_m": 74,
             "track_km": 68.7,
-            "span_km": 41.0
+            "span_km": 41.0,
+            "elevation_min_m": 105,
+            "elevation_max_m": 162,
+            "climb_m": 149,
+            "descent_m": 133
           },
           "poiCount": 15,
           "segmentCount": 1,
@@ -229,13 +221,12 @@
           "name": "9. Юг. Вдоль Северки",
           "description": "",
           "stats": {
-            "distance_km": 78.0,
-            "elevation_min_m": 110,
-            "elevation_max_m": 161,
-            "climb_m": 96,
-            "descent_m": 144,
             "track_km": 78.1,
-            "span_km": 57.3
+            "span_km": 57.3,
+            "elevation_min_m": 98,
+            "elevation_max_m": 182,
+            "climb_m": 210,
+            "descent_m": 269
           },
           "poiCount": 17,
           "segmentCount": 1,
@@ -251,13 +242,12 @@
           "name": "10. Юг. Талеж и Шкинь",
           "description": "",
           "stats": {
-            "distance_km": 130.9,
-            "elevation_min_m": 114,
-            "elevation_max_m": 185,
-            "climb_m": 218,
-            "descent_m": 275,
             "track_km": 130.9,
-            "span_km": 81.8
+            "span_km": 81.8,
+            "elevation_min_m": 107,
+            "elevation_max_m": 195,
+            "climb_m": 417,
+            "descent_m": 451
           },
           "poiCount": 20,
           "segmentCount": 4,
@@ -273,13 +263,12 @@
           "name": "11. Юг. Серпухов-Ступино",
           "description": "",
           "stats": {
-            "distance_km": 110.8,
-            "elevation_min_m": 108,
-            "elevation_max_m": 189,
-            "climb_m": 254,
-            "descent_m": 234,
             "track_km": 110.9,
-            "span_km": 54.4
+            "span_km": 54.4,
+            "elevation_min_m": 106,
+            "elevation_max_m": 199,
+            "climb_m": 422,
+            "descent_m": 382
           },
           "poiCount": 19,
           "segmentCount": 5,
@@ -295,13 +284,12 @@
           "name": "12. Юг/юго-запад. Истья и Нара",
           "description": "",
           "stats": {
-            "distance_km": 141.3,
-            "elevation_min_m": 124,
-            "elevation_max_m": 216,
-            "climb_m": 201,
-            "descent_m": 264,
             "track_km": 141.4,
-            "span_km": 62.3
+            "span_km": 62.3,
+            "elevation_min_m": 121,
+            "elevation_max_m": 232,
+            "climb_m": 520,
+            "descent_m": 563
           },
           "poiCount": 36,
           "segmentCount": 10,
@@ -317,13 +305,12 @@
           "name": "13. Восток. Мещера глубокая",
           "description": "",
           "stats": {
-            "distance_km": 82.2,
-            "elevation_min_m": 113,
-            "elevation_max_m": 164,
-            "climb_m": 38,
-            "descent_m": 70,
             "track_km": 82.2,
-            "span_km": 43.0
+            "span_km": 43.0,
+            "elevation_min_m": 110,
+            "elevation_max_m": 168,
+            "climb_m": 145,
+            "descent_m": 155
           },
           "poiCount": 15,
           "segmentCount": 4,
