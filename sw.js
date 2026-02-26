@@ -1,4 +1,4 @@
-const SHELL_VERSION = 12;
+const SHELL_VERSION = 13;
 const SHELL_CACHE = 'velotrek-shell-v' + SHELL_VERSION;
 const ROUTES_CACHE = 'velotrek-routes';
 

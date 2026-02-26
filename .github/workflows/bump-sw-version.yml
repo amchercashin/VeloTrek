@@ -1,0 +1,54 @@
+name: Bump SW shell version
+
+# Запускается когда меняются файлы app shell (CSS, JS, HTML, манифест).
+# Инкрементирует SHELL_VERSION в sw.js → браузеры получат новый SW →
+# shell-кэш (CSS/JS/HTML) сбрасывается. Маршруты (velotrek-routes) и
+# тайлы карт (IndexedDB) при этом не затрагиваются.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'css/**'
+      - 'js/**'
+      - '*.html'
+      - 'manifest.json'
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Bump SHELL_VERSION in sw.js
+        run: |
+          python3 - <<'EOF'
+          import re
+
+          with open('sw.js', 'r') as f:
+              content = f.read()
+
+          def bump(m):
+              return f'const SHELL_VERSION = {int(m.group(1)) + 1};'
+
+          new_content = re.sub(r'const SHELL_VERSION = (\d+);', bump, content)
+
+          if new_content == content:
+              print('SHELL_VERSION не найден в sw.js — пропускаем')
+          else:
+              with open('sw.js', 'w') as f:
+                  f.write(new_content)
+              version = re.search(r'const SHELL_VERSION = (\d+);', new_content).group(1)
+              print(f'SHELL_VERSION → {version}')
+          EOF
+
+      - name: Коммит sw.js
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: 'sw.js'
+          message: 'chore: bump SW shell version [skip ci]'
+          default_author: github_actions
