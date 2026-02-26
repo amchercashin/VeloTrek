@@ -1,13 +1,13 @@
 {
-  "name": "VeloTrek — Офлайн велонавигатор",
-  "short_name": "VeloTrek",
+  "name": "ВелоТропа — Офлайн велонавигатор",
+  "short_name": "ВелоТропа",
   "description": "Навигация по велосипедным маршрутам с офлайн-картами",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#ffffff",
-  "theme_color": "#1a73e8",
+  "background_color": "#1B4332",
+  "theme_color": "#2D6A4F",
   "icons": [
     {
       "src": "icons/icon-192.png",
@@ -24,6 +24,12 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ]
 }
