@@ -74,9 +74,26 @@
         routeList.innerHTML = "";
 
         try {
-          const routes = await App.loadCatalog();
+          const routes = await App.loadCatalog((updatedRoutes) => {
+            // Фоновое обновление каталога — тихо перерисовываем без фликера
+            routeList.innerHTML = "";
+            App.renderCatalog(updatedRoutes, routeList);
+          });
           loading.classList.add("hidden");
           App.renderCatalog(routes, routeList);
+
+          // Восстанавливаем позицию прокрутки после возврата с маршрута
+          try {
+            const savedScroll = sessionStorage.getItem(
+              "velotrek-catalog-scroll",
+            );
+            if (savedScroll) {
+              requestAnimationFrame(() =>
+                window.scrollTo(0, parseInt(savedScroll)),
+              );
+              sessionStorage.removeItem("velotrek-catalog-scroll");
+            }
+          } catch {}
 
           // Кнопка «+ Добавить маршрут» → README#добавление-маршрута
           const repo = App.detectRepo();

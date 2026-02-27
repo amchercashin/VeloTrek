@@ -55,7 +55,12 @@
         <h1 class="route-info__name" id="route-name"></h1>
         <p class="route-info__desc" id="route-desc"></p>
         <div class="route-info__stats" id="route-stats"></div>
-        <div class="offline-indicator hidden" id="offline-indicator"></div>
+        <div class="offline-status-row">
+          <div class="offline-indicator hidden" id="offline-indicator"></div>
+          <button class="btn-clear-offline hidden" id="btn-clear-offline">
+            Удалить
+          </button>
+        </div>
       </div>
 
       <div id="map"></div>
@@ -94,13 +99,32 @@
             <span class="gps-panel__value" id="gps-distance">—</span>
             <span class="gps-panel__label">до маршрута</span>
           </div>
+          <div class="gps-panel__item">
+            <span class="gps-panel__value" id="gps-accuracy">—</span>
+            <span class="gps-panel__label">точность</span>
+          </div>
         </div>
         <button
           class="btn btn--secondary btn--center"
           id="btn-center"
-          title="Центрировать"
+          title="Центрировать на позиции"
         >
-          &#9678;
+          <svg
+            viewBox="0 0 24 24"
+            width="18"
+            height="18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.2"
+            stroke-linecap="round"
+          >
+            <circle cx="12" cy="12" r="6" />
+            <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
+            <line x1="12" y1="2" x2="12" y2="6" />
+            <line x1="12" y1="18" x2="12" y2="22" />
+            <line x1="2" y1="12" x2="6" y2="12" />
+            <line x1="18" y1="12" x2="22" y2="12" />
+          </svg>
         </button>
       </div>
 

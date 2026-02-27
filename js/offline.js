@@ -3,9 +3,9 @@
  * Хранит тайлы в IndexedDB, рассчитывает коридор, скачивает с rate-limiting.
  */
 const OfflineTiles = (() => {
-  const DB_NAME = 'velotrek-tiles';
+  const DB_NAME = "velotrek-tiles";
   const DB_VERSION = 1;
-  const STORE_NAME = 'tiles';
+  const STORE_NAME = "tiles";
 
   let dbPromise = null;
 
@@ -16,7 +16,7 @@ const OfflineTiles = (() => {
           if (!db.objectStoreNames.contains(STORE_NAME)) {
             db.createObjectStore(STORE_NAME);
           }
-        }
+        },
       });
     }
     return dbPromise;
@@ -32,27 +32,26 @@ const OfflineTiles = (() => {
     return db.put(STORE_NAME, blob, key);
   }
 
-  async function deleteTilesForRoute(routeId) {
+  async function deleteTilesForRoute(routeData, zoomMin = 10, zoomMax = 16) {
     const db = await getDB();
-    const tx = db.transaction(STORE_NAME, 'readwrite');
+    const tileKeys = getTilesForRoute(routeData, zoomMin, zoomMax);
+    const tx = db.transaction(STORE_NAME, "readwrite");
     const store = tx.objectStore(STORE_NAME);
-    let cursor = await store.openCursor();
-    let deleted = 0;
-    while (cursor) {
-      // Tiles are stored with keys like "z/x/y", route association is tracked separately
-      cursor = await cursor.continue();
-    }
+    await Promise.all(tileKeys.map((key) => store.delete(key)));
     await tx.done;
-    return deleted;
+    return tileKeys.length;
   }
 
   function lon2tile(lon, zoom) {
-    return Math.floor((lon + 180) / 360 * Math.pow(2, zoom));
+    return Math.floor(((lon + 180) / 360) * Math.pow(2, zoom));
   }
 
   function lat2tile(lat, zoom) {
-    const latRad = lat * Math.PI / 180;
-    return Math.floor((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2 * Math.pow(2, zoom));
+    const latRad = (lat * Math.PI) / 180;
+    return Math.floor(
+      ((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2) *
+        Math.pow(2, zoom),
+    );
   }
 
   function getTilesForRoute(routeData, zoomMin, zoomMax) {
@@ -118,9 +117,9 @@ const OfflineTiles = (() => {
   }
 
   function formatSize(bytes) {
-    if (bytes < 1024) return bytes + ' Б';
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' КБ';
-    return (bytes / (1024 * 1024)).toFixed(1) + ' МБ';
+    if (bytes < 1024) return bytes + " Б";
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " КБ";
+    return (bytes / (1024 * 1024)).toFixed(1) + " МБ";
   }
 
   async function downloadTiles(routeData, tileUrlTemplate, options = {}) {
@@ -130,23 +129,43 @@ const OfflineTiles = (() => {
       concurrency = 4,
       delayMs = 100,
       onProgress = () => {},
-      signal = null
+      signal = null,
+      tiles: precomputedTiles = null,
     } = options;
 
-    const allTileKeys = getTilesForRoute(routeData, zoomMin, zoomMax);
+    const allTileKeys =
+      precomputedTiles || getTilesForRoute(routeData, zoomMin, zoomMax);
 
-    // Check which are already cached
-    onProgress({ phase: 'checking', total: allTileKeys.length, completed: 0, failed: 0, cached: 0 });
+    // Check which are already cached — параллельными чанками по 50
+    onProgress({
+      phase: "checking",
+      total: allTileKeys.length,
+      completed: 0,
+      failed: 0,
+      cached: 0,
+    });
 
     const toDownload = [];
     let cached = 0;
-    for (const key of allTileKeys) {
-      if (signal && signal.aborted) return { total: allTileKeys.length, completed: 0, failed: 0, cached, cancelled: true };
-      const existing = await getTile(key);
-      if (existing) {
-        cached++;
-      } else {
-        toDownload.push(key);
+    const CHECK_CHUNK = 50;
+    for (let i = 0; i < allTileKeys.length; i += CHECK_CHUNK) {
+      if (signal && signal.aborted) {
+        return {
+          total: allTileKeys.length,
+          completed: 0,
+          failed: 0,
+          cached,
+          cancelled: true,
+        };
+      }
+      const chunk = allTileKeys.slice(i, i + CHECK_CHUNK);
+      const results = await Promise.all(chunk.map((k) => getTile(k)));
+      for (let j = 0; j < chunk.length; j++) {
+        if (results[j]) {
+          cached++;
+        } else {
+          toDownload.push(chunk[j]);
+        }
       }
     }
 
@@ -154,11 +173,17 @@ const OfflineTiles = (() => {
     let completed = 0;
     let failed = 0;
 
-    onProgress({ phase: 'downloading', total, completed, failed, cached });
+    onProgress({ phase: "downloading", total, completed, failed, cached });
 
     if (total === 0) {
-      onProgress({ phase: 'done', total: 0, completed: 0, failed: 0, cached });
-      return { total: allTileKeys.length, completed: 0, failed: 0, cached, cancelled: false };
+      onProgress({ phase: "done", total: 0, completed: 0, failed: 0, cached });
+      return {
+        total: allTileKeys.length,
+        completed: 0,
+        failed: 0,
+        cached,
+        cancelled: false,
+      };
     }
 
     const queue = [...toDownload];
@@ -168,11 +193,11 @@ const OfflineTiles = (() => {
         if (signal && signal.aborted) return;
 
         const key = queue.shift();
-        const [z, x, y] = key.split('/');
+        const [z, x, y] = key.split("/");
         const url = tileUrlTemplate
-          .replace('{z}', z)
-          .replace('{x}', x)
-          .replace('{y}', y);
+          .replace("{z}", z)
+          .replace("{x}", x)
+          .replace("{y}", y);
 
         try {
           const resp = await fetch(url);
@@ -187,10 +212,10 @@ const OfflineTiles = (() => {
           failed++;
         }
 
-        onProgress({ phase: 'downloading', total, completed, failed, cached });
+        onProgress({ phase: "downloading", total, completed, failed, cached });
 
         if (delayMs > 0 && queue.length > 0) {
-          await new Promise(r => setTimeout(r, delayMs));
+          await new Promise((r) => setTimeout(r, delayMs));
         }
       }
     }
@@ -199,7 +224,7 @@ const OfflineTiles = (() => {
     await Promise.all(workers);
 
     const cancelled = signal ? signal.aborted : false;
-    onProgress({ phase: 'done', total, completed, failed, cached, cancelled });
+    onProgress({ phase: "done", total, completed, failed, cached, cancelled });
 
     return { total: allTileKeys.length, completed, failed, cached, cancelled };
   }
@@ -211,7 +236,7 @@ const OfflineTiles = (() => {
 
   async function clearAllTiles() {
     const db = await getDB();
-    const tx = db.transaction(STORE_NAME, 'readwrite');
+    const tx = db.transaction(STORE_NAME, "readwrite");
     await tx.objectStore(STORE_NAME).clear();
     await tx.done;
   }
@@ -223,7 +248,8 @@ const OfflineTiles = (() => {
     estimateSize,
     formatSize,
     downloadTiles,
+    deleteTilesForRoute,
     getStoredTileCount,
-    clearAllTiles
+    clearAllTiles,
   };
 })();
