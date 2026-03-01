@@ -95,8 +95,8 @@ const RoutePage = (() => {
     const stats = data.stats || {};
 
     const parts = [];
-    if (stats.track_km) parts.push(`🗺️ ${stats.track_km} км`);
-    if (stats.span_km) parts.push(`📏 ${stats.span_km} км`);
+    if (stats.track_km) parts.push(`🗺️ ${Math.round(stats.track_km)} км`);
+    if (stats.span_km) parts.push(`📏 ${Math.round(stats.span_km)} км`);
     if (stats.elevation_min_m && stats.elevation_max_m)
       parts.push(`⛰ ${stats.elevation_min_m}–${stats.elevation_max_m} м`);
     if (stats.climb_m) parts.push(`↗ ${stats.climb_m} м`);
