@@ -213,48 +213,91 @@ const App = (() => {
       );
     }
 
-    // Long press для раскрытия свёрнутой секции
-    let longPressStartX = 0;
-    let longPressStartY = 0;
+    // Отслеживание touch: toggle-кнопка + long press для section-routes
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchedToggleBtn = null; // кнопка, которую начали нажимать
+    let preventNextClick = false; // предотвратить дублирование click после touchend
 
     const touchStartHandler = (e) => {
+      const t = e.touches[0];
+      touchStartX = t.clientX;
+      touchStartY = t.clientY;
+
+      // Запомнить toggle-кнопку, если касание началось на ней
+      touchedToggleBtn = e.target.closest(".section-header--toggle") || null;
+
+      // Long press для раскрытия свёрнутой секции через область маршрутов
       const routesDiv = e.target.closest(
         ".catalog-section--collapsible:not(.is-expanded) .section-routes",
       );
-      if (!routesDiv) return;
-      const t = e.touches[0];
-      longPressStartX = t.clientX;
-      longPressStartY = t.clientY;
-      container._longPressTimer = setTimeout(() => {
-        const section = routesDiv.closest(".catalog-section--collapsible");
-        if (section && !section.classList.contains("is-expanded")) {
-          setSectionExpanded(section, true);
-        }
-        container._longPressTimer = null;
-      }, 400);
+      if (routesDiv) {
+        container._longPressTimer = setTimeout(() => {
+          const section = routesDiv.closest(".catalog-section--collapsible");
+          if (section && !section.classList.contains("is-expanded")) {
+            setSectionExpanded(section, true);
+          }
+          container._longPressTimer = null;
+        }, 400);
+      }
     };
 
-    const touchEndHandler = () => {
+    const touchEndHandler = (e) => {
+      // Отменить long-press если был
       if (container._longPressTimer) {
         clearTimeout(container._longPressTimer);
         container._longPressTimer = null;
       }
+
+      // Если касание началось на toggle-кнопке — срабатываем всегда,
+      // если Y-смещение < 15px (не скролл страницы)
+      if (touchedToggleBtn) {
+        const t = e.changedTouches[0];
+        const dy = Math.abs(t.clientY - touchStartY);
+        if (dy < 15) {
+          const section = touchedToggleBtn.closest(
+            ".catalog-section--collapsible",
+          );
+          if (section) {
+            const expanding = !section.classList.contains("is-expanded");
+            setSectionExpanded(section, expanding);
+            if (!expanding) {
+              touchedToggleBtn.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }
+            preventNextClick = true; // подавить дублирующий click
+          }
+        }
+        touchedToggleBtn = null;
+      }
     };
 
     const touchMoveHandler = (e) => {
-      if (container._longPressTimer) {
-        const t = e.touches[0];
-        if (
-          Math.abs(t.clientX - longPressStartX) > 8 ||
-          Math.abs(t.clientY - longPressStartY) > 8
-        ) {
-          clearTimeout(container._longPressTimer);
-          container._longPressTimer = null;
-        }
+      const t = e.touches[0];
+      const dy = Math.abs(t.clientY - touchStartY);
+      const dx = Math.abs(t.clientX - touchStartX);
+
+      // Отменить long-press при любом движении > 8px
+      if (container._longPressTimer && (dx > 8 || dy > 8)) {
+        clearTimeout(container._longPressTimer);
+        container._longPressTimer = null;
+      }
+
+      // Если скролл явный (Y > 15px) — отменить toggle-кнопку тоже
+      if (touchedToggleBtn && dy > 15) {
+        touchedToggleBtn = null;
       }
     };
 
     const clickHandler = (e) => {
+      // Подавить click если toggle уже обработан через touchend
+      if (preventNextClick) {
+        preventNextClick = false;
+        return;
+      }
+
       if (e.target.closest("a")) return;
 
       const toggleBtn = e.target.closest(".section-header--toggle");
