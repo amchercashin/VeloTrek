@@ -215,6 +215,10 @@ const App = (() => {
     let touchedToggleBtn = null; // кнопка toggle, которую начали нажимать
     let touchedPeekSection = null; // свёрнутая секция, в зоне peek которой началось касание
     let preventNextClick = false; // предотвратить дублирование click после touchend
+    let peekExpandTimer = null; // таймер авто-раскрытия peek-зоны без отпускания пальца
+
+    const PEEK_HOLD_MS = 300; // задержка авто-раскрытия
+    const SCROLL_CANCEL_Y = 35; // px явного скролла, отменяющего peek-таймер
 
     const touchStartHandler = (e) => {
       const t = e.touches[0];
@@ -229,11 +233,26 @@ const App = (() => {
         const routesDiv = e.target.closest(
           ".catalog-section--collapsible:not(.is-expanded) .section-routes",
         );
-        touchedPeekSection = routesDiv
-          ? routesDiv.closest(".catalog-section--collapsible")
-          : null;
+        if (routesDiv) {
+          touchedPeekSection = routesDiv.closest(
+            ".catalog-section--collapsible",
+          );
+          // Запускаем таймер: раскрыть без ожидания отпускания пальца
+          clearTimeout(peekExpandTimer);
+          peekExpandTimer = setTimeout(() => {
+            if (touchedPeekSection) {
+              setSectionExpanded(touchedPeekSection, true);
+              touchedPeekSection = null;
+              preventNextClick = true;
+            }
+          }, PEEK_HOLD_MS);
+        } else {
+          touchedPeekSection = null;
+        }
       } else {
         touchedPeekSection = null;
+        clearTimeout(peekExpandTimer);
+        peekExpandTimer = null;
       }
     };
 
@@ -262,9 +281,11 @@ const App = (() => {
         touchedToggleBtn = null;
       }
 
-      // Если касание в зоне peek и не скролл — раскрыть секцию
+      // Если таймер peek ещё не сработал — раскрыть при быстром тапе
       if (touchedPeekSection) {
-        if (dy < 15) {
+        clearTimeout(peekExpandTimer);
+        peekExpandTimer = null;
+        if (dy < 20) {
           setSectionExpanded(touchedPeekSection, true);
           preventNextClick = true;
         }
@@ -276,9 +297,15 @@ const App = (() => {
       const t = e.touches[0];
       const dy = Math.abs(t.clientY - touchStartY);
 
-      // При явном скролле (Y > 15px) отменяем оба обработчика
+      // Toggle-кнопка отменяется при любом движении > 15px
       if (dy > 15) {
         touchedToggleBtn = null;
+      }
+
+      // Peek-таймер отменяется только при явном скролле
+      if (dy > SCROLL_CANCEL_Y) {
+        clearTimeout(peekExpandTimer);
+        peekExpandTimer = null;
         touchedPeekSection = null;
       }
     };
