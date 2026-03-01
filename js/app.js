@@ -191,10 +191,6 @@ const App = (() => {
     if (container._observer) {
       container._observer.disconnect();
     }
-    if (container._longPressTimer) {
-      clearTimeout(container._longPressTimer);
-      container._longPressTimer = null;
-    }
     if (container._catalogClickHandler) {
       container.removeEventListener("click", container._catalogClickHandler);
     }
@@ -213,10 +209,11 @@ const App = (() => {
       );
     }
 
-    // Отслеживание touch: toggle-кнопка + long press для section-routes
+    // Отслеживание touch: toggle-кнопка и зона peek свёрнутой секции
     let touchStartX = 0;
     let touchStartY = 0;
-    let touchedToggleBtn = null; // кнопка, которую начали нажимать
+    let touchedToggleBtn = null; // кнопка toggle, которую начали нажимать
+    let touchedPeekSection = null; // свёрнутая секция, в зоне peek которой началось касание
     let preventNextClick = false; // предотвратить дублирование click после touchend
 
     const touchStartHandler = (e) => {
@@ -227,33 +224,25 @@ const App = (() => {
       // Запомнить toggle-кнопку, если касание началось на ней
       touchedToggleBtn = e.target.closest(".section-header--toggle") || null;
 
-      // Long press для раскрытия свёрнутой секции через область маршрутов
-      const routesDiv = e.target.closest(
-        ".catalog-section--collapsible:not(.is-expanded) .section-routes",
-      );
-      if (routesDiv) {
-        container._longPressTimer = setTimeout(() => {
-          const section = routesDiv.closest(".catalog-section--collapsible");
-          if (section && !section.classList.contains("is-expanded")) {
-            setSectionExpanded(section, true);
-          }
-          container._longPressTimer = null;
-        }, 400);
+      // Запомнить свёрнутую секцию, если касание в зоне peek (section-routes)
+      if (!touchedToggleBtn) {
+        const routesDiv = e.target.closest(
+          ".catalog-section--collapsible:not(.is-expanded) .section-routes",
+        );
+        touchedPeekSection = routesDiv
+          ? routesDiv.closest(".catalog-section--collapsible")
+          : null;
+      } else {
+        touchedPeekSection = null;
       }
     };
 
     const touchEndHandler = (e) => {
-      // Отменить long-press если был
-      if (container._longPressTimer) {
-        clearTimeout(container._longPressTimer);
-        container._longPressTimer = null;
-      }
+      const t = e.changedTouches[0];
+      const dy = Math.abs(t.clientY - touchStartY);
 
-      // Если касание началось на toggle-кнопке — срабатываем всегда,
-      // если Y-смещение < 15px (не скролл страницы)
+      // Если касание на toggle-кнопке и не скролл — переключить
       if (touchedToggleBtn) {
-        const t = e.changedTouches[0];
-        const dy = Math.abs(t.clientY - touchStartY);
         if (dy < 15) {
           const section = touchedToggleBtn.closest(
             ".catalog-section--collapsible",
@@ -267,27 +256,30 @@ const App = (() => {
                 block: "start",
               });
             }
-            preventNextClick = true; // подавить дублирующий click
+            preventNextClick = true;
           }
         }
         touchedToggleBtn = null;
+      }
+
+      // Если касание в зоне peek и не скролл — раскрыть секцию
+      if (touchedPeekSection) {
+        if (dy < 15) {
+          setSectionExpanded(touchedPeekSection, true);
+          preventNextClick = true;
+        }
+        touchedPeekSection = null;
       }
     };
 
     const touchMoveHandler = (e) => {
       const t = e.touches[0];
       const dy = Math.abs(t.clientY - touchStartY);
-      const dx = Math.abs(t.clientX - touchStartX);
 
-      // Отменить long-press при любом движении > 8px
-      if (container._longPressTimer && (dx > 8 || dy > 8)) {
-        clearTimeout(container._longPressTimer);
-        container._longPressTimer = null;
-      }
-
-      // Если скролл явный (Y > 15px) — отменить toggle-кнопку тоже
-      if (touchedToggleBtn && dy > 15) {
+      // При явном скролле (Y > 15px) отменяем оба обработчика
+      if (dy > 15) {
         touchedToggleBtn = null;
+        touchedPeekSection = null;
       }
     };
 
