@@ -159,6 +159,8 @@ body {
   margin-top: 4px;
   font-family: inherit;
   -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .catalog-section:first-child .section-header--toggle {
@@ -216,6 +218,8 @@ body {
   margin-bottom: 10px;
   text-decoration: none;
   color: var(--color-text);
+  user-select: none;
+  -webkit-user-select: none;
   transition:
     transform var(--transition),
     border-left-color var(--transition);
