@@ -233,7 +233,8 @@ const App = (() => {
         const routesDiv = e.target.closest(
           ".catalog-section--collapsible:not(.is-expanded) .section-routes",
         );
-        if (routesDiv) {
+        if (routesDiv && !e.target.closest(".route-card")) {
+          // Тап в пустой части peek-зоны (не на карточке) → раскрыть секцию
           touchedPeekSection = routesDiv.closest(
             ".catalog-section--collapsible",
           );
