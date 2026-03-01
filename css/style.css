@@ -140,6 +140,71 @@ body {
   padding-top: 8px;
 }
 
+/* === Сворачиваемые разделы === */
+
+.catalog-section--collapsible .section-header--toggle {
+  width: 100%;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--color-primary);
+  padding: 16px 0 6px;
+  margin-top: 4px;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.catalog-section:first-child .section-header--toggle {
+  margin-top: 0;
+  padding-top: 8px;
+}
+
+.section-header__meta {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.section-chevron {
+  display: inline-block;
+  font-style: normal;
+  transition: transform 0.25s ease;
+  line-height: 1;
+}
+
+.catalog-section--collapsible.is-expanded .section-chevron {
+  transform: rotate(90deg);
+}
+
+/* Свёрнутый раздел: 3 карточки + половина 4-й (высота задаётся JS через --peek-max-height) */
+.catalog-section--collapsible:not(.is-expanded) .section-routes {
+  max-height: var(--peek-max-height, 380px);
+  overflow: hidden;
+  position: relative;
+}
+
+.catalog-section--collapsible:not(.is-expanded) .section-routes::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, var(--color-bg));
+  pointer-events: none;
+}
+
 .route-card {
   display: block;
   background: var(--color-surface);

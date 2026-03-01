@@ -1,5 +1,5 @@
 {
-  "generated": "2026-02-26T10:59:42Z",
+  "generated": "2026-03-01T09:09:17Z",
   "sections": [
     {
       "name": "Велопутешествия",
@@ -319,6 +319,263 @@
             "maxLat": 55.891679,
             "minLon": 39.005467,
             "maxLon": 39.391394
+          }
+        }
+      ]
+    },
+    {
+      "name": "Походы 2-3 дня МО",
+      "routes": [
+        {
+          "filename": "Походы 2-3 дня МО/01-tver-staritsa.kml",
+          "name": "1. Чисмена-Старица-Тверь",
+          "description": "",
+          "stats": {
+            "track_km": 416.7,
+            "span_km": 129.8,
+            "elevation_min_m": 125,
+            "elevation_max_m": 248,
+            "climb_m": 727,
+            "descent_m": 924
+          },
+          "poiCount": 45,
+          "segmentCount": 8,
+          "bbox": {
+            "minLat": 56.007889,
+            "maxLat": 56.877792,
+            "minLon": 34.834728,
+            "maxLon": 36.239176
+          }
+        },
+        {
+          "filename": "Походы 2-3 дня МО/02-tver-torzhok.kml",
+          "name": "2. Тверь-Торжок-Тверь",
+          "description": "",
+          "stats": {
+            "track_km": 346.4,
+            "span_km": 80.8,
+            "elevation_min_m": 124,
+            "elevation_max_m": 226,
+            "climb_m": 693,
+            "descent_m": 716
+          },
+          "poiCount": 39,
+          "segmentCount": 9,
+          "bbox": {
+            "minLat": 56.725561,
+            "maxLat": 57.045621,
+            "minLon": 34.735551,
+            "maxLon": 35.928131
+          }
+        },
+        {
+          "filename": "Походы 2-3 дня МО/03-konakowo-tver.kml",
+          "name": "3. Конаково-Тверь",
+          "description": "",
+          "stats": {
+            "track_km": 115.5,
+            "span_km": 61.2,
+            "elevation_min_m": 121,
+            "elevation_max_m": 153,
+            "climb_m": 288,
+            "descent_m": 283
+          },
+          "poiCount": 18,
+          "segmentCount": 4,
+          "bbox": {
+            "minLat": 56.576217,
+            "maxLat": 56.863178,
+            "minLon": 35.893514,
+            "maxLon": 36.748345
+          }
+        },
+        {
+          "filename": "Походы 2-3 дня МО/04-pereslavl-plechtchejevo.kml",
+          "name": "4. Переславль и Плещеево",
+          "description": "",
+          "stats": {
+            "track_km": 216.4,
+            "span_km": 99.3,
+            "elevation_min_m": 124,
+            "elevation_max_m": 214,
+            "climb_m": 528,
+            "descent_m": 432
+          },
+          "poiCount": 39,
+          "segmentCount": 5,
+          "bbox": {
+            "minLat": 56.526235,
+            "maxLat": 56.919029,
+            "minLon": 37.560421,
+            "maxLon": 39.019876
+          }
+        },
+        {
+          "filename": "Походы 2-3 дня МО/05-reka-kirzhach.kml",
+          "name": "5. Киржач",
+          "description": "",
+          "stats": {
+            "track_km": 179.0,
+            "span_km": 65.1,
+            "elevation_min_m": 114,
+            "elevation_max_m": 206,
+            "climb_m": 571,
+            "descent_m": 436
+          },
+          "poiCount": 18,
+          "segmentCount": 6,
+          "bbox": {
+            "minLat": 55.864548,
+            "maxLat": 56.400925,
+            "minLon": 38.681091,
+            "maxLon": 39.10061
+          }
+        },
+        {
+          "filename": "Походы 2-3 дня МО/06-koloksha-vladimirskoe-opole.kml",
+          "name": "6. Ополье и Колокша",
+          "description": "",
+          "stats": {
+            "track_km": 188.0,
+            "span_km": 108.0,
+            "elevation_min_m": 99,
+            "elevation_max_m": 236,
+            "climb_m": 640,
+            "descent_m": 546
+          },
+          "poiCount": 29,
+          "segmentCount": 4,
+          "bbox": {
+            "minLat": 56.061938,
+            "maxLat": 56.58095,
+            "minLon": 38.706508,
+            "maxLon": 40.183697
+          }
+        },
+        {
+          "filename": "Походы 2-3 дня МО/07-pojma-oki-meschera.kml",
+          "name": "7. Ока и Мещера",
+          "description": "",
+          "stats": {
+            "track_km": 263.7,
+            "span_km": 86.9,
+            "elevation_min_m": 97,
+            "elevation_max_m": 160,
+            "climb_m": 407,
+            "descent_m": 468
+          },
+          "poiCount": 55,
+          "segmentCount": 9,
+          "bbox": {
+            "minLat": 54.91645,
+            "maxLat": 55.559618,
+            "minLon": 38.839073,
+            "maxLon": 39.615755
+          }
+        },
+        {
+          "filename": "Походы 2-3 дня МО/08-reka-osetr.kml",
+          "name": "8. Осётр",
+          "description": "",
+          "stats": {
+            "track_km": 353.2,
+            "span_km": 118.8,
+            "elevation_min_m": 102,
+            "elevation_max_m": 259,
+            "climb_m": 2003,
+            "descent_m": 1731
+          },
+          "poiCount": 65,
+          "segmentCount": 14,
+          "bbox": {
+            "minLat": 54.338621,
+            "maxLat": 55.144104,
+            "minLon": 37.685273,
+            "maxLon": 38.897226
+          }
+        },
+        {
+          "filename": "Походы 2-3 дня МО/09-kaluga-tarusa-protva.kml",
+          "name": "9. Калуга-Таруса-Протва",
+          "description": "",
+          "stats": {
+            "track_km": 337.0,
+            "span_km": 107.9,
+            "elevation_min_m": 112,
+            "elevation_max_m": 225,
+            "climb_m": 1861,
+            "descent_m": 1951
+          },
+          "poiCount": 73,
+          "segmentCount": 16,
+          "bbox": {
+            "minLat": 54.427311,
+            "maxLat": 55.055759,
+            "minLon": 36.199002,
+            "maxLon": 37.477573
+          }
+        },
+        {
+          "filename": "Походы 2-3 дня МО/10-reka-ugra.kml",
+          "name": "10. Угра",
+          "description": "",
+          "stats": {
+            "track_km": 330.0,
+            "span_km": 161.7,
+            "elevation_min_m": 124,
+            "elevation_max_m": 246,
+            "climb_m": 869,
+            "descent_m": 1004
+          },
+          "poiCount": 39,
+          "segmentCount": 11,
+          "bbox": {
+            "minLat": 54.627959,
+            "maxLat": 55.544121,
+            "minLon": 34.304971,
+            "maxLon": 36.273884
+          }
+        },
+        {
+          "filename": "Походы 2-3 дня МО/11-borodino-obninsk.kml",
+          "name": "11. Бородино-Обнинск",
+          "description": "",
+          "stats": {
+            "track_km": 170.6,
+            "span_km": 74.7,
+            "elevation_min_m": 123,
+            "elevation_max_m": 237,
+            "climb_m": 620,
+            "descent_m": 669
+          },
+          "poiCount": 33,
+          "segmentCount": 4,
+          "bbox": {
+            "minLat": 55.007182,
+            "maxLat": 55.496215,
+            "minLon": 35.779772,
+            "maxLon": 36.586822
+          }
+        },
+        {
+          "filename": "Походы 2-3 дня МО/12-borodino-gagarin-dubosekowo.kml",
+          "name": "12. Бородино-Гагарин-Дубосеково",
+          "description": "",
+          "stats": {
+            "track_km": 207.2,
+            "span_km": 87.3,
+            "elevation_min_m": 180,
+            "elevation_max_m": 274,
+            "climb_m": 529,
+            "descent_m": 492
+          },
+          "poiCount": 22,
+          "segmentCount": 4,
+          "bbox": {
+            "minLat": 55.496269,
+            "maxLat": 56.009377,
+            "minLon": 34.98843,
+            "maxLon": 36.041744
           }
         }
       ]

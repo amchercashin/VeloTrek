@@ -6,6 +6,7 @@
 const App = (() => {
   const CACHE_KEY = "velotrek-catalog";
   const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 часа
+  const PREVIEW_LIMIT = 4; // Маршрутов показывается без разворачивания
 
   // Определяем базовый URL для загрузки файлов маршрутов
   function getRouteBaseUrl() {
@@ -85,8 +86,8 @@ const App = (() => {
 
   function renderRouteCard(route) {
     const stats = route.stats || {};
-    const track = stats.track_km ? `${stats.track_km} км` : "";
-    const span = stats.span_km ? `${stats.span_km} км` : "";
+    const track = stats.track_km ? `${Math.round(stats.track_km)} км` : "";
+    const span = stats.span_km ? `${Math.round(stats.span_km)} км` : "";
     const elevation =
       stats.elevation_min_m && stats.elevation_max_m
         ? `${stats.elevation_min_m}–${stats.elevation_max_m} м`
@@ -110,6 +111,31 @@ const App = (() => {
     `;
   }
 
+  function renderSection(section) {
+    const routes = section.routes || [];
+    const count = routes.length;
+    const name = escapeHtml(section.name);
+
+    if (count <= PREVIEW_LIMIT) {
+      return `
+        <section class="catalog-section">
+          <h2 class="section-header">${name}</h2>
+          ${routes.map(renderRouteCard).join("")}
+        </section>`;
+    }
+
+    return `
+      <section class="catalog-section catalog-section--collapsible">
+        <button class="section-header section-header--toggle" aria-expanded="false">
+          <span>${name}</span>
+          <span class="section-header__meta">${count} <span class="section-chevron">&#9658;</span></span>
+        </button>
+        <div class="section-routes">
+          ${routes.map(renderRouteCard).join("")}
+        </div>
+      </section>`;
+  }
+
   function renderCatalog(sections, container) {
     const totalRoutes = sections.reduce(
       (n, s) => n + (s.routes || []).length,
@@ -121,26 +147,168 @@ const App = (() => {
       return;
     }
 
-    container.innerHTML = sections
-      .map(
-        (section) => `
-      <h2 class="section-header">${escapeHtml(section.name)}</h2>
-      ${(section.routes || []).map(renderRouteCard).join("")}
-    `,
-      )
-      .join("");
+    container.innerHTML = sections.map(renderSection).join("");
 
-    // Навигация по клику на карточку (div вместо <a> для поддержки вложенных ссылок)
-    container.addEventListener("click", (e) => {
-      if (e.target.closest("a")) return; // Клик по ссылке в описании — не переходим
+    // Точная высота peek: 3 полных карточки + половина 4-й (измеряем после layout)
+    function updatePeekHeights() {
+      container
+        .querySelectorAll(".catalog-section--collapsible")
+        .forEach((s) => {
+          const routesDiv = s.querySelector(".section-routes");
+          const cards = routesDiv.querySelectorAll(".route-card");
+          if (cards.length < 4) return;
+          let h = 0;
+          for (let i = 0; i < 3; i++) {
+            h +=
+              cards[i].getBoundingClientRect().height +
+              parseInt(getComputedStyle(cards[i]).marginBottom);
+          }
+          h += Math.round(cards[3].getBoundingClientRect().height / 2);
+          routesDiv.style.setProperty("--peek-max-height", h + "px");
+        });
+    }
+    requestAnimationFrame(updatePeekHeights);
+
+    // Пересчёт при изменении ширины окна (поворот экрана, ресайз)
+    if (container._resizeHandler) {
+      window.removeEventListener("resize", container._resizeHandler);
+    }
+    let resizeTimer = null;
+    container._resizeHandler = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(updatePeekHeights, 150);
+    };
+    window.addEventListener("resize", container._resizeHandler);
+
+    // Снимаем старые обработчики (stale-while-revalidate может вызвать renderCatalog дважды)
+    if (container._catalogClickHandler) {
+      container.removeEventListener("click", container._catalogClickHandler);
+    }
+    if (container._catalogTouchStartHandler) {
+      container.removeEventListener(
+        "touchstart",
+        container._catalogTouchStartHandler,
+      );
+      container.removeEventListener(
+        "touchend",
+        container._catalogTouchEndHandler,
+      );
+      container.removeEventListener(
+        "touchmove",
+        container._catalogTouchMoveHandler,
+      );
+    }
+
+    // Long press для раскрытия свёрнутой секции
+    let longPressTimer = null;
+    let longPressStartX = 0;
+    let longPressStartY = 0;
+
+    const touchStartHandler = (e) => {
+      const routesDiv = e.target.closest(
+        ".catalog-section--collapsible:not(.is-expanded) .section-routes",
+      );
+      if (!routesDiv) return;
+      const t = e.touches[0];
+      longPressStartX = t.clientX;
+      longPressStartY = t.clientY;
+      longPressTimer = setTimeout(() => {
+        const section = routesDiv.closest(".catalog-section--collapsible");
+        if (section && !section.classList.contains("is-expanded")) {
+          section.classList.add("is-expanded");
+          section
+            .querySelector(".section-header--toggle")
+            .setAttribute("aria-expanded", "true");
+        }
+        longPressTimer = null;
+      }, 400);
+    };
+
+    const touchEndHandler = () => {
+      if (longPressTimer) {
+        clearTimeout(longPressTimer);
+        longPressTimer = null;
+      }
+    };
+
+    const touchMoveHandler = (e) => {
+      if (longPressTimer) {
+        const t = e.touches[0];
+        if (
+          Math.abs(t.clientX - longPressStartX) > 8 ||
+          Math.abs(t.clientY - longPressStartY) > 8
+        ) {
+          clearTimeout(longPressTimer);
+          longPressTimer = null;
+        }
+      }
+    };
+
+    const clickHandler = (e) => {
+      if (e.target.closest("a")) return;
+
+      const toggleBtn = e.target.closest(".section-header--toggle");
+      if (toggleBtn) {
+        const section = toggleBtn.closest(".catalog-section--collapsible");
+        if (section) {
+          const expanding = !section.classList.contains("is-expanded");
+          section.classList.toggle("is-expanded", expanding);
+          toggleBtn.setAttribute("aria-expanded", String(expanding));
+          if (!expanding) {
+            toggleBtn.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }
+        return;
+      }
+
+      // Навигация по карточке
       const card = e.target.closest(".route-card");
       if (card && card.dataset.route) {
-        // Сохраняем позицию прокрутки для восстановления при возврате
         try {
           sessionStorage.setItem("velotrek-catalog-scroll", window.scrollY);
         } catch {}
         window.location.href = `route.html?route=${card.dataset.route}`;
       }
+    };
+
+    container._catalogClickHandler = clickHandler;
+    container._catalogTouchStartHandler = touchStartHandler;
+    container._catalogTouchEndHandler = touchEndHandler;
+    container._catalogTouchMoveHandler = touchMoveHandler;
+
+    container.addEventListener("click", clickHandler);
+    container.addEventListener("touchstart", touchStartHandler, {
+      passive: true,
+    });
+    container.addEventListener("touchend", touchEndHandler, { passive: true });
+    container.addEventListener("touchmove", touchMoveHandler, {
+      passive: true,
+    });
+
+    // Авто-сворачивание: когда последняя карточка расширенного раздела уходит выше экрана
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting && entry.boundingClientRect.bottom < 0) {
+            const section = entry.target.closest(
+              ".catalog-section--collapsible",
+            );
+            if (section && section.classList.contains("is-expanded")) {
+              section.classList.remove("is-expanded");
+              section
+                .querySelector(".section-header--toggle")
+                .setAttribute("aria-expanded", "false");
+            }
+          }
+        });
+      },
+      { threshold: 0 },
+    );
+
+    container.querySelectorAll(".catalog-section--collapsible").forEach((s) => {
+      const cards = s.querySelectorAll(".route-card");
+      const lastCard = cards[cards.length - 1];
+      if (lastCard) observer.observe(lastCard);
     });
   }
 
