@@ -233,20 +233,43 @@ const App = (() => {
         const routesDiv = e.target.closest(
           ".catalog-section--collapsible:not(.is-expanded) .section-routes",
         );
-        if (routesDiv && !e.target.closest(".route-card")) {
-          // Тап в пустой части peek-зоны (не на карточке) → раскрыть секцию
-          touchedPeekSection = routesDiv.closest(
-            ".catalog-section--collapsible",
-          );
-          // Запускаем таймер: раскрыть без ожидания отпускания пальца
-          clearTimeout(peekExpandTimer);
-          peekExpandTimer = setTimeout(() => {
-            if (touchedPeekSection) {
-              setSectionExpanded(touchedPeekSection, true);
+        if (routesDiv) {
+          // Первые 3 карточки (индекс 0–2) — полностью видимы → прямая навигация
+          const card = e.target.closest(".route-card");
+          if (card) {
+            const cards = routesDiv.querySelectorAll(".route-card");
+            const idx = Array.prototype.indexOf.call(cards, card);
+            if (idx < 3) {
+              // Первые три — навигация без раскрытия секции
               touchedPeekSection = null;
-              preventNextClick = true;
+            } else {
+              // 4-я+ карточка в peek → раскрыть секцию
+              touchedPeekSection = routesDiv.closest(
+                ".catalog-section--collapsible",
+              );
+              clearTimeout(peekExpandTimer);
+              peekExpandTimer = setTimeout(() => {
+                if (touchedPeekSection) {
+                  setSectionExpanded(touchedPeekSection, true);
+                  touchedPeekSection = null;
+                  preventNextClick = true;
+                }
+              }, PEEK_HOLD_MS);
             }
-          }, PEEK_HOLD_MS);
+          } else {
+            // Пустая область peek → раскрыть секцию
+            touchedPeekSection = routesDiv.closest(
+              ".catalog-section--collapsible",
+            );
+            clearTimeout(peekExpandTimer);
+            peekExpandTimer = setTimeout(() => {
+              if (touchedPeekSection) {
+                setSectionExpanded(touchedPeekSection, true);
+                touchedPeekSection = null;
+                preventNextClick = true;
+              }
+            }, PEEK_HOLD_MS);
+          }
         } else {
           touchedPeekSection = null;
         }
