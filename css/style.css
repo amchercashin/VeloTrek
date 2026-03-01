@@ -179,6 +179,7 @@ body {
 .section-chevron {
   display: inline-block;
   font-style: normal;
+  font-size: 1rem;
   transition: transform 0.25s ease;
   line-height: 1;
 }
