@@ -149,6 +149,13 @@ const App = (() => {
 
     container.innerHTML = sections.map(renderSection).join("");
 
+    function setSectionExpanded(section, expanding) {
+      section.classList.toggle("is-expanded", expanding);
+      section
+        .querySelector(".section-header--toggle")
+        .setAttribute("aria-expanded", String(expanding));
+    }
+
     // Точная высота peek: 3 полных карточки + половина 4-й (измеряем после layout)
     function updatePeekHeights() {
       container
@@ -181,6 +188,13 @@ const App = (() => {
     window.addEventListener("resize", container._resizeHandler);
 
     // Снимаем старые обработчики (stale-while-revalidate может вызвать renderCatalog дважды)
+    if (container._observer) {
+      container._observer.disconnect();
+    }
+    if (container._longPressTimer) {
+      clearTimeout(container._longPressTimer);
+      container._longPressTimer = null;
+    }
     if (container._catalogClickHandler) {
       container.removeEventListener("click", container._catalogClickHandler);
     }
@@ -200,7 +214,6 @@ const App = (() => {
     }
 
     // Long press для раскрытия свёрнутой секции
-    let longPressTimer = null;
     let longPressStartX = 0;
     let longPressStartY = 0;
 
@@ -212,34 +225,31 @@ const App = (() => {
       const t = e.touches[0];
       longPressStartX = t.clientX;
       longPressStartY = t.clientY;
-      longPressTimer = setTimeout(() => {
+      container._longPressTimer = setTimeout(() => {
         const section = routesDiv.closest(".catalog-section--collapsible");
         if (section && !section.classList.contains("is-expanded")) {
-          section.classList.add("is-expanded");
-          section
-            .querySelector(".section-header--toggle")
-            .setAttribute("aria-expanded", "true");
+          setSectionExpanded(section, true);
         }
-        longPressTimer = null;
+        container._longPressTimer = null;
       }, 400);
     };
 
     const touchEndHandler = () => {
-      if (longPressTimer) {
-        clearTimeout(longPressTimer);
-        longPressTimer = null;
+      if (container._longPressTimer) {
+        clearTimeout(container._longPressTimer);
+        container._longPressTimer = null;
       }
     };
 
     const touchMoveHandler = (e) => {
-      if (longPressTimer) {
+      if (container._longPressTimer) {
         const t = e.touches[0];
         if (
           Math.abs(t.clientX - longPressStartX) > 8 ||
           Math.abs(t.clientY - longPressStartY) > 8
         ) {
-          clearTimeout(longPressTimer);
-          longPressTimer = null;
+          clearTimeout(container._longPressTimer);
+          container._longPressTimer = null;
         }
       }
     };
@@ -252,8 +262,7 @@ const App = (() => {
         const section = toggleBtn.closest(".catalog-section--collapsible");
         if (section) {
           const expanding = !section.classList.contains("is-expanded");
-          section.classList.toggle("is-expanded", expanding);
-          toggleBtn.setAttribute("aria-expanded", String(expanding));
+          setSectionExpanded(section, expanding);
           if (!expanding) {
             toggleBtn.scrollIntoView({ behavior: "smooth", block: "start" });
           }
@@ -286,7 +295,7 @@ const App = (() => {
     });
 
     // Авто-сворачивание: когда последняя карточка расширенного раздела уходит выше экрана
-    const observer = new IntersectionObserver(
+    container._observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting && entry.boundingClientRect.bottom < 0) {
@@ -294,10 +303,7 @@ const App = (() => {
               ".catalog-section--collapsible",
             );
             if (section && section.classList.contains("is-expanded")) {
-              section.classList.remove("is-expanded");
-              section
-                .querySelector(".section-header--toggle")
-                .setAttribute("aria-expanded", "false");
+              setSectionExpanded(section, false);
             }
           }
         });
@@ -308,7 +314,7 @@ const App = (() => {
     container.querySelectorAll(".catalog-section--collapsible").forEach((s) => {
       const cards = s.querySelectorAll(".route-card");
       const lastCard = cards[cards.length - 1];
-      if (lastCard) observer.observe(lastCard);
+      if (lastCard) container._observer.observe(lastCard);
     });
   }
 
