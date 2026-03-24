@@ -10,42 +10,29 @@
     </radialGradient>
   </defs>
 
-  <!-- Background -->
-  <rect width="512" height="512" rx="108" fill="url(#bg)"/>
-  <rect width="512" height="512" rx="108" fill="url(#hl)"/>
+  <!-- Background: full bleed, no border-radius (OS applies its own mask) -->
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <rect width="512" height="512" fill="url(#hl)"/>
 
-  <!-- Circular dotted route track -->
-  <circle cx="256" cy="254" r="196" fill="none" stroke="#f4a261" stroke-width="8" stroke-dasharray="10,15" stroke-linecap="round" opacity="0.9"/>
+  <!-- Circular dotted route track (slightly smaller for maskable safe area) -->
+  <circle cx="256" cy="254" r="175" fill="none" stroke="#f4a261" stroke-width="8" stroke-dasharray="10,15" stroke-linecap="round" opacity="0.9"/>
 
-  <!-- Bicycle -->
-  <g stroke="white" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <!-- Rear wheel -->
+  <!-- Bicycle (scaled down ~10% and recentered for safe area) -->
+  <g stroke="white" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(256,260) scale(0.88) translate(-256,-260)">
     <circle cx="168" cy="278" r="56" stroke-width="11"/>
     <circle cx="168" cy="278" r="3.5" fill="white" stroke="none"/>
-    <!-- Front wheel -->
     <circle cx="344" cy="278" r="56" stroke-width="11"/>
     <circle cx="344" cy="278" r="3.5" fill="white" stroke="none"/>
-    <!-- Bottom bracket -->
     <circle cx="244" cy="282" r="5" fill="white" stroke="none"/>
-    <!-- Chain stay: rear hub → BB -->
     <line x1="168" y1="278" x2="244" y2="282" stroke-width="9"/>
-    <!-- Seat tube: BB → seat cluster -->
     <line x1="244" y1="282" x2="226" y2="198" stroke-width="9"/>
-    <!-- Down tube: head tube → BB -->
     <line x1="314" y1="198" x2="244" y2="282" stroke-width="9"/>
-    <!-- Top tube -->
     <line x1="226" y1="198" x2="314" y2="198" stroke-width="8"/>
-    <!-- Seat stay: rear hub → seat cluster -->
     <line x1="168" y1="278" x2="226" y2="198" stroke-width="7"/>
-    <!-- Fork: head tube → front hub -->
     <line x1="314" y1="198" x2="344" y2="278" stroke-width="9"/>
-    <!-- Seat post -->
     <line x1="226" y1="198" x2="220" y2="170" stroke-width="8"/>
-    <!-- Saddle -->
     <line x1="204" y1="167" x2="238" y2="167" stroke-width="11"/>
-    <!-- Stem -->
     <line x1="314" y1="198" x2="326" y2="175" stroke-width="8"/>
-    <!-- Handlebar -->
     <path d="M316,172 Q332,166 336,180" stroke-width="8"/>
   </g>
 </svg>
