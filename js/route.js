@@ -21,6 +21,70 @@ const RoutePage = (() => {
     return div.innerHTML;
   }
 
+  function sanitizeDescriptionHtml(html) {
+    const template = document.createElement("template");
+    template.innerHTML = html;
+    const allowedTags = new Set([
+      "A",
+      "B",
+      "BR",
+      "EM",
+      "I",
+      "LI",
+      "OL",
+      "P",
+      "STRONG",
+      "UL",
+    ]);
+
+    function cleanNode(node) {
+      for (const child of [...node.childNodes]) {
+        if (child.nodeType === Node.ELEMENT_NODE) {
+          if (!allowedTags.has(child.tagName)) {
+            if (["IFRAME", "SCRIPT", "STYLE"].includes(child.tagName)) {
+              child.remove();
+              continue;
+            }
+            cleanNode(child);
+            child.replaceWith(...child.childNodes);
+            continue;
+          }
+
+          for (const attr of [...child.attributes]) {
+            const name = attr.name.toLowerCase();
+            if (name.startsWith("on")) {
+              child.removeAttribute(attr.name);
+              continue;
+            }
+            if (child.tagName !== "A" || !["href", "target", "rel", "class"].includes(name)) {
+              child.removeAttribute(attr.name);
+            }
+          }
+
+          if (child.tagName === "A") {
+            const href = child.getAttribute("href") || "";
+            let safeHref = false;
+            try {
+              const parsed = new URL(href, window.location.href);
+              safeHref = ["http:", "https:", "mailto:"].includes(parsed.protocol);
+            } catch {}
+            if (!safeHref) child.removeAttribute("href");
+            child.setAttribute("target", "_blank");
+            child.setAttribute("rel", "noopener noreferrer");
+            child.classList.add("desc-link");
+          }
+        } else if (child.nodeType !== Node.TEXT_NODE) {
+          child.remove();
+          continue;
+        }
+        cleanNode(child);
+      }
+    }
+
+    cleanNode(template.content);
+    return template.innerHTML;
+  }
+
   /** Показать toast-уведомление (не блокирующий alert) */
   function showToast(msg, duration = 3500) {
     const existing = document.querySelector(".toast");
@@ -83,11 +147,7 @@ const RoutePage = (() => {
     const rawDesc = data.description || "";
     const descSection = document.getElementById("route-description");
     if (rawDesc && rawDesc.includes("<")) {
-      // HTML-описание из CDATA — рендерим как HTML (санитизация: убираем script/iframe)
-      const sanitized = rawDesc
-        .replace(/<script[\s\S]*?<\/script>/gi, "")
-        .replace(/<iframe[\s\S]*?<\/iframe>/gi, "");
-      descSection.innerHTML = sanitized;
+      descSection.innerHTML = sanitizeDescriptionHtml(rawDesc);
       descSection.classList.remove("hidden");
     }
 
@@ -272,6 +332,9 @@ const RoutePage = (() => {
       downloadBtn.classList.add("hidden");
       downloadPanel.classList.remove("hidden");
       downloadStatus.textContent = "Подготовка...";
+      progressFill.style.width = "0%";
+      progressFill.classList.remove("progress-bar__fill--done");
+      cancelBtn.classList.remove("hidden");
 
       downloadController = new AbortController();
 
@@ -287,7 +350,7 @@ const RoutePage = (() => {
         // Сначала кэшируем KML, потом скачиваем тайлы
         await cacheKmlFile(filename);
 
-        const result = await OfflineTiles.downloadTiles(
+        await OfflineTiles.downloadTiles(
           data,
           VeloMap.getTileUrl(),
           {
@@ -321,9 +384,27 @@ const RoutePage = (() => {
                     downloadPanel.classList.add("hidden");
                     downloadBtn.classList.remove("hidden");
                   }, 1200);
+                } else if (progress.failed > 0) {
+                  downloadStatus.textContent =
+                    `Скачано ${progress.completed + progress.cached} тайлов, ` +
+                    `ошибок: ${progress.failed}. Можно попробовать ещё раз.`;
+                  OfflineTiles.saveRouteManifest(
+                    filename,
+                    progress.availableKeys || [],
+                  ).catch(() => {});
+                  checkOfflineStatus(data, filename);
+                  setTimeout(() => {
+                    downloadPanel.classList.add("hidden");
+                    downloadBtn.textContent = "Доскачать карту";
+                    downloadBtn.classList.remove("hidden");
+                  }, 2500);
                 } else {
                   const total = progress.completed + progress.cached;
                   downloadStatus.textContent = `✓ Готово — ${total} тайлов в памяти`;
+                  OfflineTiles.saveRouteManifest(
+                    filename,
+                    progress.availableKeys || tiles,
+                  ).catch(() => {});
                   // Обновить офлайн-индикатор
                   checkOfflineStatus(data, filename);
                   setTimeout(() => {
@@ -341,6 +422,11 @@ const RoutePage = (() => {
         );
       } catch (e) {
         downloadStatus.textContent = `Ошибка: ${e.message}`;
+        cancelBtn.classList.add("hidden");
+        setTimeout(() => {
+          downloadPanel.classList.add("hidden");
+          downloadBtn.classList.remove("hidden");
+        }, 1800);
       }
     });
 
@@ -351,7 +437,7 @@ const RoutePage = (() => {
         clearBtn.textContent = "Удаление...";
 
         try {
-          await OfflineTiles.deleteTilesForRoute(data);
+          await OfflineTiles.deleteTilesForRoute(data, 10, 16, filename);
 
           // Удаляем KML из SW-кэша
           if ("caches" in window) {
@@ -484,7 +570,9 @@ const RoutePage = (() => {
     errorEl.querySelector(".error-msg__text").textContent = msg;
   }
 
-  return { init };
+  return { init, _test: { sanitizeDescriptionHtml } };
 })();
 
-document.addEventListener("DOMContentLoaded", () => RoutePage.init());
+if (!window.VELOTREK_TEST) {
+  document.addEventListener("DOMContentLoaded", () => RoutePage.init());
+}

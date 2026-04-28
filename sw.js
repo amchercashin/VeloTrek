@@ -28,7 +28,9 @@ self.addEventListener("install", (event) => {
   const bust = "?_sw=" + SHELL_CACHE;
   event.waitUntil(
     caches.open(SHELL_CACHE).then((cache) => {
-      const cdnPromise = cache.addAll(CDN_FILES);
+      const cdnPromise = Promise.allSettled(
+        CDN_FILES.map((url) => cache.add(url)),
+      );
       const shellPromise = Promise.all(
         SHELL_FILES.map((url) =>
           fetch(url + bust, { cache: "no-cache" }).then((resp) => {
@@ -158,8 +160,10 @@ self.addEventListener("fetch", (event) => {
 function networkFirst(request, cacheName) {
   return fetch(request, { cache: "no-cache" })
     .then((response) => {
-      const clone = response.clone();
-      caches.open(cacheName).then((cache) => cache.put(request, clone));
+      if (response.ok) {
+        const clone = response.clone();
+        caches.open(cacheName).then((cache) => cache.put(request, clone));
+      }
       return response;
     })
     .catch(() => caches.match(request));
@@ -193,7 +197,7 @@ self.addEventListener("message", (event) => {
       (async () => {
         try {
           const cache = await caches.open(ROUTES_CACHE);
-          const response = await fetch(payload.url);
+          const response = await fetch(payload.url, { cache: "no-cache" });
           if (response.ok) {
             await cache.put(payload.url, response);
             reply({

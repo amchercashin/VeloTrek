@@ -23,7 +23,7 @@ const KMLParser = (() => {
       bbox: { minLat: 90, maxLat: -90, minLon: 180, maxLon: -180 }
     };
 
-    const docEl = doc.getElementsByTagNameNS(KML_NS, 'Document')[0];
+    const docEl = getElements(doc, 'Document')[0];
     if (!docEl) {
       throw new Error('KML не содержит элемент Document');
     }
@@ -31,12 +31,12 @@ const KMLParser = (() => {
     result.name = getTextNS(docEl, 'name') || '';
     result.description = getTextNS(docEl, 'description') || '';
 
-    const placemarks = doc.getElementsByTagNameNS(KML_NS, 'Placemark');
+    const placemarks = getElements(doc, 'Placemark');
 
     for (const pm of placemarks) {
-      const point = pm.getElementsByTagNameNS(KML_NS, 'Point')[0];
-      const multiGeo = pm.getElementsByTagNameNS(KML_NS, 'MultiGeometry')[0];
-      const lineString = pm.getElementsByTagNameNS(KML_NS, 'LineString')[0];
+      const point = getElements(pm, 'Point')[0];
+      const multiGeo = getElements(pm, 'MultiGeometry')[0];
+      const lineString = getElements(pm, 'LineString')[0];
 
       if (point) {
         const poi = parsePoint(pm, point);
@@ -45,7 +45,7 @@ const KMLParser = (() => {
           updateBBox(result.bbox, poi.lat, poi.lon);
         }
       } else if (multiGeo) {
-        const lineStrings = multiGeo.getElementsByTagNameNS(KML_NS, 'LineString');
+        const lineStrings = getElements(multiGeo, 'LineString');
         for (const ls of lineStrings) {
           const segment = parseCoordinates(ls);
           if (segment.length > 0) {
@@ -105,15 +105,25 @@ const KMLParser = (() => {
   function getTextNS(parent, tagName) {
     const children = parent.childNodes;
     for (const child of children) {
-      if (child.localName === tagName && child.namespaceURI === KML_NS) {
+      if (child.localName === tagName) {
         return child.textContent;
       }
     }
     return null;
   }
 
+  function getElements(parent, tagName) {
+    const namespaced = parent.getElementsByTagNameNS
+      ? parent.getElementsByTagNameNS(KML_NS, tagName)
+      : [];
+    if (namespaced.length > 0) return namespaced;
+    return Array.from(parent.getElementsByTagName('*')).filter(
+      (el) => el.localName === tagName,
+    );
+  }
+
   function parsePoint(placemark, pointEl) {
-    const coordsEl = pointEl.getElementsByTagNameNS(KML_NS, 'coordinates')[0];
+    const coordsEl = getElements(pointEl, 'coordinates')[0];
     if (!coordsEl) return null;
 
     const coords = coordsEl.textContent.trim().split(',');
@@ -124,12 +134,12 @@ const KMLParser = (() => {
       description: getTextNS(placemark, 'description') || '',
       lon: parseFloat(coords[0]),
       lat: parseFloat(coords[1]),
-      elevation: parseFloat(coords[2]) || 0
+      elevation: Number.isFinite(parseFloat(coords[2])) ? parseFloat(coords[2]) : null
     };
   }
 
   function parseCoordinates(lineStringEl) {
-    const coordsEl = lineStringEl.getElementsByTagNameNS(KML_NS, 'coordinates')[0];
+    const coordsEl = getElements(lineStringEl, 'coordinates')[0];
     if (!coordsEl) return [];
 
     const coordText = coordsEl.textContent.trim();
@@ -137,9 +147,9 @@ const KMLParser = (() => {
       const parts = triplet.split(',').map(Number);
       const lon = parts[0];
       const lat = parts[1];
-      const ele = parts[2] || 0;
+      const ele = Number.isFinite(parts[2]) ? parts[2] : null;
       return [lat, lon, ele];
-    });
+    }).filter(([lat, lon]) => Number.isFinite(lat) && Number.isFinite(lon));
   }
 
   function calcElevationStats(segments) {
@@ -153,7 +163,7 @@ const KMLParser = (() => {
     let hasEle = false;
 
     for (const seg of segments) {
-      const eles = seg.map(p => p[2]).filter(e => e);
+      const eles = seg.map(p => p[2]).filter((e) => Number.isFinite(e));
       if (eles.length < 2) continue;
       hasEle = true;
       for (const e of eles) {

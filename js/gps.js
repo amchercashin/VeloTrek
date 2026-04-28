@@ -180,31 +180,50 @@ const GPSTracker = (() => {
     let minDist = Infinity;
     let nearestPoint = null;
 
-    const step = Math.max(1, Math.floor(routePoints.length / 1000));
-    for (let i = 0; i < routePoints.length; i += step) {
-      const point = routePoints[i];
-      const dist = haversine(lat, lon, point[0], point[1]);
-      if (dist < minDist) {
-        minDist = dist;
-        nearestPoint = point;
-      }
-    }
-
-    if (nearestPoint) {
-      const idx = routePoints.indexOf(nearestPoint);
-      const start = Math.max(0, idx - step);
-      const end = Math.min(routePoints.length, idx + step);
-      for (let i = start; i < end; i++) {
-        const point = routePoints[i];
+    for (const segment of routeData.segments) {
+      if (segment.length === 1) {
+        const point = segment[0];
         const dist = haversine(lat, lon, point[0], point[1]);
         if (dist < minDist) {
           minDist = dist;
           nearestPoint = point;
         }
+        continue;
+      }
+
+      for (let i = 1; i < segment.length; i++) {
+        const nearest = nearestOnSegment(lat, lon, segment[i - 1], segment[i]);
+        if (nearest.distance < minDist) {
+          minDist = nearest.distance;
+          nearestPoint = nearest.point;
+        }
       }
     }
 
     return { point: nearestPoint, distance: minDist };
+  }
+
+  function nearestOnSegment(lat, lon, a, b) {
+    const latScale = 111320;
+    const lonScale = 111320 * Math.cos((lat * Math.PI) / 180);
+    const ax = (a[1] - lon) * lonScale;
+    const ay = (a[0] - lat) * latScale;
+    const bx = (b[1] - lon) * lonScale;
+    const by = (b[0] - lat) * latScale;
+    const dx = bx - ax;
+    const dy = by - ay;
+    const len2 = dx * dx + dy * dy;
+    const t = len2 > 0 ? Math.max(0, Math.min(1, -(ax * dx + ay * dy) / len2)) : 0;
+    const x = ax + dx * t;
+    const y = ay + dy * t;
+    return {
+      point: [
+        a[0] + (b[0] - a[0]) * t,
+        a[1] + (b[1] - a[1]) * t,
+        (a[2] || 0) + ((b[2] || 0) - (a[2] || 0)) * t,
+      ],
+      distance: Math.sqrt(x * x + y * y),
+    };
   }
 
   function haversine(lat1, lon1, lat2, lon2) {
@@ -261,5 +280,5 @@ const GPSTracker = (() => {
     return { isTracking, followMode };
   }
 
-  return { init, start, stop, setFollowMode, getState };
+  return { init, start, stop, setFollowMode, getState, _test: { findNearestPoint } };
 })();

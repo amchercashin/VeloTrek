@@ -26,12 +26,13 @@ const App = (() => {
     return { base: "", owner: null, repo: null };
   }
 
-  function getCachedCatalog() {
+  function getCachedCatalog(options = {}) {
+    const { allowExpired = false } = options;
     try {
       const cached = localStorage.getItem(CACHE_KEY);
       if (!cached) return null;
       const data = JSON.parse(cached);
-      if (Date.now() - data.timestamp > CACHE_TTL) return null;
+      if (!allowExpired && Date.now() - data.timestamp > CACHE_TTL) return null;
       return data.sections;
     } catch {
       return null;
@@ -54,6 +55,7 @@ const App = (() => {
 
   async function loadCatalog(onUpdate) {
     const cached = getCachedCatalog();
+    const staleCached = cached || getCachedCatalog({ allowExpired: true });
 
     if (cached && onUpdate) {
       // Stale-while-revalidate: отдаём кэш мгновенно, обновляем в фоне
@@ -78,14 +80,15 @@ const App = (() => {
       setCachedCatalog(sections);
       return sections;
     } catch (e) {
-      // При ошибке сети — используем кэш
-      if (cached) return cached;
+      // При ошибке сети — используем любой сохранённый каталог, даже старше TTL
+      if (staleCached) return staleCached;
       throw new Error(`Не удалось загрузить каталог: ${e.message}`);
     }
   }
 
   function renderRouteCard(route) {
     const stats = route.stats || {};
+    const encodedFilename = encodeURIComponent(route.filename);
     const track = stats.track_km ? `${Math.round(stats.track_km)} км` : "";
     const span = stats.span_km ? `${Math.round(stats.span_km)} км` : "";
     const elevation =
@@ -96,7 +99,7 @@ const App = (() => {
     const descent = stats.descent_m ? `${stats.descent_m} м` : "";
 
     return `
-      <div class="route-card" data-route="${encodeURIComponent(route.filename)}">
+      <a class="route-card" href="route.html?route=${encodedFilename}" data-route="${encodedFilename}">
         <h2 class="route-card__title">${escapeHtml(route.name)}</h2>
         <div class="route-card__stats">
           ${track ? `<span class="stat" title="Суммарная длина трека"><span class="stat__icon">🗺️</span> ${track}</span>` : ""}
@@ -107,7 +110,7 @@ const App = (() => {
           ${route.poiCount ? `<span class="stat" title="Точки интереса"><span class="stat__icon">📍</span> ${route.poiCount} точек</span>` : ""}
         </div>
         ${route.error ? `<p class="route-card__error">Ошибка загрузки</p>` : ""}
-      </div>
+      </a>
     `;
   }
 
@@ -338,6 +341,7 @@ const App = (() => {
       // Подавить click если toggle уже обработан через touchend
       if (preventNextClick) {
         preventNextClick = false;
+        e.preventDefault();
         return;
       }
 
@@ -362,7 +366,9 @@ const App = (() => {
         try {
           sessionStorage.setItem("velotrek-catalog-scroll", window.scrollY);
         } catch {}
-        window.location.href = `route.html?route=${card.dataset.route}`;
+        if (card.tagName !== "A") {
+          window.location.href = `route.html?route=${card.dataset.route}`;
+        }
       }
     };
 

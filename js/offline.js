@@ -4,8 +4,10 @@
  */
 const OfflineTiles = (() => {
   const DB_NAME = "velotrek-tiles";
-  const DB_VERSION = 1;
+  const DB_VERSION = 2;
   const STORE_NAME = "tiles";
+  const ROUTES_STORE = "routes";
+  const TILE_REFS_STORE = "tileRefs";
 
   let dbPromise = null;
 
@@ -15,6 +17,12 @@ const OfflineTiles = (() => {
         upgrade(db) {
           if (!db.objectStoreNames.contains(STORE_NAME)) {
             db.createObjectStore(STORE_NAME);
+          }
+          if (!db.objectStoreNames.contains(ROUTES_STORE)) {
+            db.createObjectStore(ROUTES_STORE);
+          }
+          if (!db.objectStoreNames.contains(TILE_REFS_STORE)) {
+            db.createObjectStore(TILE_REFS_STORE);
           }
         },
       });
@@ -32,12 +40,62 @@ const OfflineTiles = (() => {
     return db.put(STORE_NAME, blob, key);
   }
 
-  async function deleteTilesForRoute(routeData, zoomMin = 10, zoomMax = 16) {
+  async function saveRouteManifest(routeId, tileKeys) {
+    if (!routeId) return;
     const db = await getDB();
-    const tileKeys = getTilesForRoute(routeData, zoomMin, zoomMax);
-    const tx = db.transaction(STORE_NAME, "readwrite");
-    const store = tx.objectStore(STORE_NAME);
-    await Promise.all(tileKeys.map((key) => store.delete(key)));
+    const tx = db.transaction([ROUTES_STORE, TILE_REFS_STORE], "readwrite");
+    const routesStore = tx.objectStore(ROUTES_STORE);
+    const refsStore = tx.objectStore(TILE_REFS_STORE);
+
+    const previousKeys = (await routesStore.get(routeId)) || [];
+    const uniqueKeys = [...new Set([...previousKeys, ...tileKeys])];
+
+    for (const key of uniqueKeys) {
+      const refs = (await refsStore.get(key)) || [];
+      if (!refs.includes(routeId)) {
+        refs.push(routeId);
+        await refsStore.put(refs, key);
+      }
+    }
+
+    await routesStore.put(uniqueKeys, routeId);
+    await tx.done;
+  }
+
+  async function deleteTilesForRoute(
+    routeData,
+    zoomMin = 10,
+    zoomMax = 16,
+    routeId = null,
+  ) {
+    const db = await getDB();
+    const manifestKeys = routeId ? await db.get(ROUTES_STORE, routeId) : null;
+    const tileKeys = manifestKeys || getTilesForRoute(routeData, zoomMin, zoomMax);
+    const tx = db.transaction(
+      [STORE_NAME, ROUTES_STORE, TILE_REFS_STORE],
+      "readwrite",
+    );
+    const tileStore = tx.objectStore(STORE_NAME);
+    const routesStore = tx.objectStore(ROUTES_STORE);
+    const refsStore = tx.objectStore(TILE_REFS_STORE);
+
+    for (const key of tileKeys) {
+      if (routeId && manifestKeys) {
+        const refs = ((await refsStore.get(key)) || []).filter(
+          (id) => id !== routeId,
+        );
+        if (refs.length) {
+          await refsStore.put(refs, key);
+        } else {
+          await refsStore.delete(key);
+          await tileStore.delete(key);
+        }
+      } else {
+        await tileStore.delete(key);
+      }
+    }
+
+    if (routeId) await routesStore.delete(routeId);
     await tx.done;
     return tileKeys.length;
   }
@@ -146,6 +204,7 @@ const OfflineTiles = (() => {
     });
 
     const toDownload = [];
+    const availableKeys = [];
     let cached = 0;
     const CHECK_CHUNK = 50;
     for (let i = 0; i < allTileKeys.length; i += CHECK_CHUNK) {
@@ -155,6 +214,7 @@ const OfflineTiles = (() => {
           completed: 0,
           failed: 0,
           cached,
+          availableKeys,
           cancelled: true,
         };
       }
@@ -163,6 +223,7 @@ const OfflineTiles = (() => {
       for (let j = 0; j < chunk.length; j++) {
         if (results[j]) {
           cached++;
+          availableKeys.push(chunk[j]);
         } else {
           toDownload.push(chunk[j]);
         }
@@ -176,12 +237,20 @@ const OfflineTiles = (() => {
     onProgress({ phase: "downloading", total, completed, failed, cached });
 
     if (total === 0) {
-      onProgress({ phase: "done", total: 0, completed: 0, failed: 0, cached });
+      onProgress({
+        phase: "done",
+        total: 0,
+        completed: 0,
+        failed: 0,
+        cached,
+        availableKeys,
+      });
       return {
         total: allTileKeys.length,
         completed: 0,
         failed: 0,
         cached,
+        availableKeys,
         cancelled: false,
       };
     }
@@ -200,15 +269,17 @@ const OfflineTiles = (() => {
           .replace("{y}", y);
 
         try {
-          const resp = await fetch(url);
+          const resp = await fetch(url, signal ? { signal } : undefined);
           if (resp.ok) {
             const blob = await resp.blob();
             await putTile(key, blob);
+            availableKeys.push(key);
             completed++;
           } else {
             failed++;
           }
         } catch {
+          if (signal && signal.aborted) return;
           failed++;
         }
 
@@ -224,9 +295,24 @@ const OfflineTiles = (() => {
     await Promise.all(workers);
 
     const cancelled = signal ? signal.aborted : false;
-    onProgress({ phase: "done", total, completed, failed, cached, cancelled });
+    onProgress({
+      phase: "done",
+      total,
+      completed,
+      failed,
+      cached,
+      availableKeys,
+      cancelled,
+    });
 
-    return { total: allTileKeys.length, completed, failed, cached, cancelled };
+    return {
+      total: allTileKeys.length,
+      completed,
+      failed,
+      cached,
+      availableKeys,
+      cancelled,
+    };
   }
 
   async function getStoredTileCount() {
@@ -236,8 +322,13 @@ const OfflineTiles = (() => {
 
   async function clearAllTiles() {
     const db = await getDB();
-    const tx = db.transaction(STORE_NAME, "readwrite");
+    const tx = db.transaction(
+      [STORE_NAME, ROUTES_STORE, TILE_REFS_STORE],
+      "readwrite",
+    );
     await tx.objectStore(STORE_NAME).clear();
+    await tx.objectStore(ROUTES_STORE).clear();
+    await tx.objectStore(TILE_REFS_STORE).clear();
     await tx.done;
   }
 
@@ -249,6 +340,7 @@ const OfflineTiles = (() => {
     formatSize,
     downloadTiles,
     deleteTilesForRoute,
+    saveRouteManifest,
     getStoredTileCount,
     clearAllTiles,
   };
