@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-01T12:48:48Z",
+  "generated": "2026-05-17T21:21:15Z",
   "sections": [
     {
       "name": "Велопутешествия",
@@ -45,6 +45,142 @@
             "maxLat": 55.842941,
             "minLon": 37.386917,
             "maxLon": 37.82994768826549
+          }
+        },
+        {
+          "filename": "Москва/04-po-techeniyu-yauzy.kml",
+          "name": "По течению Яузы",
+          "description": "",
+          "stats": {
+            "track_km": 8.0,
+            "span_km": 5.8
+          },
+          "poiCount": 5,
+          "segmentCount": 1,
+          "bbox": {
+            "minLat": 55.852456,
+            "maxLat": 55.894036,
+            "minLon": 37.628587,
+            "maxLon": 37.685072
+          }
+        },
+        {
+          "filename": "Москва/05-zv01-po-parkam-moskvy.kml",
+          "name": "ZV01 по паркам Москвы",
+          "description": "",
+          "stats": {
+            "track_km": 41.4,
+            "span_km": 13.3
+          },
+          "poiCount": 11,
+          "segmentCount": 1,
+          "bbox": {
+            "minLat": 55.7894176,
+            "maxLat": 55.887314,
+            "minLon": 37.607636,
+            "maxLon": 37.7288532
+          }
+        },
+        {
+          "filename": "Москва/06-chetyre-parka.kml",
+          "name": "4 парка!",
+          "description": "",
+          "stats": {
+            "track_km": 24.8,
+            "span_km": 13.9
+          },
+          "poiCount": 8,
+          "segmentCount": 1,
+          "bbox": {
+            "minLat": 55.68851,
+            "maxLat": 55.809276,
+            "minLon": 37.792962,
+            "maxLon": 37.850206
+          }
+        },
+        {
+          "filename": "Москва/07-naberezhnye-moskvy-reki.kml",
+          "name": "Набережные Москвы-реки",
+          "description": "",
+          "stats": {
+            "track_km": 17.8,
+            "span_km": 8.9
+          },
+          "poiCount": 24,
+          "segmentCount": 1,
+          "bbox": {
+            "minLat": 55.709347,
+            "maxLat": 55.755622,
+            "minLon": 37.542475,
+            "maxLon": 37.659076
+          }
+        },
+        {
+          "filename": "Москва/08-moskva-zhivopisnaya.kml",
+          "name": "Москва Живописная",
+          "description": "",
+          "stats": {
+            "track_km": 33.5,
+            "span_km": 10.7
+          },
+          "poiCount": 36,
+          "segmentCount": 1,
+          "bbox": {
+            "minLat": 55.705604,
+            "maxLat": 55.77329,
+            "minLon": 37.534957,
+            "maxLon": 37.656619
+          }
+        },
+        {
+          "filename": "Москва/09-rechnoy.kml",
+          "name": "Речной",
+          "description": "",
+          "stats": {
+            "track_km": 48.2,
+            "span_km": 11.3
+          },
+          "poiCount": 10,
+          "segmentCount": 1,
+          "bbox": {
+            "minLat": 55.740145,
+            "maxLat": 55.821165,
+            "minLon": 37.387207,
+            "maxLon": 37.494846
+          }
+        },
+        {
+          "filename": "Москва/10-filevskiy-park.kml",
+          "name": "Филевский парк",
+          "description": "",
+          "stats": {
+            "track_km": 12.8,
+            "span_km": 4.1
+          },
+          "poiCount": 16,
+          "segmentCount": 1,
+          "bbox": {
+            "minLat": 55.739954,
+            "maxLat": 55.752439,
+            "minLon": 37.434921,
+            "maxLon": 37.496565
+          }
+        },
+        {
+          "filename": "Москва/11-kanal-imeni-moskvy.kml",
+          "name": "Канал имени Москвы",
+          "description": "",
+          "stats": {
+            "track_km": 30.8,
+            "span_km": 10.6
+          },
+          "poiCount": 13,
+          "segmentCount": 1,
+          "bbox": {
+            "minLat": 55.874913,
+            "maxLat": 55.955552,
+            "minLon": 37.480483,
+            "maxLon": 37.570406
           }
         }
       ]
