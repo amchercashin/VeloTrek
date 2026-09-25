@@ -1,5 +1,8 @@
 /**
- * Нижняя шторка поверх карты: «peek» (шапка с главными действиями) ↔ «full».
+ * Нижняя шторка поверх карты, три положения:
+ *   collapsed — видно только название, карта почти на весь экран;
+ *   peek      — шапка с главными действиями (скачать / поехать);
+ *   full      — всё содержимое с описанием и точками.
  * Тянется за шапку; на широком экране становится боковой панелью (через CSS),
  * и логика перетаскивания отключается.
  */
@@ -9,14 +12,18 @@ export function createSheet(root, { onChange } = {}) {
   const head = root.querySelector(".sheet__head");
   const body = root.querySelector(".sheet__body");
   const wide = window.matchMedia("(min-width: 900px)");
+  const title = root.querySelector(".sheet__title");
   let state = "peek";
-  let offsets = { full: 0, peek: 0, hidden: 0 };
+  let offsets = { full: 0, peek: 0, collapsed: 0, hidden: 0 };
   let current = 0;
 
   function measure() {
     const h = root.offsetHeight;
     const peek = Math.min(head.offsetHeight, h);
-    offsets = { full: 0, peek: h - peek, hidden: h + 24 };
+    // Свёрнутая шторка заканчивается сразу под названием (плюс отступ до края экрана)
+    const padBottom = parseFloat(getComputedStyle(head).paddingBottom) || 0;
+    const collapsed = Math.min(peek, title.offsetTop + title.offsetHeight + padBottom);
+    offsets = { full: 0, peek: h - peek, collapsed: h - collapsed, hidden: h + 24 };
     if (!dragging) apply(offsets[state], false);
   }
 
@@ -75,7 +82,7 @@ export function createSheet(root, { onChange } = {}) {
     let y = startOffset + dy;
     // Резиновое сопротивление за пределами крайних положений
     if (y < offsets.full) y = offsets.full - Math.sqrt(offsets.full - y) * 3;
-    if (y > offsets.peek) y = offsets.peek + Math.sqrt(y - offsets.peek) * 3;
+    if (y > offsets.collapsed) y = offsets.collapsed + Math.sqrt(y - offsets.collapsed) * 3;
     const dt = e.timeStamp - lastT;
     if (dt > 0) velocity = 0.8 * ((e.clientY - lastY) / dt) + 0.2 * velocity;
     lastY = e.clientY;
@@ -90,10 +97,19 @@ export function createSheet(root, { onChange } = {}) {
     dragging = false;
     suppressClick = true;
     setTimeout(() => (suppressClick = false), 0);
+    // Быстрый жест — на соседнее положение по направлению, иначе — к ближайшему
+    const order = ["full", "peek", "collapsed"];
     let next;
-    if (velocity < -0.45) next = "full";
-    else if (velocity > 0.45) next = "peek";
-    else next = current < (offsets.full + offsets.peek) / 2 ? "full" : "peek";
+    if (Math.abs(velocity) > 0.45) {
+      const from = order.indexOf(state);
+      const step = velocity > 0 ? 1 : -1;
+      // Если палец уже протащил за соседнее положение — считаем от ближайшего
+      const nearest = order.reduce((a, b) => (Math.abs(offsets[b] - current) < Math.abs(offsets[a] - current) ? b : a));
+      const base = Math.abs(order.indexOf(nearest) - from) > 1 ? order.indexOf(nearest) : from;
+      next = order[Math.max(0, Math.min(order.length - 1, base + step))];
+    } else {
+      next = order.reduce((a, b) => (Math.abs(offsets[b] - current) < Math.abs(offsets[a] - current) ? b : a));
+    }
     setState(next);
   };
   head.addEventListener("pointerup", end);
@@ -110,7 +126,7 @@ export function createSheet(root, { onChange } = {}) {
       }
       if (wide.matches) return;
       if (e.target.closest("button, a, input, [data-no-toggle]")) return;
-      setState(state === "full" ? "peek" : "full");
+      setState(state === "peek" ? "full" : "peek");
     },
     true,
   );
