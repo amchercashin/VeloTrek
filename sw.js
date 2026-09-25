@@ -7,7 +7,7 @@
  *   связи в лесу не ждём минуту, а отдаём сохранённую копию.
  * - Тайлы карты не трогаем: скачанные лежат в IndexedDB (см. js/data/tiles.js).
  */
-const SHELL_VERSION = 27;
+const SHELL_VERSION = 28;
 const SHELL_CACHE = "versty-shell-v" + SHELL_VERSION;
 const ROUTES_CACHE = "velotrek-routes"; // имя сохранено: там файлы маршрутов прежней версии
 const NETWORK_TIMEOUT_MS = 4000;
