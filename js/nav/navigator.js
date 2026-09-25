@@ -21,7 +21,7 @@ export function requestCompassPermission() {
   return Promise.resolve("granted");
 }
 
-export function createNavigator({ L, map, route, onUpdate, onFollowChange }) {
+export function createNavigator({ L, map, route, onUpdate, onFollowChange, keepAwake = true }) {
   const index = buildTrackIndex(route.segments);
   let watchId = null;
   let wakeLock = null;
@@ -74,9 +74,12 @@ export function createNavigator({ L, map, route, onUpdate, onFollowChange }) {
   }
 
   async function acquireWakeLock() {
+    if (!keepAwake || wakeLock) return;
     try {
       if ("wakeLock" in navigator && document.visibilityState === "visible") {
         wakeLock = await navigator.wakeLock.request("screen");
+        // Система снимает блокировку, когда вкладка скрыта, — вернём её при возвращении
+        wakeLock.addEventListener("release", () => (wakeLock = null));
       }
     } catch {
       /* нет поддержки или энергосбережение — экран просто погаснет по таймауту */
@@ -258,6 +261,15 @@ export function createNavigator({ L, map, route, onUpdate, onFollowChange }) {
     setFollow,
     setInsets(next) {
       insets = next;
+    },
+    /** «Не гасить экран»: без блокировки экран гаснет по таймауту системы. */
+    setKeepAwake(on) {
+      keepAwake = on;
+      if (on) acquireWakeLock();
+      else {
+        wakeLock?.release().catch(() => {});
+        wakeLock = null;
+      }
     },
     get following() {
       return follow;

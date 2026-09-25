@@ -43,6 +43,7 @@ const SHELL_FILES = [
   "./js/ui/feedback.js",
   "./js/ui/icons.js",
   "./js/ui/route-card.js",
+  "./js/ui/screen.js",
   "./js/ui/sheet.js",
   "./js/views/catalog.js",
   "./js/views/panels.js",

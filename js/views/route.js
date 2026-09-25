@@ -15,8 +15,9 @@ import { createNavigator, requestCompassPermission } from "../nav/navigator.js";
 import { createSheet } from "../ui/sheet.js";
 import { icon } from "../ui/icons.js";
 import { toast, confirmDialog } from "../ui/feedback.js";
+import * as screen from "../ui/screen.js";
 
-const NIGHT_KEY = "versty:night-map";
+const SCREEN_TIP_KEY = "versty:tip-screen";
 
 export function createRouteView(root, { onClose, onDownloadsChanged }) {
   root.innerHTML = `
@@ -25,8 +26,8 @@ export function createRouteView(root, { onClose, onDownloadsChanged }) {
     <div class="map-top">
       <button class="fab" type="button" data-action="back" aria-label="К списку маршрутов">${icon("back")}</button>
       <div class="map-top__right">
-        <button class="fab" type="button" data-action="fit" aria-label="Показать весь маршрут">${icon("fit")}</button>
-        <button class="fab" type="button" data-action="night" aria-pressed="false" aria-label="Ночная карта">${icon("moon")}</button>
+        <button class="fab fab--pill" type="button" data-action="fit" hidden>${icon("route", { size: 20 })}Весь маршрут</button>
+        <button class="fab nav-only" type="button" data-action="screen" aria-label="Экран: яркость и стиль карты">${icon("sun")}</button>
       </div>
     </div>
 
@@ -65,6 +66,33 @@ export function createRouteView(root, { onClose, onDownloadsChanged }) {
       </div>
       <button class="fab fab--lg" type="button" data-action="follow" aria-pressed="true" aria-label="Следовать за мной">${icon("locate")}</button>
       <button class="btn btn--stop" type="button" data-action="stop">${icon("stop", { size: 20 })}Стоп</button>
+    </div>
+
+    <div class="dimmer" aria-hidden="true"></div>
+
+    <div class="screen-pop" data-screen-pop role="dialog" aria-label="Экран" hidden>
+      <div class="screen-pop__head">
+        <b>Экран</b>
+        <button class="icon-btn icon-btn--sm" type="button" data-action="screen-close" aria-label="Закрыть">${icon("close", { size: 18 })}</button>
+      </div>
+      <div class="field">
+        <span class="field__label">Карта</span>
+        <div class="seg seg--text" role="radiogroup" aria-label="Стиль карты">
+          <button type="button" role="radio" data-map-style="auto">Авто</button>
+          <button type="button" role="radio" data-map-style="day">День</button>
+          <button type="button" role="radio" data-map-style="night">Ночь</button>
+        </div>
+        <small class="field__hint">«Авто» — как тема телефона</small>
+      </div>
+      <label class="field">
+        <span class="field__label">Затемнение <span class="field__value" data-dim-value></span></span>
+        <input class="range" type="range" min="0" max="70" step="5" data-dim />
+        <small class="field__hint">На OLED-экранах тёмная картинка тратит меньше заряда. Системную яркость браузер менять не умеет — её можно убавить в пункте управления телефона.</small>
+      </label>
+      <label class="switch">
+        <input type="checkbox" data-keep-awake />
+        <span class="switch__text"><b>Не гасить экран</b><small>Если выключить, экран погаснет как обычно, а позиция обновится, когда вы его включите</small></span>
+      </label>
     </div>`;
 
   const els = {
@@ -78,7 +106,8 @@ export function createRouteView(root, { onClose, onDownloadsChanged }) {
     body: $("[data-body]", root),
     hud: $("[data-hud]", root),
     navbar: $("[data-navbar]", root),
-    night: $("[data-action=night]", root),
+    fit: $("[data-action=fit]", root),
+    screenPop: $("[data-screen-pop]", root),
   };
 
   let L = null;
@@ -92,6 +121,7 @@ export function createRouteView(root, { onClose, onDownloadsChanged }) {
   const sheet = createSheet(els.sheet, {
     onChange: () => {
       map?.invalidateSize({ pan: false });
+      updateFitButton();
     },
   });
 
@@ -101,7 +131,7 @@ export function createRouteView(root, { onClose, onDownloadsChanged }) {
       mapReady = createMap(els.map).then((res) => {
         L = res.L;
         map = res.map;
-        setNight(storage.get(NIGHT_KEY, false));
+        map.on("moveend", updateFitButton);
         return res;
       });
       mapReady.catch(() => (mapReady = null));
@@ -123,13 +153,62 @@ export function createRouteView(root, { onClose, onDownloadsChanged }) {
     map.fitBounds(boundsOf(L, bbox), { ...mapPadding(), animate, maxZoom: 15 });
   }
 
-  function setNight(on) {
-    els.map.classList.toggle("is-night", on);
-    els.night.setAttribute("aria-pressed", String(on));
-    els.night.innerHTML = icon(on ? "sun" : "moon");
-    els.night.setAttribute("aria-label", on ? "Дневная карта" : "Ночная карта");
-    storage.set(NIGHT_KEY, on);
+  /**
+   * «Весь маршрут» показываем, только когда маршрут ушёл из видимой части карты
+   * или стал совсем мелким — сразу после открытия кнопка не нужна.
+   */
+  function updateFitButton() {
+    const bbox = current?.data?.bbox || current?.meta?.bbox;
+    if (!map || !bbox || nav || !map._loaded) {
+      els.fit.hidden = true;
+      return;
+    }
+    const b = boundsOf(L, bbox);
+    const nw = map.latLngToContainerPoint(b.getNorthWest());
+    const se = map.latLngToContainerPoint(b.getSouthEast());
+    const size = map.getSize();
+    const { paddingTopLeft: tl, paddingBottomRight: br } = mapPadding();
+    const tol = 32;
+    const areaW = size.x - tl[0] - br[0];
+    const areaH = size.y - tl[1] - br[1];
+    const inside =
+      nw.x >= tl[0] - tol && nw.y >= tl[1] - tol && se.x <= size.x - br[0] + tol && se.y <= size.y - br[1] + tol;
+    const tooSmall = se.x - nw.x < areaW * 0.3 && se.y - nw.y < areaH * 0.3;
+    els.fit.hidden = inside && !tooSmall;
   }
+
+  // --- экран: стиль карты, затемнение, «не гасить» --------------------------------
+  function renderScreen(state) {
+    root.style.setProperty("--dim", state.dim / 100);
+    for (const b of els.screenPop.querySelectorAll("[data-map-style]")) {
+      b.setAttribute("aria-checked", String(b.dataset.mapStyle === state.mapStyle));
+    }
+    $("[data-dim]", els.screenPop).value = state.dim;
+    $("[data-dim-value]", els.screenPop).textContent = state.dim ? `${state.dim}%` : "нет";
+    $("[data-keep-awake]", els.screenPop).checked = state.keepAwake;
+  }
+  screen.subscribe(renderScreen);
+  renderScreen(screen.get());
+
+  els.screenPop.addEventListener("click", (e) => {
+    const style = e.target.closest("[data-map-style]");
+    if (style) screen.set({ mapStyle: style.dataset.mapStyle });
+  });
+  $("[data-dim]", els.screenPop).addEventListener("input", (e) => screen.set({ dim: Number(e.target.value) }));
+  $("[data-keep-awake]", els.screenPop).addEventListener("change", (e) => {
+    screen.set({ keepAwake: e.target.checked });
+    nav?.setKeepAwake(e.target.checked);
+  });
+
+  function toggleScreenPop(open = els.screenPop.hidden) {
+    els.screenPop.hidden = !open;
+    root.classList.toggle("is-screen-open", open);
+  }
+
+  // Тап мимо панели закрывает её
+  root.addEventListener("pointerdown", (e) => {
+    if (!els.screenPop.hidden && !e.target.closest("[data-screen-pop], [data-action=screen]")) toggleScreenPop(false);
+  });
 
   // --- шапка шторки --------------------------------------------------------------
   function renderHead() {
@@ -459,6 +538,8 @@ export function createRouteView(root, { onClose, onDownloadsChanged }) {
   function hudInsets() {
     const top = els.hud.getBoundingClientRect().bottom;
     const bottom = window.innerHeight - els.navbar.getBoundingClientRect().top;
+    // Кнопка «Экран» и её панель встают сразу под HUD
+    root.style.setProperty("--hud-bottom", `${top}px`);
     nav?.setInsets({ top, bottom });
   }
 
@@ -485,6 +566,7 @@ export function createRouteView(root, { onClose, onDownloadsChanged }) {
         onFollowChange: (on) => {
           hud.follow.setAttribute("aria-pressed", String(on));
         },
+        keepAwake: screen.get().keepAwake,
       });
       nav.start();
     } catch (e) {
@@ -502,15 +584,29 @@ export function createRouteView(root, { onClose, onDownloadsChanged }) {
     els.hud.hidden = false;
     els.navbar.hidden = false;
     sheet.setState("hidden");
+    els.fit.hidden = true;
     requestAnimationFrame(hudInsets);
     // Отдельная запись в истории: кнопка «назад» сначала спросит про остановку навигации
     history.pushState({ versty: "nav" }, "");
+
+    // Один раз подсказываем про яркость: в поездке экран — главный потребитель батареи
+    if (!storage.get(SCREEN_TIP_KEY)) {
+      storage.set(SCREEN_TIP_KEY, true);
+      setTimeout(() => {
+        if (!nav) return;
+        toast("Экран — главный расход батареи в поездке. Затемните картинку", {
+          duration: 8000,
+          action: { label: "Настроить", onClick: () => toggleScreenPop(true) },
+        });
+      }, 2500);
+    }
   }
 
   function stopNav({ fromHistory = false } = {}) {
     if (!nav) return;
     nav.stop();
     nav = null;
+    toggleScreenPop(false);
     root.classList.remove("is-navigating");
     els.hud.hidden = true;
     els.navbar.hidden = true;
@@ -541,10 +637,11 @@ export function createRouteView(root, { onClose, onDownloadsChanged }) {
       case "back":
         return onClose();
       case "fit":
-        if (nav) nav.setFollow(false);
         return fitRoute(true);
-      case "night":
-        return setNight(!els.map.classList.contains("is-night"));
+      case "screen":
+        return toggleScreenPop();
+      case "screen-close":
+        return toggleScreenPop(false);
       case "download":
         return startDownload();
       case "cancel":
