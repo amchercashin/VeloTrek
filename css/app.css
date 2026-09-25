@@ -970,22 +970,23 @@ a.card:active {
   gap: 10px;
 }
 
-/* В поездке сверху HUD: «назад» и «весь маршрут» прячем, кнопка «Экран» встаёт под HUD */
+/* В поездке сверху только HUD */
 .is-navigating .map-top {
-  top: calc(var(--hud-bottom, 140px) + 10px);
-}
-
-.is-navigating .map-top [data-action="back"],
-.is-navigating .map-top [data-action="fit"] {
   display: none;
 }
 
-.nav-only {
-  display: none;
+/* «Экран» — в правом нижнем углу над панелью поездки, рядом с остальным управлением */
+.fab--screen {
+  position: absolute;
+  z-index: 700;
+  right: max(10px, calc((100% - 520px) / 2));
+  bottom: calc(var(--navbar-top, 90px) + 12px);
+  animation: rise 0.3s var(--ease-out);
 }
 
-.is-navigating .nav-only {
-  display: grid;
+.fab--screen[aria-expanded="true"] {
+  background: var(--ink);
+  color: var(--bg);
 }
 
 .fab--pill {
@@ -1809,8 +1810,8 @@ a.card:active {
 .screen-pop {
   position: absolute;
   z-index: 950;
-  top: calc(var(--hud-bottom, 140px) + 66px);
-  right: 12px;
+  bottom: calc(var(--navbar-top, 90px) + 12px + 46px + 10px);
+  right: max(10px, calc((100% - 520px) / 2));
   width: min(340px, calc(100% - 24px));
   display: grid;
   gap: 16px;
@@ -1819,7 +1820,7 @@ a.card:active {
   background: var(--surface);
   box-shadow: var(--shadow-2);
   animation: pop 0.2s var(--ease-out);
-  transform-origin: top right;
+  transform-origin: bottom right;
 }
 
 .screen-pop__head {
@@ -2415,6 +2416,11 @@ dialog {
 
 .route-open .toast.is-in {
   transform: translate(-50%, 0);
+}
+
+/* В поездке тост не должен закрывать HUD */
+.nav-active .toast {
+  top: calc(var(--hud-bottom, 140px) + 10px);
 }
 
 .toast--ok {
