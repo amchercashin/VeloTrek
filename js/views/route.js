@@ -27,7 +27,6 @@ export function createRouteView(root, { onClose, onDownloadsChanged }) {
       <button class="fab" type="button" data-action="back" aria-label="К списку маршрутов">${icon("back")}</button>
       <div class="map-top__right">
         <button class="fab fab--pill" type="button" data-action="fit" hidden>${icon("route", { size: 20 })}Весь маршрут</button>
-        <button class="fab nav-only" type="button" data-action="screen" aria-label="Экран: яркость и стиль карты">${icon("sun")}</button>
       </div>
     </div>
 
@@ -68,6 +67,8 @@ export function createRouteView(root, { onClose, onDownloadsChanged }) {
       <button class="btn btn--stop" type="button" data-action="stop">${icon("stop", { size: 20 })}Стоп</button>
     </div>
 
+    <button class="fab fab--screen" type="button" data-action="screen" aria-label="Экран: яркость и стиль карты" hidden>${icon("sun")}</button>
+
     <div class="dimmer" aria-hidden="true"></div>
 
     <div class="screen-pop" data-screen-pop role="dialog" aria-label="Экран" hidden>
@@ -107,6 +108,7 @@ export function createRouteView(root, { onClose, onDownloadsChanged }) {
     hud: $("[data-hud]", root),
     navbar: $("[data-navbar]", root),
     fit: $("[data-action=fit]", root),
+    screenBtn: $("[data-action=screen]", root),
     screenPop: $("[data-screen-pop]", root),
   };
 
@@ -202,7 +204,7 @@ export function createRouteView(root, { onClose, onDownloadsChanged }) {
 
   function toggleScreenPop(open = els.screenPop.hidden) {
     els.screenPop.hidden = !open;
-    root.classList.toggle("is-screen-open", open);
+    els.screenBtn.setAttribute("aria-expanded", String(open));
   }
 
   // Тап мимо панели закрывает её
@@ -536,10 +538,12 @@ export function createRouteView(root, { onClose, onDownloadsChanged }) {
   }
 
   function hudInsets() {
-    const top = els.hud.getBoundingClientRect().bottom;
-    const bottom = window.innerHeight - els.navbar.getBoundingClientRect().top;
-    // Кнопка «Экран» и её панель встают сразу под HUD
-    root.style.setProperty("--hud-bottom", `${top}px`);
+    // offsetTop/offsetHeight, а не getBoundingClientRect: на них не влияет анимация появления
+    const top = els.hud.offsetTop + els.hud.offsetHeight;
+    const bottom = root.offsetHeight - els.navbar.offsetTop;
+    // Тосты в поездке встают под HUD, кнопка «Экран» — над нижней панелью
+    document.documentElement.style.setProperty("--hud-bottom", `${top}px`);
+    root.style.setProperty("--navbar-top", `${bottom}px`);
     nav?.setInsets({ top, bottom });
   }
 
@@ -581,8 +585,10 @@ export function createRouteView(root, { onClose, onDownloadsChanged }) {
     hud.bar.style.transform = "scaleX(0)";
     hud.acc.textContent = "";
     root.classList.add("is-navigating");
+    document.documentElement.classList.add("nav-active");
     els.hud.hidden = false;
     els.navbar.hidden = false;
+    els.screenBtn.hidden = false;
     sheet.setState("hidden");
     els.fit.hidden = true;
     requestAnimationFrame(hudInsets);
@@ -608,6 +614,8 @@ export function createRouteView(root, { onClose, onDownloadsChanged }) {
     nav = null;
     toggleScreenPop(false);
     root.classList.remove("is-navigating");
+    document.documentElement.classList.remove("nav-active");
+    els.screenBtn.hidden = true;
     els.hud.hidden = true;
     els.navbar.hidden = true;
     sheet.setState("peek");
