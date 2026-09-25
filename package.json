@@ -1,0 +1,15 @@
+{
+  "name": "versty",
+  "private": true,
+  "description": "Вёрсты — веломаршруты Москвы и Подмосковья с офлайн-картами",
+  "type": "module",
+  "scripts": {
+    "serve": "npx --yes http-server -p 8080 -c-1 .",
+    "test": "node --test tests/unit.test.mjs",
+    "e2e": "node tests/e2e.mjs http://localhost:8080",
+    "index": "python3 scripts/generate-index.py"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.0"
+  }
+}

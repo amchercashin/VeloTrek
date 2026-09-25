@@ -2,134 +2,43 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    />
-    <meta name="theme-color" content="#2D6A4F" />
-    <meta
-      name="description"
-      content="ВелоТропа — офлайн велонавигатор с загружаемыми картами"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Вёрсты — веломаршруты без интернета</title>
+    <meta name="description" content="Веломаршруты по Москве и Подмосковью с офлайн-картами и GPS-навигацией без интернета." />
+    <meta name="theme-color" content="#f4f3ee" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b100d" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Вёрсты" />
     <link rel="manifest" href="manifest.json" />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="icons/apple-touch-icon.png"
-    />
     <link rel="icon" type="image/svg+xml" href="icons/icon.svg" />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="icons/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="icons/favicon-16x16.png"
-    />
-    <link rel="shortcut icon" href="favicon.ico" />
-    <title>ВелоТропа</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+    <link rel="preload" href="fonts/onest-cyrillic.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="css/app.css" />
   </head>
   <body>
-    <header class="header">
-      <div class="header__inner">
-        <span class="header__title">ВелоТропа</span>
-        <a
-          href="#"
-          class="header__action"
-          id="add-route-btn"
-          title="Добавить маршрут"
-          >+</a
-        >
-      </div>
-    </header>
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="brand-mark" viewBox="0 0 512 512">
+        <rect width="512" height="512" rx="116" fill="#124a38" />
+        <g transform="translate(12 -8)">
+          <path d="M112 404C168 398 150 318 214 306S292 356 318 306" fill="none" stroke="#f4f3ee" stroke-width="34" stroke-linecap="round" stroke-dasharray="0.5 56" />
+          <circle cx="112" cy="404" r="40" fill="#ff5a1f" />
+          <circle cx="112" cy="404" r="14" fill="#124a38" />
+          <g transform="rotate(6 368 190)">
+            <rect x="336" y="84" width="66" height="212" rx="15" fill="#f4f3ee" />
+            <path d="M336 138l66-29v26l-66 29zM336 202l66-29v26l-66 29zM336 266l66-29v26l-66 29z" fill="#ff5a1f" />
+          </g>
+        </g>
+      </symbol>
+    </svg>
 
-    <main class="catalog" id="catalog">
-      <div class="loading" id="loading">
-        <div class="loading__spinner"></div>
-        <p>Загрузка маршрутов...</p>
-      </div>
+    <div id="catalog" class="catalog-view"></div>
+    <section id="route" class="route-view" hidden></section>
 
-      <div class="error-msg hidden" id="error">
-        <p class="error-msg__text"></p>
-        <button class="error-msg__retry" onclick="loadRoutes()">
-          Повторить
-        </button>
-      </div>
-
-      <div id="route-list"></div>
-    </main>
-
-    <!-- JSZip для поддержки KMZ -->
-    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-    <script src="js/kml-parser.js"></script>
-    <script src="js/app.js"></script>
-
-    <script>
-      async function loadRoutes() {
-        const loading = document.getElementById("loading");
-        const error = document.getElementById("error");
-        const routeList = document.getElementById("route-list");
-
-        loading.classList.remove("hidden");
-        error.classList.add("hidden");
-        routeList.innerHTML = "";
-
-        try {
-          const routes = await App.loadCatalog((updatedRoutes) => {
-            // Фоновое обновление каталога — тихо перерисовываем без фликера
-            routeList.innerHTML = "";
-            App.renderCatalog(updatedRoutes, routeList);
-          });
-          loading.classList.add("hidden");
-          App.renderCatalog(routes, routeList);
-
-          // Восстанавливаем позицию прокрутки после возврата с маршрута
-          try {
-            const savedScroll = sessionStorage.getItem(
-              "velotrek-catalog-scroll",
-            );
-            if (savedScroll) {
-              requestAnimationFrame(() =>
-                window.scrollTo(0, parseInt(savedScroll)),
-              );
-              sessionStorage.removeItem("velotrek-catalog-scroll");
-            }
-          } catch {}
-
-          // Кнопка «+ Добавить маршрут» → README#добавление-маршрута
-          const repo = App.detectRepo();
-          if (repo) {
-            document.getElementById("add-route-btn").href =
-              `https://github.com/${repo.owner}/${repo.repo}#добавление-маршрута`;
-          }
-        } catch (e) {
-          loading.classList.add("hidden");
-          error.classList.remove("hidden");
-          error.querySelector(".error-msg__text").textContent =
-            "Не удалось загрузить маршруты: " + e.message;
-        }
-      }
-
-      // Service Worker
-      SWUpdater.init();
-
-      loadRoutes();
-    </script>
+    <noscript><p class="noscript">Для работы «Вёрст» нужен JavaScript.</p></noscript>
+    <script type="module" src="js/main.js"></script>
   </body>
 </html>

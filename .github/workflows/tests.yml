@@ -1,0 +1,23 @@
+name: Тесты
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Юнит-тесты
+        run: node --test tests/unit.test.mjs
+      - name: Каталог маршрутов актуален
+        run: |
+          python3 scripts/generate-index.py > /dev/null
+          # Поле generated меняется при каждом запуске — сравниваем без него
+          git diff --quiet -I '"generated"' -- routes/index.json || {
+            echo "routes/index.json устарел: запустите python3 scripts/generate-index.py"; exit 1; }
