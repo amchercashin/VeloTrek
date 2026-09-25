@@ -1,720 +1,967 @@
 {
-  "generated": "2026-05-17T21:21:15Z",
-  "sections": [
+ "generated": "2026-09-25T11:59:52Z",
+ "sections": [
+  {
+   "name": "Велопутешествия",
+   "routes": [
     {
-      "name": "Велопутешествия",
-      "routes": [
-        {
-          "filename": "Велопутешествия/02-moskva-spb-yahroma-dubna.kmz",
-          "name": "ВЕЛО 1. Москва - Санкт-Петербург",
-          "description": "",
-          "stats": {
-            "track_km": 1109.2,
-            "span_km": 654.8,
-            "elevation_min_m": 10,
-            "elevation_max_m": 295,
-            "climb_m": 2376,
-            "descent_m": 2500
-          },
-          "poiCount": 0,
-          "segmentCount": 1,
-          "bbox": {
-            "minLat": 55.747353,
-            "maxLat": 59.939197,
-            "minLon": 30.064645,
-            "maxLon": 37.817649
-          }
-        }
-      ]
-    },
-    {
-      "name": "Москва",
-      "routes": [
-        {
-          "filename": "Москва/03-zelyonoe-kolco-moskvy.kmz",
-          "name": "Зелёное кольцо Москвы",
-          "description": "",
-          "stats": {
-            "track_km": 127.3,
-            "span_km": 37.5
-          },
-          "poiCount": 0,
-          "segmentCount": 1,
-          "bbox": {
-            "minLat": 55.61702,
-            "maxLat": 55.842941,
-            "minLon": 37.386917,
-            "maxLon": 37.82994768826549
-          }
-        },
-        {
-          "filename": "Москва/04-po-techeniyu-yauzy.kml",
-          "name": "По течению Яузы",
-          "description": "",
-          "stats": {
-            "track_km": 8.0,
-            "span_km": 5.8
-          },
-          "poiCount": 5,
-          "segmentCount": 1,
-          "bbox": {
-            "minLat": 55.852456,
-            "maxLat": 55.894036,
-            "minLon": 37.628587,
-            "maxLon": 37.685072
-          }
-        },
-        {
-          "filename": "Москва/05-zv01-po-parkam-moskvy.kml",
-          "name": "ZV01 по паркам Москвы",
-          "description": "",
-          "stats": {
-            "track_km": 41.4,
-            "span_km": 13.3
-          },
-          "poiCount": 11,
-          "segmentCount": 1,
-          "bbox": {
-            "minLat": 55.7894176,
-            "maxLat": 55.887314,
-            "minLon": 37.607636,
-            "maxLon": 37.7288532
-          }
-        },
-        {
-          "filename": "Москва/06-chetyre-parka.kml",
-          "name": "4 парка!",
-          "description": "",
-          "stats": {
-            "track_km": 24.8,
-            "span_km": 13.9
-          },
-          "poiCount": 8,
-          "segmentCount": 1,
-          "bbox": {
-            "minLat": 55.68851,
-            "maxLat": 55.809276,
-            "minLon": 37.792962,
-            "maxLon": 37.850206
-          }
-        },
-        {
-          "filename": "Москва/07-naberezhnye-moskvy-reki.kml",
-          "name": "Набережные Москвы-реки",
-          "description": "",
-          "stats": {
-            "track_km": 17.8,
-            "span_km": 8.9
-          },
-          "poiCount": 24,
-          "segmentCount": 1,
-          "bbox": {
-            "minLat": 55.709347,
-            "maxLat": 55.755622,
-            "minLon": 37.542475,
-            "maxLon": 37.659076
-          }
-        },
-        {
-          "filename": "Москва/08-moskva-zhivopisnaya.kml",
-          "name": "Москва Живописная",
-          "description": "",
-          "stats": {
-            "track_km": 33.5,
-            "span_km": 10.7
-          },
-          "poiCount": 36,
-          "segmentCount": 1,
-          "bbox": {
-            "minLat": 55.705604,
-            "maxLat": 55.77329,
-            "minLon": 37.534957,
-            "maxLon": 37.656619
-          }
-        },
-        {
-          "filename": "Москва/09-rechnoy.kml",
-          "name": "Речной",
-          "description": "",
-          "stats": {
-            "track_km": 48.2,
-            "span_km": 11.3
-          },
-          "poiCount": 10,
-          "segmentCount": 1,
-          "bbox": {
-            "minLat": 55.740145,
-            "maxLat": 55.821165,
-            "minLon": 37.387207,
-            "maxLon": 37.494846
-          }
-        },
-        {
-          "filename": "Москва/10-filevskiy-park.kml",
-          "name": "Филевский парк",
-          "description": "",
-          "stats": {
-            "track_km": 12.8,
-            "span_km": 4.1
-          },
-          "poiCount": 16,
-          "segmentCount": 1,
-          "bbox": {
-            "minLat": 55.739954,
-            "maxLat": 55.752439,
-            "minLon": 37.434921,
-            "maxLon": 37.496565
-          }
-        },
-        {
-          "filename": "Москва/11-kanal-imeni-moskvy.kml",
-          "name": "Канал имени Москвы",
-          "description": "",
-          "stats": {
-            "track_km": 30.8,
-            "span_km": 10.6
-          },
-          "poiCount": 13,
-          "segmentCount": 1,
-          "bbox": {
-            "minLat": 55.874913,
-            "maxLat": 55.955552,
-            "minLon": 37.480483,
-            "maxLon": 37.570406
-          }
-        }
-      ]
-    },
-    {
-      "name": "Однодневки Подмосковья",
-      "routes": [
-        {
-          "filename": "Однодневки Подмосковья/01-moskva-reka-1.kml",
-          "name": "1. Запад. Вдоль Москвы-реки, часть 1",
-          "description": "",
-          "stats": {
-            "track_km": 136.1,
-            "span_km": 45.5,
-            "elevation_min_m": 134,
-            "elevation_max_m": 229,
-            "climb_m": 521,
-            "descent_m": 625
-          },
-          "poiCount": 44,
-          "segmentCount": 8,
-          "bbox": {
-            "minLat": 55.538746,
-            "maxLat": 55.735803,
-            "minLon": 36.246659,
-            "maxLon": 36.881307
-          }
-        },
-        {
-          "filename": "Однодневки Подмосковья/02-moskva-reka-2.kml",
-          "name": "2. Запад. Вдоль Москвы-реки, часть 2",
-          "description": "",
-          "stats": {
-            "track_km": 113.3,
-            "span_km": 34.9,
-            "elevation_min_m": 127,
-            "elevation_max_m": 204,
-            "climb_m": 332,
-            "descent_m": 372
-          },
-          "poiCount": 35,
-          "segmentCount": 9,
-          "bbox": {
-            "minLat": 55.701043,
-            "maxLat": 55.814919,
-            "minLon": 36.78654,
-            "maxLon": 37.30523
-          }
-        },
-        {
-          "filename": "Однодневки Подмосковья/03-istra-i-maglusha.kml",
-          "name": "3. Запад. Истра и Маглуша",
-          "description": "",
-          "stats": {
-            "track_km": 83.1,
-            "span_km": 42.7
-          },
-          "poiCount": 38,
-          "segmentCount": 8,
-          "bbox": {
-            "minLat": 55.839362,
-            "maxLat": 56.00558,
-            "minLon": 36.536295,
-            "maxLon": 37.153583
-          }
-        },
-        {
-          "filename": "Однодневки Подмосковья/04-sestra-i-yahroma.kml",
-          "name": "4. Север. Сестра и Яхрома",
-          "description": "",
-          "stats": {
-            "track_km": 133.6,
-            "span_km": 49.1,
-            "elevation_min_m": 114,
-            "elevation_max_m": 156,
-            "climb_m": 199,
-            "descent_m": 178
-          },
-          "poiCount": 29,
-          "segmentCount": 8,
-          "bbox": {
-            "minLat": 56.286782,
-            "maxLat": 56.659609,
-            "minLon": 37.094052,
-            "maxLon": 37.521282
-          }
-        },
-        {
-          "filename": "Однодневки Подмосковья/05-dubna-i-velya.kml",
-          "name": "5. Север. Дубна и Веля",
-          "description": "",
-          "stats": {
-            "track_km": 176.1,
-            "span_km": 61.3,
-            "elevation_min_m": 123,
-            "elevation_max_m": 239,
-            "climb_m": 720,
-            "descent_m": 850
-          },
-          "poiCount": 34,
-          "segmentCount": 8,
-          "bbox": {
-            "minLat": 56.214365,
-            "maxLat": 56.573735,
-            "minLon": 37.519137,
-            "maxLon": 38.273108
-          }
-        },
-        {
-          "filename": "Однодневки Подмосковья/06-sorocany-kanal-muranovo.kml",
-          "name": "6. Север. Сорочаны, канал и Мураново",
-          "description": "",
-          "stats": {
-            "track_km": 79.1,
-            "span_km": 37.3,
-            "elevation_min_m": 140,
-            "elevation_max_m": 240,
-            "climb_m": 322,
-            "descent_m": 267
-          },
-          "poiCount": 20,
-          "segmentCount": 3,
-          "bbox": {
-            "minLat": 56.083052,
-            "maxLat": 56.306917,
-            "minLon": 37.498872,
-            "maxLon": 37.947555
-          }
-        },
-        {
-          "filename": "Однодневки Подмосковья/07-vorya-i-torgosha.kml",
-          "name": "7. Север/восток. Воря и Торгоша",
-          "description": "",
-          "stats": {
-            "track_km": 94.2,
-            "span_km": 43.5,
-            "elevation_min_m": 132,
-            "elevation_max_m": 232,
-            "climb_m": 434,
-            "descent_m": 373
-          },
-          "poiCount": 32,
-          "segmentCount": 4,
-          "bbox": {
-            "minLat": 55.943094,
-            "maxLat": 56.309591,
-            "minLon": 37.977335,
-            "maxLon": 38.218756
-          }
-        },
-        {
-          "filename": "Однодневки Подмосковья/08-meshchera-nerskaya.kml",
-          "name": "8. Восток. Мещера Нерская",
-          "description": "",
-          "stats": {
-            "track_km": 68.7,
-            "span_km": 41.0,
-            "elevation_min_m": 105,
-            "elevation_max_m": 162,
-            "climb_m": 149,
-            "descent_m": 133
-          },
-          "poiCount": 15,
-          "segmentCount": 1,
-          "bbox": {
-            "minLat": 55.427466,
-            "maxLat": 55.756245,
-            "minLon": 38.559461,
-            "maxLon": 38.853021
-          }
-        },
-        {
-          "filename": "Однодневки Подмосковья/09-vdol-severki.kml",
-          "name": "9. Юг. Вдоль Северки",
-          "description": "",
-          "stats": {
-            "track_km": 78.1,
-            "span_km": 57.3,
-            "elevation_min_m": 98,
-            "elevation_max_m": 182,
-            "climb_m": 210,
-            "descent_m": 269
-          },
-          "poiCount": 17,
-          "segmentCount": 1,
-          "bbox": {
-            "minLat": 55.171086,
-            "maxLat": 55.292832,
-            "minLon": 37.896046,
-            "maxLon": 38.772722
-          }
-        },
-        {
-          "filename": "Однодневки Подмосковья/10-talezh-i-shkin.kml",
-          "name": "10. Юг. Талеж и Шкинь",
-          "description": "",
-          "stats": {
-            "track_km": 130.9,
-            "span_km": 81.8,
-            "elevation_min_m": 107,
-            "elevation_max_m": 195,
-            "climb_m": 417,
-            "descent_m": 451
-          },
-          "poiCount": 20,
-          "segmentCount": 4,
-          "bbox": {
-            "minLat": 55.048958,
-            "maxLat": 55.326248,
-            "minLon": 37.494729,
-            "maxLon": 38.685935
-          }
-        },
-        {
-          "filename": "Однодневки Подмосковья/11-serpuhov-stupino.kml",
-          "name": "11. Юг. Серпухов-Ступино",
-          "description": "",
-          "stats": {
-            "track_km": 110.9,
-            "span_km": 54.4,
-            "elevation_min_m": 106,
-            "elevation_max_m": 199,
-            "climb_m": 422,
-            "descent_m": 382
-          },
-          "poiCount": 19,
-          "segmentCount": 5,
-          "bbox": {
-            "minLat": 54.840943,
-            "maxLat": 55.12125,
-            "minLon": 37.451633,
-            "maxLon": 38.148544
-          }
-        },
-        {
-          "filename": "Однодневки Подмосковья/12-istya-i-nara.kml",
-          "name": "12. Юг/юго-запад. Истья и Нара",
-          "description": "",
-          "stats": {
-            "track_km": 141.4,
-            "span_km": 62.3,
-            "elevation_min_m": 121,
-            "elevation_max_m": 232,
-            "climb_m": 520,
-            "descent_m": 563
-          },
-          "poiCount": 36,
-          "segmentCount": 10,
-          "bbox": {
-            "minLat": 55.029818,
-            "maxLat": 55.341251,
-            "minLon": 36.662195,
-            "maxLon": 37.477573
-          }
-        },
-        {
-          "filename": "Однодневки Подмосковья/13-meshchera-glubokaya.kml",
-          "name": "13. Восток. Мещера глубокая",
-          "description": "",
-          "stats": {
-            "track_km": 82.2,
-            "span_km": 43.0,
-            "elevation_min_m": 110,
-            "elevation_max_m": 168,
-            "climb_m": 145,
-            "descent_m": 155
-          },
-          "poiCount": 15,
-          "segmentCount": 4,
-          "bbox": {
-            "minLat": 55.57254,
-            "maxLat": 55.891679,
-            "minLon": 39.005467,
-            "maxLon": 39.391394
-          }
-        }
-      ]
-    },
-    {
-      "name": "Походы 2-3 дня МО",
-      "routes": [
-        {
-          "filename": "Походы 2-3 дня МО/01-tver-staritsa.kml",
-          "name": "1. Чисмена-Старица-Тверь",
-          "description": "",
-          "stats": {
-            "track_km": 416.7,
-            "span_km": 129.8,
-            "elevation_min_m": 125,
-            "elevation_max_m": 248,
-            "climb_m": 727,
-            "descent_m": 924
-          },
-          "poiCount": 45,
-          "segmentCount": 8,
-          "bbox": {
-            "minLat": 56.007889,
-            "maxLat": 56.877792,
-            "minLon": 34.834728,
-            "maxLon": 36.239176
-          }
-        },
-        {
-          "filename": "Походы 2-3 дня МО/02-tver-torzhok.kml",
-          "name": "2. Тверь-Торжок-Тверь",
-          "description": "",
-          "stats": {
-            "track_km": 346.4,
-            "span_km": 80.8,
-            "elevation_min_m": 124,
-            "elevation_max_m": 226,
-            "climb_m": 693,
-            "descent_m": 716
-          },
-          "poiCount": 39,
-          "segmentCount": 9,
-          "bbox": {
-            "minLat": 56.725561,
-            "maxLat": 57.045621,
-            "minLon": 34.735551,
-            "maxLon": 35.928131
-          }
-        },
-        {
-          "filename": "Походы 2-3 дня МО/03-konakowo-tver.kml",
-          "name": "3. Конаково-Тверь",
-          "description": "",
-          "stats": {
-            "track_km": 115.5,
-            "span_km": 61.2,
-            "elevation_min_m": 121,
-            "elevation_max_m": 153,
-            "climb_m": 288,
-            "descent_m": 283
-          },
-          "poiCount": 18,
-          "segmentCount": 4,
-          "bbox": {
-            "minLat": 56.576217,
-            "maxLat": 56.863178,
-            "minLon": 35.893514,
-            "maxLon": 36.748345
-          }
-        },
-        {
-          "filename": "Походы 2-3 дня МО/04-pereslavl-plechtchejevo.kml",
-          "name": "4. Переславль и Плещеево",
-          "description": "",
-          "stats": {
-            "track_km": 216.4,
-            "span_km": 99.3,
-            "elevation_min_m": 124,
-            "elevation_max_m": 214,
-            "climb_m": 528,
-            "descent_m": 432
-          },
-          "poiCount": 39,
-          "segmentCount": 5,
-          "bbox": {
-            "minLat": 56.526235,
-            "maxLat": 56.919029,
-            "minLon": 37.560421,
-            "maxLon": 39.019876
-          }
-        },
-        {
-          "filename": "Походы 2-3 дня МО/05-reka-kirzhach.kml",
-          "name": "5. Киржач",
-          "description": "",
-          "stats": {
-            "track_km": 179.0,
-            "span_km": 65.1,
-            "elevation_min_m": 114,
-            "elevation_max_m": 206,
-            "climb_m": 571,
-            "descent_m": 436
-          },
-          "poiCount": 18,
-          "segmentCount": 6,
-          "bbox": {
-            "minLat": 55.864548,
-            "maxLat": 56.400925,
-            "minLon": 38.681091,
-            "maxLon": 39.10061
-          }
-        },
-        {
-          "filename": "Походы 2-3 дня МО/06-koloksha-vladimirskoe-opole.kml",
-          "name": "6. Ополье и Колокша",
-          "description": "",
-          "stats": {
-            "track_km": 188.0,
-            "span_km": 108.0,
-            "elevation_min_m": 99,
-            "elevation_max_m": 236,
-            "climb_m": 640,
-            "descent_m": 546
-          },
-          "poiCount": 29,
-          "segmentCount": 4,
-          "bbox": {
-            "minLat": 56.061938,
-            "maxLat": 56.58095,
-            "minLon": 38.706508,
-            "maxLon": 40.183697
-          }
-        },
-        {
-          "filename": "Походы 2-3 дня МО/07-pojma-oki-meschera.kml",
-          "name": "7. Ока и Мещера",
-          "description": "",
-          "stats": {
-            "track_km": 263.7,
-            "span_km": 86.9,
-            "elevation_min_m": 97,
-            "elevation_max_m": 160,
-            "climb_m": 407,
-            "descent_m": 468
-          },
-          "poiCount": 55,
-          "segmentCount": 9,
-          "bbox": {
-            "minLat": 54.91645,
-            "maxLat": 55.559618,
-            "minLon": 38.839073,
-            "maxLon": 39.615755
-          }
-        },
-        {
-          "filename": "Походы 2-3 дня МО/08-reka-osetr.kml",
-          "name": "8. Осётр",
-          "description": "",
-          "stats": {
-            "track_km": 353.2,
-            "span_km": 118.8,
-            "elevation_min_m": 102,
-            "elevation_max_m": 259,
-            "climb_m": 2003,
-            "descent_m": 1731
-          },
-          "poiCount": 65,
-          "segmentCount": 14,
-          "bbox": {
-            "minLat": 54.338621,
-            "maxLat": 55.144104,
-            "minLon": 37.685273,
-            "maxLon": 38.897226
-          }
-        },
-        {
-          "filename": "Походы 2-3 дня МО/09-kaluga-tarusa-protva.kml",
-          "name": "9. Калуга-Таруса-Протва",
-          "description": "",
-          "stats": {
-            "track_km": 337.0,
-            "span_km": 107.9,
-            "elevation_min_m": 112,
-            "elevation_max_m": 225,
-            "climb_m": 1861,
-            "descent_m": 1951
-          },
-          "poiCount": 73,
-          "segmentCount": 16,
-          "bbox": {
-            "minLat": 54.427311,
-            "maxLat": 55.055759,
-            "minLon": 36.199002,
-            "maxLon": 37.477573
-          }
-        },
-        {
-          "filename": "Походы 2-3 дня МО/10-reka-ugra.kml",
-          "name": "10. Угра",
-          "description": "",
-          "stats": {
-            "track_km": 330.0,
-            "span_km": 161.7,
-            "elevation_min_m": 124,
-            "elevation_max_m": 246,
-            "climb_m": 869,
-            "descent_m": 1004
-          },
-          "poiCount": 39,
-          "segmentCount": 11,
-          "bbox": {
-            "minLat": 54.627959,
-            "maxLat": 55.544121,
-            "minLon": 34.304971,
-            "maxLon": 36.273884
-          }
-        },
-        {
-          "filename": "Походы 2-3 дня МО/11-borodino-obninsk.kml",
-          "name": "11. Бородино-Обнинск",
-          "description": "",
-          "stats": {
-            "track_km": 170.6,
-            "span_km": 74.7,
-            "elevation_min_m": 123,
-            "elevation_max_m": 237,
-            "climb_m": 620,
-            "descent_m": 669
-          },
-          "poiCount": 33,
-          "segmentCount": 4,
-          "bbox": {
-            "minLat": 55.007182,
-            "maxLat": 55.496215,
-            "minLon": 35.779772,
-            "maxLon": 36.586822
-          }
-        },
-        {
-          "filename": "Походы 2-3 дня МО/12-borodino-gagarin-dubosekowo.kml",
-          "name": "12. Бородино-Гагарин-Дубосеково",
-          "description": "",
-          "stats": {
-            "track_km": 207.2,
-            "span_km": 87.3,
-            "elevation_min_m": 180,
-            "elevation_max_m": 274,
-            "climb_m": 529,
-            "descent_m": 492
-          },
-          "poiCount": 22,
-          "segmentCount": 4,
-          "bbox": {
-            "minLat": 55.496269,
-            "maxLat": 56.009377,
-            "minLon": 34.98843,
-            "maxLon": 36.041744
-          }
-        }
-      ]
+     "filename": "Велопутешествия/02-moskva-spb-yahroma-dubna.kmz",
+     "name": "ВЕЛО 1. Москва - Санкт-Петербург",
+     "stats": {
+      "track_km": 1109.2,
+      "span_km": 654.8,
+      "elevation_min_m": 10,
+      "elevation_max_m": 295,
+      "climb_m": 2376,
+      "descent_m": 2500
+     },
+     "mainKm": 1109.2,
+     "poiCount": 0,
+     "segmentCount": 1,
+     "bbox": {
+      "minLat": 55.747353,
+      "maxLat": 59.939197,
+      "minLon": 30.064645,
+      "maxLon": 37.817649
+     },
+     "line": [
+      "cjhsIy_sdFra@asGwwD{fFe`GtmA}yEbxJoxJubN{iJ}m@vg@m|N_fKmlBk|JjyMtJltCmuCnf@vv@fvH_lHbyZmvRs}@kjDekK~K|}NqjMqsAiwSlnRmwTlsGu|R|eZimG~oSjcIf{a@qbIhlr@vhG`dj@erDxiGuwBroPw`GwyDchE~gFjhAn}Jc|AtdGjo@voO}~AviO_~CzvLysDb{@wWhpEbhAhUmtCzoPupJhjNeaA|aYkyBv`J`aEjkOqkArgPv|A`_\\ulE|rBgV`wMiaDl`BagAjnVahCtk@eqB~vScnJhn_@ph@n|VthDvaMwpFxdEoAzqPtcDdyJ`jAx_RnpI~oE_`Izr{@fkBbcK}rDpsNbo@rv^izF~cPz~I`o_@_`BfmO~|@r}AmuNd|Yjq@v`QxvE~xFVxaI}~LlsEuqK{~CmzDlrDroBlkk@oyLy~QezQiY|nD{k\\}jBogL{tC__BmsFqcAmrC`jIsuMxrFcdFzxKwhGfeX_f@p}PsTnlu@h`Bpy`@o~@hfKczLjma@atIrfHusCxpJusKsfHyyNfaQsiEkqCmfGziEgUndOdtG`vRmfBz[wv@bzGp|CfaO_dBdxYeiCfcLo|Hz|Ds_HucFoaClaEp^twQ}{Nh`h@ljBhgEox@ded@cu@tfAca`@yow@``H}}P}`Jk~S{sGyiG}nArrC{dGghIke@x}DsnCmwCmkElty@ijEj{FijAxkSipGaqEgqHhiGwzE{gD}tMrzUqgFheAm`PuaEzp@pda@_`HrfAwmAhcGonBswCclFhuAutBzbDgV~hKeuVfcC{w@~xG_bJn}DgvG~au@_mM~N{jFeuMe`Lx_EubG_fJgxJn`Hl`Be~PkgD}iLepC}fAmsHkq^cuB_lAc~HlhMytE~WsbDr{Kk~Zjq@giAqzC{d@jqD"
+     ]
     }
-  ]
+   ]
+  },
+  {
+   "name": "Москва",
+   "routes": [
+    {
+     "filename": "Москва/03-zelyonoe-kolco-moskvy.kmz",
+     "name": "Зелёное кольцо Москвы",
+     "stats": {
+      "track_km": 127.3,
+      "span_km": 37.5
+     },
+     "mainKm": 127.3,
+     "poiCount": 0,
+     "segmentCount": 1,
+     "bbox": {
+      "minLat": 55.61702,
+      "maxLat": 55.842941,
+      "minLon": 37.386917,
+      "maxLon": 37.82994768826549
+     },
+     "line": [
+      "{lrrI}pkeFl]sPiRhCia@syB}F_kAvI~Ela@mJpWhADfHxZcDkGt^nGnNxA`o@zKrc@oLvQfBnOcEjK^ty@qCnPbEvSNzg@fGdK}CpM|Ajm@yFfItJd\\oBfb@hDnEnIySxJ|aAbRjWhJvn@wLr~@jNhXmF`OzL|c@uMvg@tDb@vD`e@zKzE{W`Xwl@cJmEdcBaS|RxCvPmA~a@~CdCeGlCeKluAnTftBcHnw@rB`hA_aAdqFe{E}|E}cBb_DcnApxCsDmZqYay@gp@xbBkFn_@~BvU_g@|c@kLa[iWf_@_C~^sHc_@mz@jy@qQwz@aVxR_IiA~@`eAtOQrUz[gLV|f@rmAbHxg@Jvf@cGbd@ea@hx@mMa@mLoTxGlRoDvYg[{HavAd^qReXyGqb@bD~WwAntAxJvmAtCn`CaU_Aob@cn@m_@eUjGmWy@eIiZmVcm@cSwl@ir@}KyiEvMnCaC{m@uWs\\sInTc@kHcGs@eAuOsD|AoDcs@mZqqA`AoM`HoB|AitAuEbDoBsJcIxF{t@{`E]gOnUe\\wh@epAwMaj@_NqmAfb@U|@{`@nEwNuJig@AozA{Gc`@g[oi@wKbEgI}GmEodAaLuz@YgRzK`Dl@wh@`FwArGgg@hb@i_@jKzIvF_CbPuqAtk@e~@vJeq@qBgIyJjWgEiFa{@xDuAspAfJg`@gLkGcEcxC}_AxEaBi~Evx@uH}LgeGv\\qDtAlIrAmP~OgA~Sxa@vYnCwAuqC`i@_PhDzF`KsK~s@}CvYpg@hw@ADv\\vGdB~Hjg@rDhIfPeHrExDfRln@zXeLdBphCtv@_Che@eXpF`j@bzAev@fHt@rFiQm@gJr]iOjX}^|f@fJ|CvTlF{EdBpE`GqVjDtLbVtLrcD~i@XrrAnPfw@x`@tNt@|R|C~Ahn@jRnFkMru@|KdLeLhHrK`q@a{@hN~@`GyGpb@|iBJ`SfE`Bme@hOLlEl[gExH}M"
+     ]
+    },
+    {
+     "filename": "Москва/04-po-techeniyu-yauzy.kml",
+     "name": "По течению Яузы",
+     "stats": {
+      "track_km": 8.0,
+      "span_km": 5.8
+     },
+     "mainKm": 8.0,
+     "poiCount": 5,
+     "segmentCount": 1,
+     "bbox": {
+      "minLat": 55.852456,
+      "maxLat": 55.894036,
+      "minLon": 37.628587,
+      "maxLon": 37.685072
+     },
+     "line": [
+      "wxctIuj_eFvKh@rFvB`RtOHhCbBjBI|C^JP{G|EQrN|Ph@jG_ErJpA|BJzCjAl@d@}ArAbC~AbI\\xMo@bRy@rE^lC`@J`@`IxAjJ~BvKxBfEfGzCzW[nBj@HqBlA}CzAu@bCdA~BrDl@jD|@wDxAjBHhDzB|JIbBhA|HrBpD`GrCk@vCl@vEfGpCnEvNhAADhPx@dF[k@zA]xA`BzCvI|B~CnDj@nC|BhGxUy@~CxGpC|FQp@dD|@aDzCeAxEqH|C]~DoDd@fG_CxN^tFo@~G~GhBbAU"
+     ]
+    },
+    {
+     "filename": "Москва/05-zv01-po-parkam-moskvy.kml",
+     "name": "ZV01 по паркам Москвы",
+     "stats": {
+      "track_km": 41.4,
+      "span_km": 13.3
+     },
+     "mainKm": 41.4,
+     "poiCount": 11,
+     "segmentCount": 1,
+     "bbox": {
+      "minLat": 55.7894176,
+      "maxLat": 55.887314,
+      "minLon": 37.607636,
+      "maxLon": 37.7288532
+     },
+     "line": [
+      "_kosIwh~dFwYvNmCyFqDf@cBjGd@bHyu@djAgJeWo@iG{XrPsB{M_F_KgNyRaJcH_EiLv@aMm@m@tIkZ}I}]yH|V_Fzj@qYrh@{BnJ}B?kKjp@_AvQwCjRkGNeE{DsIjDiZr_@iEu@~AzIgI`\\_FnAo@ni@jPYcDx[lW|r@c@tFbA~BhCg@`KjU|VrNhAvMUx\\kAlF{L{@eHbB{IeM_C~DkOaU|BJnBaE_No`@gEbEmG_i@nA_DnIuB}GiKkAeGuGgI}Ff@eEpDeJjQoIb@AeCuOc[{KmA}D_NeAQmCsPM~CcBUuIrMv@vGvEgBnB`Bv@_CiC_Dr@mAgDv@sLxOq@eDsJc@yHkIaJnG_DkGc@aFoO{Ya@wDxAuK_@iMeEwM{F{FvA{F{EqEeAoHqGmQ_@wFcK{LeWXeRyFmAwGpHaJu@cEiFrC_CsDo@sGoAFSke@iFuPyBfBsAeCl@aL{DkNTwDcL{Kf@oEvApAz@{BvAcLlAh@vB}CaKeHqDkQ|@i}Ave@{kAfIaNnGnIz@iFl@v@c@u@ph@ro@h_@ggAnoFy]dEb~BjAdCqAtGjBlyAfUlBbJsIbL|BdCxTpHhWf}Bjq@LxGrCnEtEaCf@uJxYmN"
+     ]
+    },
+    {
+     "filename": "Москва/06-chetyre-parka.kml",
+     "name": "4 парка!",
+     "stats": {
+      "track_km": 24.8,
+      "span_km": 13.9
+     },
+     "mainKm": 24.8,
+     "poiCount": 8,
+     "segmentCount": 1,
+     "bbox": {
+      "minLat": 55.68851,
+      "maxLat": 55.809276,
+      "minLon": 37.792962,
+      "maxLon": 37.850206
+     },
+     "line": [
+      "_fssI}hxeF[bEpCl@xzAkDr@mA@qOnAhD|WcArAhG@k[|dBkIpDlD|B}FbZU`AtFuB~Y|ThAZ|MxGrAoAjL|InSbLxGhSfDvZ|KvBpA^|DjOkG~BbRda@|A`DjYlDqBCmBlAhCvLgHHtBaCnCtI_Eg@|JzI|CdAi@FqCGw[}@uCtB}C}AkGd@kVhBuApPhRnBGc@wHdS{x@n_@e_A|AOrKrMpOnGfDtE}A_AnZdGyTeC~BcJfBoA|QlFhMe|@bX~ABqNrAmEqBuAj@NLuEhDw@VgE~DuEnFeOlN|GdDtI|FdBcGkBsB_IvEsIjAh@tFsFD`E`BnDtJtCfChGRtLoCrF@hIhH@pMwHdGi@{PyXm\\gWeEqIxAmSbC{JbK}K|K_B"
+     ]
+    },
+    {
+     "filename": "Москва/07-naberezhnye-moskvy-reki.kml",
+     "name": "Набережные Москвы-реки",
+     "stats": {
+      "track_km": 17.8,
+      "span_km": 8.9
+     },
+     "mainKm": 17.8,
+     "poiCount": 24,
+     "segmentCount": 1,
+     "bbox": {
+      "minLat": 55.709347,
+      "maxLat": 55.755622,
+      "minLon": 37.542475,
+      "maxLon": 37.659076
+     },
+     "line": [
+      "crhsIghzdFk@jIcCOpEf@c@K@fCkDu@jDNjAxNlDxJlB`RKxNzHrFvE`UjDvCtCg@fFdH_BxEwHnh@_AzY`@vPg@jGHxBj@UdDji@xDnW^UdBrInJlN~JrH~GR`QfFrCzB`Sbi@fE~FcEpPjR{|@eE`VpIbJvLzF^m@f\\vXb]je@hCbBtTr\\xHlRhRt{@~Ebd@@ra@n@p@}KePYfXmFz]}K|WkO|RgLlFyLd@CxAkAKnAmAqKoCqJqH}FuLmGm]oDuMmNcXrE_QdA{IrFgJ]b@ct@}xBrMmTTl@j@_ApChGz@qA"
+     ]
+    },
+    {
+     "filename": "Москва/08-moskva-zhivopisnaya.kml",
+     "name": "Москва Живописная",
+     "stats": {
+      "track_km": 33.5,
+      "span_km": 10.7
+     },
+     "mainKm": 33.5,
+     "poiCount": 36,
+     "segmentCount": 1,
+     "bbox": {
+      "minLat": 55.705604,
+      "maxLat": 55.77329,
+      "minLon": 37.534957,
+      "maxLon": 37.656619
+     },
+     "line": [
+      "y`_sIyhbdFx@aB{A{EkPg]aMnV}T|Mg]dF}h@zAwBqCh@cAgGaVk@kJ`DwDeBuAvBs@t@fBWvAxWdOrTjAnZsIvCcC{HtEfGkDbH_K`LgXnFiWnAk]Ccl@}Ce\\aIue@gIsZmIuTgp@w_Agb@}]gO_HoN{MzA}BpG_\\qBtH|ArCoR|z@`@rALaAfIvDvBzCek@iVoJyPcQ{T{EpLcE|BsYgDqVNpHu@cG@eRzLuk@sj@q]vw@qIyWyEgVwDqp@lLDrBbEjc@c`@td@iUiAqKc@P_BsU_DqDp@_Aq@~@yb@{[kZgFiKJlDke@zS_eArYif@`EwBkCbC|GbRjMjU`CpJdEdk@bDzUj@OhAzM_Bz@pNuIhHcKtD}^dJiFbAvHn@e@o@d@Zt@dHpFtFbIwHoJpBy@jC`DvA~BiKnj@sAxc@fFr~@dF|\\pBvFrC~FzPzNd]|IlTvj@zJvLSbAwDiFe@vAN_BjHsZfB^o@s@nBwJ~@u@pBjAm@fCpCzDxIjKjBi@tJrM"
+     ]
+    },
+    {
+     "filename": "Москва/09-rechnoy.kml",
+     "name": "Речной",
+     "stats": {
+      "track_km": 48.2,
+      "span_km": 11.3
+     },
+     "mainKm": 48.2,
+     "poiCount": 10,
+     "segmentCount": 1,
+     "bbox": {
+      "minLat": 55.740145,
+      "maxLat": 55.821165,
+      "minLon": 37.387207,
+      "maxLon": 37.494846
+     },
+     "line": [
+      "kfrsIc{gcFwEv]mClIsb@cWyFbGsErXmZoGeApCsFv@oEcE{@qHnAwRnF}IjBqO`FgQrEeFlFoNbD~@bJoDW}BxNwl@xAkOlFcUbF_d@xA_EpCzAvGh[tISgC~JhGaFiAxB?`c@uGJpDPaEx@jD}@yBmCrFbDv@{AkAoCd@|GbMdHl^`g@nGzDbb@nJrVnQnDbE|AfHu@pKcFpMvJlDrPrLnLhPrQfPnCvEQ`CrAnCbCTnOqSJwe@}Aio@zFmCbIc@aBwNQ}Gj@iBmEa^HkEfAIeA}b@jCoRbG{QfEsE`\\aHpJoDz@uA[k@r\\uHnGjD|@qHiBaBJeCnEvAdAeAgBgBiCtH|DgKg@jBoPuB{c@}Ra_Ac[aDc^zB{@~D`ArtAvf@lPlE|IOdA|@vC|RhA}Br@`GvCTbHjKpLg@~EcExZct@bFye@NoTyAc]qFi^uLa]iP_[IzA\\sAwEgHk@yDrAiBjFrCx@uA}PeQsBaHoMpBiAyFkA{Uv@aLc@y^nKlBhRsQlC_@Vn@uBj@qDtSc@`a@xEeFfFaAvHjHtFr[eQl_@{Du@_DjAlCdBfCtHa@p@pQl]hLl^nF~\\lAd\\o@bVsItd@sUbj@oIlM}IUoBtNi@D@sGlFoc@N{PeRinAqQwUqTed@ih@{UeDkKkBuZmBgBaMhD`A`\\cCtQyEnHgKxIeVrc@uDlDsHb_@iDrGs@nH{DvFgHbDcJj@mKwAsPUsCtA}DqAuR?{AoBiIQeCgB}BeSbBsGoN~MwPRsQeAsC_Fs@cHvCftBxEtl@uBjk@XtDcDxm@dBbHzHvFf@xJsG~h@"
+     ]
+    },
+    {
+     "filename": "Москва/10-filevskiy-park.kml",
+     "name": "Филевский парк",
+     "stats": {
+      "track_km": 12.8,
+      "span_km": 4.1
+     },
+     "mainKm": 12.8,
+     "poiCount": 16,
+     "segmentCount": 1,
+     "bbox": {
+      "minLat": 55.739954,
+      "maxLat": 55.752439,
+      "minLon": 37.434921,
+      "maxLon": 37.496565
+     },
+     "line": [
+      "kxgsI}ozcFMl\\xMvLw@tQmAzDbDJ~IkEpG~EpAlCyFbYGnHaBrOT]dFlExDrAtMKsJ^}McFeAxA_HgBq@`AxC`E~A~HlCdD`M`WrJpWhGz_@`Dxa@u@bSoCnNUvIcApCa@jFcJnToQr]_FlF_IqA|FbBvBs@|ByDrX}m@|DuN`Gu]Z_M_@aQ}@_LoAqK{Gi\\wFgLqBcJgQg[b@e@i@}CgE_HrDs@rCz@d@oBs@cCuQqWyFR{FzB[aAq@ac@ZyDa@qAt@eFYmGRgHbCUfEfA_@sDRyY"
+     ]
+    },
+    {
+     "filename": "Москва/11-kanal-imeni-moskvy.kml",
+     "name": "Канал имени Москвы",
+     "stats": {
+      "track_km": 30.8,
+      "span_km": 10.6
+     },
+     "mainKm": 30.8,
+     "poiCount": 13,
+     "segmentCount": 1,
+     "bbox": {
+      "minLat": 55.874913,
+      "maxLat": 55.955552,
+      "minLon": 37.480483,
+      "maxLon": 37.570406
+     },
+     "line": [
+      "s_atI}mfdFa_Bt@aBxBcC`K_Ae@cGdUgBuEZaAsHgJ}@Fwo@{x@cLVwBlDuAjIuCpAcRfBGm\\}GXgSya@BxA{BtAoDMkfAfTLpBwTpFuMTyCxDHrMaj@rAaAuOpNqA`DF\\fBIpMeRd@hOriBlBs@r@lB|Gt|Bp@vCoIbAIdBcRbCee@pTnAnLgAxHaBjB`BkBtB~GDpCbFjHtCxVsLjEl@tL[tKeLtp@?`]aFhB{EhNrK`LlSvInM~CbONrRsGjl@}e@nQcIbGw@taAxBlMzBzEpCiAq@_@eO`@sHfBuNnFo@deA~NhYlTvLeDfLkWtIyBdHkG`Vuh@hNcUz@pAz@sBgAwAYn@\\ZCkAfAvA{@rBo@_A_Sab@lf@eg@eAgBt\\y]{@cEtDTtKqJlBaL_Di_@g@Df@ExCtb@`@cAhAnGm^ouD"
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Однодневки Подмосковья",
+   "routes": [
+    {
+     "filename": "Однодневки Подмосковья/01-moskva-reka-1.kml",
+     "name": "1. Запад. Вдоль Москвы-реки, часть 1",
+     "stats": {
+      "track_km": 136.1,
+      "span_km": 45.5,
+      "elevation_min_m": 134,
+      "elevation_max_m": 229,
+      "climb_m": 521,
+      "descent_m": 625
+     },
+     "mainKm": 79.9,
+     "poiCount": 44,
+     "segmentCount": 8,
+     "bbox": {
+      "minLat": 55.538746,
+      "maxLat": 55.735803,
+      "minLon": 36.246659,
+      "maxLon": 36.881307
+     },
+     "line": [
+      "yhfrI{||~EqEnBbAdWgH|]s[`d@qLjg@oTznCuVnSajApzCfJl[k`@n]nNrRb@`OiNh@NdI`Qw@rA~HLtIwIxFXvb@oc@~Uw^~b@",
+      "wlgrIese~E{j@au@ks@oLsMrOoT{a@gMcm@",
+      "sg`sIwtp_FjAu|@gEeR{i@{`@wCzc@gTqXoRtRaRufA`KwV{XwmAl@i{@vOo_AxNh\\mCwJ",
+      "el~qIklr|Ecb@gLk\\`Fgr@ah@}gBck@sQfh@clAvFqo@~y@iu@jmBerAjpBtIraAkGfLvMz}@_QR}NcyAkFlCuNqUwHcu@fk@sYeVytCo@idDgS{E~IcnAyH_fArEws@dVsh@fJk@Jw`@y\\yFyFkl@uN{F{F_zA~WkeAfJgCnZcv@dWgHtZs[gi@ozAyt@fDaBgQnNo_AdFy{AlXqaBo\\af@mCyU`EiaAzNmFpO}u@_PaY`_@}b@bm@}pDxSw_@|Ay_@gJmgAbL}Jg\\}rAu]yz@mJzDoSphBy~@tpB_O`EcN{a@o\\iUmOx_@mGiUeNwE}UgsAdBc|@{\\ojA[{cBciA{jDio@{t@q_@iPqf@my@a{BpdAsOmgAuEkuAtGmEFsn@hFa@hJo|AqBim@qTca@|UeSvMdGgKwf@mUirDoPw\\ee@v`@eYi@sOq[xImdA|k@yz@vPiu@xJXdIoeA_cAogA{`@ixAoa@ms@k@y[vPcw@tXaPxJlOpw@uiAlVyDfUfFjB|JpLgw@yCmP~ByNwF}QrRc[",
+      "{{_rIqf~|EoWro@_XmAkWsc@wEpDg{A|mG",
+      "ifnrIcnt}E}@it@bQ_vAzJLbLs_@xp@zBjLo^gSwwAeByo@tWsaBnBur@gRa`CaTar@",
+      "kelrIeri~E_]{w@cOn@oPrt@aIb_AeZbx@yc@pj@}NkVi{@am@aFoYwAuxAjDiC?sq@qF{`Ase@{qAtAoO~FhH~AkGq@ie@st@_`@eHoVi@c}@ml@mIcOaq@w\\}^_P}~AcDpIit@sOp@kb@sUfJ}UaGiNhR`HpWaElc@lFvA{T~Tu\\kYiW{sA",
+      "ggurI}ds~E{T}gA"
+     ]
+    },
+    {
+     "filename": "Однодневки Подмосковья/02-moskva-reka-2.kml",
+     "name": "2. Запад. Вдоль Москвы-реки, часть 2",
+     "stats": {
+      "track_km": 113.3,
+      "span_km": 34.9,
+      "elevation_min_m": 127,
+      "elevation_max_m": 204,
+      "climb_m": 332,
+      "descent_m": 372
+     },
+     "mainKm": 62.3,
+     "poiCount": 35,
+     "segmentCount": 9,
+     "bbox": {
+      "minLat": 55.701043,
+      "maxLat": 55.814919,
+      "minLon": 36.78654,
+      "maxLon": 37.30523
+     },
+     "line": [
+      "actsIkdw_FeFpf@v@t\\nPhhAbtC|yAngAqWhV_\\aAiP~FgTdCgcAnGk`HvOqH~IzF`k@Sbq@jd@xz@fRpd@|VxTsI",
+      "ygcsIoc|_FcL`U}En_@jA|[fa@zs@z`@`yA`n@ti@`Sf\\gFlXmApk@mMgAlDex@}AqN}c@{d@sHcBwCnc@cKcFeHgQeRlRgRsfA`KwV{XwmAl@i{@tJetA",
+      "oyhsIevgbFl]pAcMfDdJmj@h~@g_Ac@y`@nXi@vAyJ",
+      "wqdsIyr}`FwIcJnEy{AiGU}ArXy}@iKdBao@{s@{HNeq@yZkDtKc|ErCwOwAmPsImEvIkyArBmsBcCgF",
+      "mjjsIub~_FrHqk@h}@m[MuPjo@yr@bEsXh[}MtPm[aImh@bVcFtCpL",
+      "a}fsI_jb`F}Cca@pb@_lAbSmD",
+      "efnsIo|nbFzBmUoBiFg_Akj@eMst@gD|@",
+      "wdcsIcdc`FnHfd@kf@_`@",
+      "ob~rI{jb`FuRb[bFdLmB`TjDfM{Lpy@wBmJcTuEgWhDgFbRop@zw@uJoPsMdHcGrInCbKmRsa@dEip@`vAsb@bK}L~CqU{b@_uBiIaGqs@vn@kWCiGiNiCud@bH_~@yCecAvBeRfG}Jvh@mLnByt@}Nw_CcDgBbAgFyLat@w`@kKeJgOoDig@fFih@~GcNtu@ak@vEyPlCw}@ePqc@yEbGdCuL{f@_yAcDg[zMatAz]sp@xU}HxNfBnFbS`Dvp@zJpWvb@kOrIm[{BeoAmNqWcc@_CsS_Z_IsYbEkHa[aTiLjAiA{IjMg{@x@m_@aF}CnJ}b@lGksAtFsBnGoWmL{l@wUap@gJcKu]nQgJlWeLyNuG`Oo_AiqAaPkDaRlGoCp`@qCyO`@yTkFsa@\\wdAaD}Vzy@yn@|JqjBu[mpBeW}A{FmbAme@}~Adl@ss@h_@wdAxb@yZ@uwAvHo~@gLyX{IdAsMtTwOgTaN_Dwg@nHyUnq@dLv`@e@zZ{LxU}I`BwPaMqd@aEuObKgRkb@sAcp@gEeL_q@}Ek`@gxBcc@rT{Lyt@iRk@eYsh@aHbB"
+     ]
+    },
+    {
+     "filename": "Однодневки Подмосковья/03-istra-i-maglusha.kml",
+     "name": "3. Запад. Истра и Маглуша",
+     "stats": {
+      "track_km": 83.1,
+      "span_km": 42.7
+     },
+     "mainKm": 68.9,
+     "poiCount": 38,
+     "segmentCount": 8,
+     "bbox": {
+      "minLat": 55.839362,
+      "maxLat": 56.00558,
+      "minLon": 36.536295,
+      "maxLon": 37.153583
+     },
+     "line": [
+      "og|sIe}baFiMsb@}Vu[xFwSjEkpC",
+      "{ittIqiu~EpZygC~MBjLi\\",
+      "w`otIwy~~E?`OcDCfEjUoJ`E",
+      "ekhtI{rz_FuOkG_Fyd@xFc{@fc@~Df@}Jff@Ttr@hM",
+      "yostIcu_~E{HfUqpAc~FcaBw}AoCih@vCuh@jNeLhnCsfGn_B{CeMme@Iyx@aTmy@nGidAtVgClK}l@xNmXdu@wEnCmnAqJgvAf\\_aAlOgHf@sSyQw]EqOxZ}hBjG{_A|MqQ|f@_T~j@it@l]q_AdRasAxXsWtEsPnCy\\eScrAaIs@k@atAlYtWbFmJhS~I`PiTjNpLp@wHjHlCnBuTdLfA?_KdDnF~[kGlH_Z_FeFsMyoAtm@{b@q@yOdf@ed@iQm[tJ}h@oAaOth@oZlRrQtOmc@|FajAlItAwAuPre@v@nY{bAoEoRrJuL~@bIvRiEIyZxLeZ}Fme@~d@y|@yOcWqH~NoOuXaIfQg[mw@mHeeAu_@}MyWue@kIa^f@wtAiJagA|}AdfBnh@rDjK{Pe@ar@qg@hXeJeC~IcwCvGad@lFcA|M~U`HyQrg@h@bNgb@pMqpA_i@kF}j@~NTwb@rRq~@mRnGmRu]aUcFwDwuBsJ}n@nW}RgQuiArRc_@wIwMv@kL|_@caAoCmg@",
+      "ylhtIiu{_FvYsO",
+      "kkgtImk|_FzE`MlUmApLqZ",
+      "wvltIyft~EmH~VcP}R{Yc@iHsj@kHyJig@bV_e@aD"
+     ]
+    },
+    {
+     "filename": "Однодневки Подмосковья/04-sestra-i-yahroma.kml",
+     "name": "4. Север. Сестра и Яхрома",
+     "stats": {
+      "track_km": 133.6,
+      "span_km": 49.1,
+      "elevation_min_m": 114,
+      "elevation_max_m": 156,
+      "climb_m": 199,
+      "descent_m": 178
+     },
+     "mainKm": 87.4,
+     "poiCount": 29,
+     "segmentCount": 8,
+     "bbox": {
+      "minLat": 56.286782,
+      "maxLat": 56.659609,
+      "minLon": 37.094052,
+      "maxLon": 37.521282
+     },
+     "line": [
+      "awkxIwqwaFlb@{fCd`AqqBbSs_AnH{w@`DstBaFqzAlI_d@b{AsdCvnCa@p^gSl{Be_Fpj@srBnzA}hBr^qHnsCxqBp_@zIlEmxAfOmU|f@csBbDgpC",
+      "ayrwIuhnbF|rAgbCcF}r@dCu}D",
+      "ceyxIsklbFmCbYhE|N|CzyB|S|m@dC~fFgKt}Ahm@nxBmAhz@jOn|@pcBjn@nr@}t@tqBgJbcAkaArMi[hr@f{@nKf^_CzKzfAneChiAj`@xo@b{AxY`EzD}i@h[sXt]q`AhoCo~A|UxJhL|`@pG~bAjLjZdYpTn^if@pGe{@lS}_Ab]P`q@al@l[e@nm@op@tnAkc@d]|Fvv@qu@tSv@eIkt@wEstB}Ny\\iy@l`@eRqhB|]gk@iKmh@if@qUmMcm@mNskEcQwy@_UsMap@}_Azc@ieBbAsp@yTeoAwBolA`MqeAuyAkcApNsr@pH{cBhdAypAd@ec@~Rio@dEgcAni@sKzZpHzu@x`Cbd@~c@`TklA~RsXbd@~Bhh@owAhC_[{Emo@qY{jA}]}HoOcZtNk^yAeOd}Bg_DxpFg}Cpf@yJd`AvFdfFxxBdtBlO|`@_[qEbFtArJuLqf@fAyLvs@g]",
+      "ozqwIggkcF~@aMxWcQrD{SjlCy`E",
+      "}tgwIepxcF|BpHmIgYgDpD`xAeaBje@uaA|_@q^tBfJiMxN",
+      "_ufwIokzcFdI_z@p~@mt@FxI",
+      "gdgwI_czcFyZkQkFtGks@uOAnG",
+      "yp}vIq_}cFpMmjAfmAvd@vD|V"
+     ]
+    },
+    {
+     "filename": "Однодневки Подмосковья/05-dubna-i-velya.kml",
+     "name": "5. Север. Дубна и Веля",
+     "stats": {
+      "track_km": 176.1,
+      "span_km": 61.3,
+      "elevation_min_m": 123,
+      "elevation_max_m": 239,
+      "climb_m": 720,
+      "descent_m": 850
+     },
+     "mainKm": 71.3,
+     "poiCount": 34,
+     "segmentCount": 8,
+     "bbox": {
+      "minLat": 56.214365,
+      "maxLat": 56.573735,
+      "minLon": 37.519137,
+      "maxLon": 38.273108
+     },
+     "line": [
+      "kxvwI}jfdFt^~c@p]uGbCzpB",
+      "wn_xIo}mdFzmAeR~g@fcAlhBd_@`QfWtb@xmCkQbi@pEbg@zdAtj@z[dkAhgBeTj`@nOuA`RrG~K",
+      "ekbvIcdxfFgCz|@sZwDy\\}`@wx@`ZiEwZ}JvD}OuW",
+      "{lfvIs{yfFiXpx@y^ki@aF`Xmq@xEjFpvAqChhB`p@xo@gO||@dd@~zF{c@|pCsuApaEmWPgnAdp@yWea@xJg[}HoReKcdBySwB}~@nc@cb@p|@m`@y`@aDdzAib@jBnBea@mYyLgpAsaCs^y\\{@{kBgZen@bHm{Ai_BnOgmBevAi`AgL}rA~qCwv@vnCunAne@i|@vbAq_@kIhEttAugAqVq|B|JsJqd@}hAfdD]xo@s{@|vAeIxm@{ZgJyLg`@e[vOec@sQmGkTq[fIXpa@qL|He@xsBjr@tk@bb@cKhBrlB_]eJkFpPiLqClA}NaX_A_`BjXg}Aw|CsmB~[wj@wG",
+      "izqvIarzeFqNa|AmVg^",
+      "ueswIqv~eFaG}b@in@yb@exA}F{vDhlBq_BqqCij@`@qh@qpA",
+      "_}`xI__hgF_g@pc@vOrhAfy@bc@qUn\\zZbyAo^j|@gAjgBaNtE{c@kSiVzRo_@cE",
+      "s{cwIq~qhFqf@`PwBteA_e@?}GpwCyfBy{Daf@`h@g[Jif@`l@wV}Wid@~rBgSvXoFj|Auj@|Ngp@wXiXzBs{@`|AgMvBy{BwrCmb@nvBaXjF}Up~@jH`c@{oAl`FcWnvErZdEaKfr@caAvp@qIbf@iLhAcJtz@tb@`@dj@n{@hEuOfd@~]a@fcAeRpWubAvBcr@tYcAfUmm@pyAgAda@sMxHtW|iDcHb~DbCjgC|`@nxLgg@nhDgLnxFagB`jHeNdhAvfAdsH`u@v{Bt[rwCv@pxAuT`~Cxj@hI`f@`u@vi@~_@fHki@|^`XwOz~A_b@~kA}ZdiB"
+     ]
+    },
+    {
+     "filename": "Однодневки Подмосковья/06-sorocany-kanal-muranovo.kml",
+     "name": "6. Север. Сорочаны, канал и Мураново",
+     "stats": {
+      "track_km": 79.1,
+      "span_km": 37.3,
+      "elevation_min_m": 140,
+      "elevation_max_m": 240,
+      "climb_m": 322,
+      "descent_m": 267
+     },
+     "mainKm": 76.0,
+     "poiCount": 20,
+     "segmentCount": 3,
+     "bbox": {
+      "minLat": 56.083052,
+      "maxLat": 56.306917,
+      "minLon": 37.498872,
+      "maxLon": 37.947555
+     },
+     "line": [
+      "yrluImyxdFyCsSfG{QQab@sFcd@}AgoC",
+      "qspvIwq{cFm]xQ@sHgPdDcC}SobAfRaAef@dJqfBhGgc@rOaDrd@nFr^|Thq@vAnKsJcEgi@pQkqALorB}T_uBxCaV`[cq@tNzc@bFyJpTrKwHlRpLbn@pM|KtEfk@hLpRnE|WfNjDhXn]nCzmAxLdb@eE~l@`Jn]l]kd@bd@gQvu@Hlx@~_@vrBuR`uAtc@vKjAnDcOfK[~t@fu@j{@jWmA}[rOa`@|UnWrQyZzl@cAfGwRxAql@lfAeoDvv@kvE|{@{~AmJsRrOcd@hn@y`Bvl@y`Abw@aj@`\\}Ebj@kiBsAel@uJqYmHwo@{WdYuUKsVoNiT`Qk]wUc`@ubAscA}MiHwIib@nPcRc`@ePaBie@s~DcNg_@{SyK{uAjAykAplAkTjAeq@o}@iqBufAgbAorBkA{Znq@e{Bn_@uqDoR}gAFa^rDqN|zAiiAjSsdApAep@~ZoTlB_N|GxAbFerB_LuFjS}rAaCsaAtEyv@lo@aKzIqJfCwQ~QwP",
+      "{x`vIij`dFDee@"
+     ]
+    },
+    {
+     "filename": "Однодневки Подмосковья/07-vorya-i-torgosha.kml",
+     "name": "7. Север/восток. Воря и Торгоша",
+     "stats": {
+      "track_km": 94.2,
+      "span_km": 43.5,
+      "elevation_min_m": 132,
+      "elevation_max_m": 232,
+      "climb_m": 434,
+      "descent_m": 373
+     },
+     "mainKm": 64.4,
+     "poiCount": 32,
+     "segmentCount": 4,
+     "bbox": {
+      "minLat": 55.943094,
+      "maxLat": 56.309591,
+      "minLon": 37.977335,
+      "maxLon": 38.218756
+     },
+     "line": [
+      "}b~uIoexgFfBkm@_Lwh@wTdV}EqTcp@|v@fDqCpAjd@ta@vw@tL~fAdTpJ",
+      "}v_vIipzgFv@_ZaIiXoO~@aMyL_JnFio@}Wwc@qiA_f@oe@zF{e@cAqs@ct@ea@oOmd@eBed@yi@sUccAts@oFnTgSrJkx@~kAwkAly@yYvh@alAhBk_@w^e@fJcFeBcLp[bAdTsHbHlKnJhAph@rQ`T}AvRfJhO_Hb~AlExA",
+      "mexuIuqsgFiBn}AdT`u@|PvmAf\\pGvZps@vl@nI`@jfB",
+      "ehqtI}segFfDdEdImWjC}|@|HeVxk@al@Cs\\}DkIvIcWe@c`@vHaDi@oRtIH|BkXqLwDrDanBiMk~B~Qw`AfQmBpEglAyEsXh@irAgSke@iMepCm`@emA_WyHq_@vOaaBfOihAus@cMnShJpf@wCf}@mIlc@{r@tgAnFjyAqE`q@g\\y`@eIyq@iPjHvBdRqWbQy_@mJcp@fJBrK_[bHiEnOsOqJ_m@~bAef@ie@u]yz@sy@meD}tA|tCmgAsdC}z@bp@edA`cBP~c@}SJid@~h@|Lh]Lha@ci@xWjDxYyFh[ov@b_AtHhe@aPwDw_ArO}\\mKcLqSub@xFiEaK}PdR{f@ca@cpAcWyq@mvAgWgHeEj\\`TjJgO`d@qLfaDhRboBoF|wA{_@|q@kSo`@ov@tbCdGha@amAn~FnMpR|CvVzI_JlLbLcKf`@pFjw@"
+     ]
+    },
+    {
+     "filename": "Однодневки Подмосковья/08-meshchera-nerskaya.kml",
+     "name": "8. Восток. Мещера Нерская",
+     "stats": {
+      "track_km": 68.7,
+      "span_km": 41.0,
+      "elevation_min_m": 105,
+      "elevation_max_m": 162,
+      "climb_m": 149,
+      "descent_m": 133
+     },
+     "mainKm": 68.7,
+     "poiCount": 15,
+     "segmentCount": 1,
+     "bbox": {
+      "minLat": 55.427466,
+      "maxLat": 55.756245,
+      "minLon": 38.559461,
+      "maxLon": 38.853021
+     },
+     "line": [
+      "uthqIscjjFkrAy_BcUg_Aq[yOvCa[}Gg^mS}IrA}p@qIi_@uYgA_Abc@qMtZaJmOeyAgx@kc@XeOa_@so@aGyYgN`Kw{@wFik@jJsDeAkaA|WqaAoK}IjKu{AkTc`@c`@i|AyPcuAkmA}gAuHbb@gNlRuDwt@ePmm@x@{Ku^syA^yo@oEah@`n@unDkVchBeQg`@mAeWbMap@~HmImAiUlK}j@aX}dBcc@xJe|AhfAcWsHog@b^ecAnrAkQrBmIdl@wBxwAeFncEbFdl@yFdV{S~HaBnPePt@eMnW}|AiNkOxYsb@a\\aMjd@eW{VecBxmAnGjc@eLpGuTdjA}@h[iFnCzEfuAgq@nnAcy@`|DmFnmBqJcAg@fN}\\pAMeLicAon@c{B~d@a~@z_@o\\}CycB|_AcrAgv@mV~fB_ObDxQdkA}OleCw~ApbA"
+     ]
+    },
+    {
+     "filename": "Однодневки Подмосковья/09-vdol-severki.kml",
+     "name": "9. Юг. Вдоль Северки",
+     "stats": {
+      "track_km": 78.1,
+      "span_km": 57.3,
+      "elevation_min_m": 98,
+      "elevation_max_m": 182,
+      "climb_m": 210,
+      "descent_m": 269
+     },
+     "mainKm": 78.1,
+     "poiCount": 17,
+     "segmentCount": 1,
+     "bbox": {
+      "minLat": 55.171086,
+      "maxLat": 55.292832,
+      "minLon": 37.896046,
+      "maxLon": 38.772722
+     },
+     "line": [
+      "wujpIiqhfFqj@w{BwXoxB{a@al@bUob@xAaa@d_@g`BxBeo@mMyxDiQm^mNibAzBonA|CuThp@mu@|\\{qBgEyEnQ{ZgGoKxMqk@fr@yn@ydA_|Ds_@g\\sRknA[c_B|Xy|@vx@vOt_@sFvu@cmA|`AajCvCq}@dr@lIpAyQ|NfJ`OafAnSub@jE_yBmH{pF_b@wqA`WoZ|c@eB|S~O|ZqOlg@gdAdN`Rja@uQtUefA|m@eObTmrBkMiRbAs|@oGm\\nL{l@`PcSdh@vG~Kvi@`b@yrA}Lgf@{rAs`@}PyNkC{U~`@k^f~@_B~Gk\\qF}^vCih@s{@i`@_RquAyO}EgN}^h@sy@x]iz@C}PkSgSzJqo@kJsUsG_aA{IeCoCkjB|DcDib@c_BiD}yA}Mq]mWknNmi@oxGaScS~@c\\`^oXsBc_A`PkiIrGuA_QenEe`@~F"
+     ]
+    },
+    {
+     "filename": "Однодневки Подмосковья/10-talezh-i-shkin.kml",
+     "name": "10. Юг. Талеж и Шкинь",
+     "stats": {
+      "track_km": 130.9,
+      "span_km": 81.8,
+      "elevation_min_m": 107,
+      "elevation_max_m": 195,
+      "climb_m": 417,
+      "descent_m": 451
+     },
+     "mainKm": 68.4,
+     "poiCount": 20,
+     "segmentCount": 4,
+     "bbox": {
+      "minLat": 55.048958,
+      "maxLat": 55.326248,
+      "minLon": 37.494729,
+      "maxLon": 38.685935
+     },
+     "line": [
+      "svaoIwrpdFge@sDo\\zh@{JimAng@ylA",
+      "aw_oIkvefFmnCglA_ZnJy\\cwBok@al@g_BofDi}@yHgQmqA",
+      "cjgoIaezcFbJcj@ho@qi@jb@syAhaAwcAbw@_eEjUsTbBwl@kLobAc\\sp@ie@{_Eql@si@su@iM}HgY|eAo{@_E}wBq`@qb@aUstAk@y}@g^[b_@}EtN_d@j@ytCouAs|A{f@}kAgS_fBtjAusDjyBqoAx[fc@bX\\}FrNp[zj@f`AaD~DyZ}iB_xDfu@cVhVszCmTggApRcEpAyt@qT}bFpLmLk\\ihEve@gnDww@qb@",
+      "er_oIonyfFlHm`@aWocGzGuhAqWq}CxNsfAwt@}iDwB{wCdq@a`Aei@{|AyhCirAe`A|Wke@kg@}Ket@sRHsIcp@xMaQ|WezIuX{rBxCesEy]ugA_DwbAwg@uD_g@wkAqb@}iFgg@y}AdKyToUiaAyGocEwV}s@cT~a@wm@jUqT}JsQcgA_z@}qBqt@kt@_w@\\u`@}lBwvAbEa[jXmFmU_jBhPyO_W}d@v@hDaaCerAmiCoHs{@_d@m~@u_@P}lCwtG_`BsiBmAuf@ag@un@wGsuBme@_oB{ScR|KgXuRhJmEcV{UmC_B}jA"
+     ]
+    },
+    {
+     "filename": "Однодневки Подмосковья/11-serpuhov-stupino.kml",
+     "name": "11. Юг. Серпухов-Ступино",
+     "stats": {
+      "track_km": 110.9,
+      "span_km": 54.4,
+      "elevation_min_m": 106,
+      "elevation_max_m": 199,
+      "climb_m": 422,
+      "descent_m": 382
+     },
+     "mainKm": 62.9,
+     "poiCount": 19,
+     "segmentCount": 5,
+     "bbox": {
+      "minLat": 54.840943,
+      "maxLat": 55.12125,
+      "minLon": 37.451633,
+      "maxLon": 38.148544
+     },
+     "line": [
+      "quxmIqhjfF|Ic|@",
+      "anxmIc{gfFgZm}At@w~@xMqE",
+      "ml`nIalpeFmeA{e@kfBKm`Bul@wm@sw@_Jia@kr@`Ms_@{GqHyNo@it@t@qNbJiBp@_q@c[sc@kX{y@in@mLmTqi@mv@jEmn@bWi^b\\sBd\\gM_O{LtC}n@kmBonAo_CuvAoPuhF_xBqYhKo\\cwBsk@il@__B}fD{}@_HcOiqA",
+      "sxymI_ttfFkc@vJyHz]mS~Map@ay@eOsj@vE{oFmu@gjHvIcgDaqBaTyPrM",
+      "mwmnIuwqcFhOec@_D{Lve@_o@|\\fXrj@gC}AmJx_@ev@`eAccBcW{v@dAuo@mJmZ_e@mYq|@caC}KivArbD_T|iAsf@oN}d@v]awElEcrBj^csBlGy_AqQmkDvAuz@yH_g@`JgmA}Lg`CvEa`A~Smj@tn@{dDvZidDvt@khARum@db@qq@rY{~@fVgxBrsAcyAhHkt@wJkvDrKav@cNoWcFsy@mPy_@bLav@_B}|@_i@mnBz_@my@hi@kFdReR`GuhAzFqGdI{mBbBotEbLin@kf@pLaJkHQwSxDsWxUiSmBcSbFuC~GmnAqHqm@hMuMnGwaAoJqBlA{\\_X{yA{Po`@pEqIqCgc@hEgD_\\}a@a_@f]ePlFkCcJ{wAbbC"
+     ]
+    },
+    {
+     "filename": "Однодневки Подмосковья/12-istya-i-nara.kml",
+     "name": "12. Юг/юго-запад. Истья и Нара",
+     "stats": {
+      "track_km": 141.4,
+      "span_km": 62.3,
+      "elevation_min_m": 121,
+      "elevation_max_m": 232,
+      "climb_m": 520,
+      "descent_m": 563
+     },
+     "mainKm": 71.4,
+     "poiCount": 36,
+     "segmentCount": 10,
+     "bbox": {
+      "minLat": 55.029818,
+      "maxLat": 55.341251,
+      "minLon": 36.662195,
+      "maxLon": 37.477573
+     },
+     "line": [
+      "mkxoIuqw~Eu[yq@xDyr@gIaCv@{o@|UigA{Pw^pAoN{QsLiAm[lHwAlJ{~@fBogBvb@efA|N|L|f@gfBh^q`@hcAu}Bro@uv@nFaRaPo~@dq@yqAn\\nKnf@awBcNo_AcbAwhCsA_YbSctAsB{pDhc@qY~Q`]bc@uvArVkYuk@{nAsElKeQe^nb@{sFiEa_@~y@aKp[uQvI}YaNq~At@}zA{KkUhp@gzAjAsg@vIwHZee@kR__AjG{_AdFgTrMv@vAmnA|P_CbAqf@tG{El`@sExaAdTdp@oi@vXxA~_@ioHoEyz@~e@{cAhMslAlKlMjKwWpG{hAp\\}eAtYeMlYygAbPyQySo\\fC_|@aZkQaH{]nn@_iFhe@oqB~D}{AiEq`@{[q]uFm_@gc@{]{RrDhGurAdKGn@aM`CcgCoFchAvKaXk@s_CwOckCnKgk@eJwn@hOwz@",
+      "ksloIw{m`Fjc@zt@nWxNln@okChE{iAlb@iaCkg@sw@dHkOsZosAvGwXzAwqBeRqWif@oO",
+      "yxwpI_rm`F_@jQdk@tcAx`A~I|k@f`@`Bt]l`@bZvc@|Cb|CfcFlUuIeHo`AjTcsBgJi_EfgAkS{IsP~Qse@xZlj@nd@mJ`OqV~o@pa@hWkZdB`TbR~Kvk@nBjw@kaAnWy{Ar_@`EpVh_Ad_@sk@pVkF~^rYvc@uuA`[bBxTmt@lNwuCj]pYn[z_AlkAzVbi@z{@xgAfy@~Vvi@",
+      "ur}oIadp`FsFze@hE~_@bdAajAfm@zKzj@oy@zDo`A",
+      "inxoIyer`Fr`@w@n~AttBlo@bC~Jko@oGyh@p^~GfZcpA",
+      "qy~oIacr`F`GhGo@|h@",
+      "ax|nIankbF~NmVp@it@vMej@nSE",
+      "ix{nIueobFkUxF{]sS",
+      "ekioIwb_aFrMcn@p[pXzUgUlLelAz\\GtHq^kc@{e@zB{g@gUkgAaJnCnLrXeBpm@ahAsk@",
+      "{ugoI{phaF{`@mg@gl@|L"
+     ]
+    },
+    {
+     "filename": "Однодневки Подмосковья/13-meshchera-glubokaya.kml",
+     "name": "13. Восток. Мещера глубокая",
+     "stats": {
+      "track_km": 82.2,
+      "span_km": 43.0,
+      "elevation_min_m": 110,
+      "elevation_max_m": 168,
+      "climb_m": 145,
+      "descent_m": 155
+     },
+     "mainKm": 58.7,
+     "poiCount": 15,
+     "segmentCount": 4,
+     "bbox": {
+      "minLat": 55.57254,
+      "maxLat": 55.891679,
+      "minLon": 39.005467,
+      "maxLon": 39.391394
+     },
+     "line": [
+      "{y`tIcuqnFrAh]~g@lw@x`@|cAp`@vcC`k@hr@x@~RjI~BfDnr@uBj]t`@r|AdDhhBdb@hlBoA~r@~JpW}LzfBtBxt@dMz`AuEtEc[hlBgL?aGri@rd@ha@xYlIjVpz@jF`i@pr@tsAlZ|a@|BaEte@jlA",
+      "aderIqn{nFmu@tN`@lh@p`@fy@}o@rx@{V`vAqp@l~Auf@zF}~@{yAinBav@cV}VqPic@mkAuaAwOqVaWoqA{hAk~Aw{@{WfA__@aNxBuo@dw@gQyHmTuu@oWwgDm\\ae@ot@pd@wm@zKaIzSuMlAcO}i@cKcoAzAa\\oKoJyGqr@scAlK_IzJk`@ks@qKdBmO~T_GzZoj@|i@wRtlBcd@rl@iOiGsUvM}Kzp@uNfFwDrVyKwEeSxUo`@cf@wV|R}PcAyW_`@gFfDyR}MmbAmqAaOsn@gDgA{EfQiPsk@{XiQ}g@xHuEiWwKeM}ZeK_i@og@uf@oVsYtC{LpGG|}AlK`x@jNrMfIzY{Chz@qp@fn@eFjSoBfaAbHdzAlP~y@aMrUpJhb@o]vzA{cAdwCs[~l@yTxz@cGhw@cRvXjElYiFnF",
+      "qk{rIwx~nFgEfUai@gCqBslBnCsG",
+      "{f~sIuelnFaBhl@z]zcA"
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Походы 2-3 дня МО",
+   "routes": [
+    {
+     "filename": "Походы 2-3 дня МО/01-tver-staritsa.kml",
+     "name": "1. Чисмена-Старица-Тверь",
+     "stats": {
+      "track_km": 416.7,
+      "span_km": 129.8,
+      "elevation_min_m": 125,
+      "elevation_max_m": 248,
+      "climb_m": 727,
+      "descent_m": 924
+     },
+     "mainKm": 215.0,
+     "poiCount": 45,
+     "segmentCount": 8,
+     "bbox": {
+      "minLat": 56.007889,
+      "maxLat": 56.877792,
+      "minLon": 34.834728,
+      "maxLon": 36.239176
+     },
+     "line": [
+      "ci|tIki`|E}lC`n@ar@eTs}@gqB}kAc{@g{B~T}|B|dByhEzdFiaBvaFgn@xB}SfgAjHv}CeR|g@dQvSefApqBie@z}Bcm@uP|Lx_EeSpx@}zBb`@}W}`@at@vaB}Abx@|j@`sACxeDrd@hyD|IpoH~f@pyBiI`l@tiBxtHbc@`pJirA~c@md@v|C}z@xnBw_At_GwQ|eFssCp_Iq{DlfCwfCv~DuxA}PivBzxDyz@sIwIltDjq@tN``@|_AwiAx|LpKjgAel@f_D_rBjaC}|A~pD{^fxCc|ClhEe}Hx~QqyArsL{KbmDah@p~@}_ArbJya@z{@",
+      "exzwIstetElXrZomCv}JmTdeEk[qGs_D{zF_oD}SeJezGyh@{vF",
+      "}nnxI_cxtEzDg_FixBipJa@czBgx@ydCnz@{xDfGiiAwRidC",
+      "s|{xIkejvE}`Cwr@mfAm|C",
+      "kacyIcorvE_eBceCiz@ihGvMmhKwxAke@wjDrsC_s@bA}`@keJs_Ew{Kmr@qtF",
+      "w{~yIo_myEuEgkBqX`DiMyaAsc@fDxBsoB{j@_{@eIebAzlAquKhg@qH{B|Yrp@|VqDtZdeAxuA",
+      "w`_uIckmxE{~@qJe^um@qBg{@",
+      "ujztIylpxE|Gjb@yiCvcAwQeE|IydCioHvUba@vpEevCyYoiAv_C_c@rhC}sAkbAswAbl@u[jpFt^f}Fm`Apk@opB|fJgdBbcDaR|oBuuAny@ceA`rByUbuDlIj}AucAh|@k`A|tCtq@x|CvxBxwDvpAfaNaqAvcBo}ApGo^fjFco@p}Bx^hwBgnD`CygAwiBszA_Dg\\vj@a^tmGqvBzh@_{AjwEwPyLm]jbAyo@hc@w\\hyAjHrw@ynBnsC`SnPiSvq@aRgZ}wCtf@}|@mgAiuBe}@}iDuqEyzA_d@_cB`t@a{@w\\qoAh[kw@btBjHzj@|i@`OaJkg@zU}E~Mrh@yiAl`AimCxt@wLtb@enBohB}RqnCgmCcaAc`CcsDl@}uFvmAwyBnuCii@lw@muCoxBu~GgUwbD|YkJfLyzBqeDqn@|LivB_k@eGqxAmbEeQjV{hDk}FgdCmdBse@afBsvCguAaf@chAdGmg@mo@sb@en@i~Dqv@mlBrh@unH{y@gpIql@csBq_BmiAsg@unF_{@wcDg|Byh@id@|n@ql@cLc|AirAsb@F}Oig@m`BqZiaDvF_a@lg@xLm`GvXwi@~Am~Dt`Bl{@dm@ekAtR}~Euo@_cMro@aJiMckC|[{o@c@ihDp_A}sFmNeZ"
+     ]
+    },
+    {
+     "filename": "Походы 2-3 дня МО/02-tver-torzhok.kml",
+     "name": "2. Тверь-Торжок-Тверь",
+     "stats": {
+      "track_km": 346.4,
+      "span_km": 80.8,
+      "elevation_min_m": 124,
+      "elevation_max_m": 226,
+      "climb_m": 693,
+      "descent_m": 716
+     },
+     "mainKm": 216.3,
+     "poiCount": 39,
+     "segmentCount": 9,
+     "bbox": {
+      "minLat": 56.725561,
+      "maxLat": 57.045621,
+      "minLon": 34.735551,
+      "maxLon": 35.928131
+     },
+     "line": [
+      "s|{yIynazEui@ys@rFkc@mUui@eW|N_XyQ|BqYi]cUyCl_@aLaE_RxwBaMeC`MknByRgBooCxs@yMd\\ir@}MqcAblAyr@pS}hA_KyN~d@{q@hJbk@nm@qBhkBsc@xIj@thBfZjpHbZxcCaFhtAxSxdAshAzdB{O|nAnj@zd@tCv_BmEpg@uPjN_KlrHsXlzAc\\~Os~@bwByB~|BlUzxAph@l^pf@|dB~u@pcDvR`|Bbe@fOcMhhBtFfjA}fAzdBqv@hwGpu@|d@fCtjApQ~H@pqB~^jaDiGxxFnIvInL`lBlBnlChi@pEfh@lz@gVbpFrBzoAaOfTn@zj@wvAhpA}sApDwAcRyURch@~Ky]xn@c{@fHkwAq~@c^fkCbHdInE|vBqNrFhAz\\_a@jkAkRx{AdObu@_HtrGgNruA}{@~tC_oBr_Aoo@`zEf`@jNySxPsr@_^kCt[bWxIuWdO`N|e@tVmTjP|O`Ekb@ld@{b@zD~_@{LnEnCje@wKvZ`b@teAn{Bv{@jiBv~Bfl@wJzbApnBrf@`eDbsAtrDvk@zVjK~nBrX~}@bVbMxPni@jbArHlrAleAlv@tyDli@jm@fTwk@vf@q`@jT`G|z@ghA|]omB~Ysa@oA{x@pTgeBdm@wXve@o_BvrAaw@d~@ymBtUkyAiTocFfBusB|[elBpSaIbL}}AwJulDhHuJ_Xg]xPsyCyg@ucAiKmdCqeAf_A_Cm}ArCgi@h~@k|BvPunAwP{zIbNct@eF{~DfVuq@kv@sw@cCouDy`AkbGyfBksDoyD{}Qbe@_k@veCrh@zKkzAsWwxJkc@scBbL_dC_VanBnS_nAmHsvBtNky@uaAakDwp@lg@qAyf@fOkhASajCzY{o@|Aa~DhaBd|@pl@_kAlRu_FwVsvB}WkmIrp@qHiPgoCha@ob@{GaYvNimAwJajArk@wjEzScf@yNuZ",
+      "ofxyI_whuEpuAni@tV}b@bFrKdg@oc@pdAkBf`@dr@~h@~R|N_LyEar@rWap@zaAiRbcCwrBng@ij@Smb@_l@e_Fuy@}Ma`@agC{S{YgOqmCw[amAeQiDqKigDks@eh@sPuoAsMwNoLtQqkAst@isApk@ka@it@oS`BgvBirB{|@bJu`AqgIsImeD",
+      "chxzIkm`tEVse@ptC~FnQadAjg@sv@je@yAxIvk@njArpB|Efi@bTgB~StsBr{D|yAt|AbxCpdBl{F",
+      "gdpzIi_etEncCan@zkBmAdu@x{FzN`zD",
+      "uhwzIw{suEhHbjCoh@je@}Dn]q{@~l@",
+      "_kfzIkkdzEuRfmCqfA{NgmC~|Cod@pdAgk@hP",
+      "mtazIctbzEcn@zoHakEr}EuTfwAeo@~jAeVn@}Pzn@_v@tq@",
+      "srpzIs~_zE}b@|n@|Lh|G}DlrAtJtkAiMzdAmNbIrKvaAmIb`EbO^dMv{@yz@|gDfg@jy@H|_FsQdhAgp@tJgs@tpAjEvaByT|cDdOdcCo_@vlDlnAhuCf\\fNds@fhDxf@bo@xg@tmD",
+      "__nzIi`fvEy`Anv@}vAvR{Xpf@sYyAoAdd@sj@tbA_cArj@iObrD~_@|`@pDxcB"
+     ]
+    },
+    {
+     "filename": "Походы 2-3 дня МО/03-konakowo-tver.kml",
+     "name": "3. Конаково-Тверь",
+     "stats": {
+      "track_km": 115.5,
+      "span_km": 61.2,
+      "elevation_min_m": 121,
+      "elevation_max_m": 153,
+      "climb_m": 288,
+      "descent_m": 283
+     },
+     "mainKm": 80.8,
+     "poiCount": 18,
+     "segmentCount": 4,
+     "bbox": {
+      "minLat": 56.576217,
+      "maxLat": 56.863178,
+      "minLon": 35.893514,
+      "maxLon": 36.748345
+     },
+     "line": [
+      "sfixI{py~EuE}GsdAxhAaXbz@wbAjnA{y@tc@xCp}@lLf]w`ApXkm@qEqMeOaOr^k_@{}@~AsZe\\eK{W_k@cCgq@eRe|@acAudAiY_yBeMgGqHedDqFt@yLeyAjImW}Mgy@cTq_@ej@qN~BrtAeh@dCqJ|PgL_ViKzK",
+      "grzyIyyj{EGhUpH|F",
+      "wuzyIoik{ElTon@|R{dBnZuYnb@m`Aj^wOxTui@j_@gHsIouAfFu|@eFjz@jKdrAohAl~FhH|fA",
+      "efbyIola_FiRhNeYdx@_BxkB`eAnwDnn@veI`@j_ArmCxaPoCxz@u`@jSjIxYOhf@zh@|z@g~@hwByu@|q@of@hlBu_@wMk`@jeE`Xb}A}Ujd@oPjAeXrn@Sdd@rPx@_C~]}Qxv@ee@`{@}{@nOwr@iO}K_PxAgq@kt@ce@eQjBwdAcuAyt@nk@wL_HySzjAmo@prAuf@jJoXdh@jHvgBfNzd@nB`|Ava@jwB`MnOgo@luCaa@tdAnAdP{HzEhGrvBuIfr@cq@juAa\\vYeMbdAqd@fOgh@poAqLfuA{q@fhBiAlvAhEkA`Ebf@|l@|a@deAn@hb@or@xv@`j@]~yC{wBrgMyiAtrBmb@~CcNoZqo@_L{p@po@_SfWof@jvCNhhAjdARbMpPoSlt@bTr[_Az`BjMzh@|bAfmA"
+     ]
+    },
+    {
+     "filename": "Походы 2-3 дня МО/04-pereslavl-plechtchejevo.kml",
+     "name": "4. Переславль и Плещеево",
+     "stats": {
+      "track_km": 216.4,
+      "span_km": 99.3,
+      "elevation_min_m": 124,
+      "elevation_max_m": 214,
+      "climb_m": 528,
+      "descent_m": 432
+     },
+     "mainKm": 177.1,
+     "poiCount": 39,
+     "segmentCount": 5,
+     "bbox": {
+      "minLat": 56.526235,
+      "maxLat": 56.919029,
+      "minLon": 37.560421,
+      "maxLon": 39.019876
+     },
+     "line": [
+      "oemxIwj~gFefDsMer@{kDeQ_bEkfA_dCoOmrA_DuoE",
+      "avxyIcg_kFjqAcxCbbBmoB|jDgk@huAoaAxfAtPpnAapGhZy|J",
+      "kyhyIiidlFiKktEvk@unDfrAu~B|wAaxA",
+      "}}axIs_gdFphA_uDbGcgBcVqPiHri@{pAivAgk@iIzTkaDmBq_BoXygC{w@ahCeeAmfH`vBqxJ`FkkElm@avEg`@iuL~C{dIgt@u}Nqb@gwDqy@w`A{Y_hDmvA_dAa]mgAdTobBq]gpDlc@a\\aJgAwLmcBuz@w[lSwjAoNm`Arq@gJkT_sDok@aM}I_eB_a@c~A}Z|Es_@oi@kv@zp@ygBj{C{wAg{AwpFsjAiN_Qec@wvDueAeQkoA`jAkdBzp@kaAuC{m@`a@_bBin@en@hV{k@byAiuBb}AynAv_Co|@`Cki@d`A_cBxs@qfDse@_`Ct~Buf@yQhLabGdo@elEfa@_z@dnBsqAaM__Ids@ssImDcjAt`A{|A~`@oiBjoAkjAfXccAj_@w|G~Ywa@`OqpBj{@w~C~N}~ErPk_@iL_s@b`@cm@cn@{|AzR{iAurAs{A|n@eoChuBqzF`hCs`FhnBkqB`k@ioBxy@uNftArj@tWrcBVlmA|M_MvBaeAaRaOkHq`A|yAlfChf@sn@z`AvFiE{eBjh@yrC}`@enBfSw_A_RyYcFgoG|lBkkB|iBgQbrCnj@jfF_eEfrAu{B",
+      "icyyI{t~jFdm@~hAxaAxI~FrU"
+     ]
+    },
+    {
+     "filename": "Походы 2-3 дня МО/05-reka-kirzhach.kml",
+     "name": "5. Киржач",
+     "stats": {
+      "track_km": 179.0,
+      "span_km": 65.1,
+      "elevation_min_m": 114,
+      "elevation_max_m": 206,
+      "climb_m": 571,
+      "descent_m": 436
+     },
+     "mainKm": 93.7,
+     "poiCount": 18,
+     "segmentCount": 6,
+     "bbox": {
+      "minLat": 55.864548,
+      "maxLat": 56.400925,
+      "minLon": 38.681091,
+      "maxLon": 39.10061
+     },
+     "line": [
+      "cw~sIyysmFtUjlEs_@rK{p@uGiS`e@w`@jOcYlw@wh@|Fad@mb@k^~@{`Als@_l@}g@i`AyQEaSgVp@}Oue@yRtNsUwE}R`RqGba@qXQ|Cjk@oNhNqIby@{Qj[tFvo@qFv^_LvSiMwDqU|w@xDtWqbAbe@o}@eDoaCjqDs]y@uGptBoOl@yLv_AqYvFkFly@iLbEgHmVoM`@f@oa@jKaXmJ_MiUnWse@ye@}U}@qIre@tb@lfAqBpbAhIde@sOvt@~Cp^if@fJoTs`@ik@~KyTd~@kIx`BjCli@ocBnzB_gAyk@ajCuEyWef@qt@nr@khAlY_q@e{@mJoe@gYl]{l@y{Ag[pc@{FoRwn@p_@kNmj@gCrMqY}Ss^gt@qvC}oBe~DozA{Qti@gXmu@{o@kHgs@X}]xgAqj@rn@yRxz@m`@uCgQtn@kKdu@hRrdAmFhSve@jw@kA~q@oXs_@om@qQiDk\\w`@q`@oOjJPgOeVa_@sYxCnA}SkX~HcViYy}@rRsjAoDasBddAiXxf@egAnnEoShaBg~@`oBaZvtAof@zsD~Kfv@}OzNzBbiClKrR",
+      "iyxuIqzflF~P`gAtOjOvPvw@m\\p]g]uCgX|eB|Uxq@}CxzAyRnwBs_@n[r[dl@_VdEgRea@s{B~yCwgAhEaq@yeA}gBz_@{_Akm@_XbBuv@~mCU~}A}PRqI`c@_IxcCxTf}@is@`q@cNsk@stCcPgy@is@oKunAcU{^cR{cAgTuAsPo]cGhQei@yeAswC~hAkg@jBmv@sk@sf@g_AkVcH`CpnAw]mHaFtTe`@kAqd@jd@cTpfC",
+      "kd~sIwkomFw]yf@e\\|Yk^qAamBloBhGhTqQvOkTm_@m`@rB{Tq_By[rCmHl\\mc@bSgo@{u@qXlEmQd[gfA_NuBvz@wQrNw`@a]eTpy@zXju@",
+      "uh~tIyeslFdKbW_hAlw@aPiRqSfg@",
+      "{`huIegrlFwHknBc|AxRcn@vbAvI`~Cmj@tlB",
+      "_ibuI_`ulFwKePeO|Pqb@zfAc~@D{l@nZyi@o^{PbJqPjd@pFzwAgPrwAal@eFgWlm@mfCdXscAlAca@aj@avAbiAyc@`s@"
+     ]
+    },
+    {
+     "filename": "Походы 2-3 дня МО/06-koloksha-vladimirskoe-opole.kml",
+     "name": "6. Ополье и Колокша",
+     "stats": {
+      "track_km": 188.0,
+      "span_km": 108.0,
+      "elevation_min_m": 99,
+      "elevation_max_m": 236,
+      "climb_m": 640,
+      "descent_m": 546
+     },
+     "mainKm": 160.6,
+     "poiCount": 29,
+     "segmentCount": 4,
+     "bbox": {
+      "minLat": 56.061938,
+      "maxLat": 56.58095,
+      "minLon": 38.706508,
+      "maxLon": 40.183697
+     },
+     "line": [
+      "crduIckgtF_fB|rAyi@qdAqu@jZoZziAag@nWpt@z_Ioj@oFc{Dt|AoKt}AlLrz@gLfWja@nnC`Zxi@ux@vxCsU`bCya@qw@_m@cSoqBjgBv@pwAqhBhwAsRhuAiv@iGucEd~@BxaD}f@dbCn|AjkEayAniBc~E_^yEajByp@vt@tZ`wAfBb_D{lBri@sw@ksAwoAfoE_LroAqg@gf@_lB|eFqpApl@}uAjyAocAaV}}BhoCq_AfOqsBtxAalChY_qDzbB_xAsm@_v@s|@oq@diF}lBfdGup@hlQ_z@nbE?xeAwbAbdIc]nr@u}@x]a~@p|B~XroBvo@ptAh_D`~CsLzr@`OxxCti@tWvZ`x@y\\lc@r@rlAqSr`A`VjtAf@d]iNzCvSrjBnQi@jqBtjDzrFl`Df@hhCmb@vsEzIvcCcYt_Gi`@zVuC``@xsB|aE~^hcBpfAbcAvbB|uD|vAr}ExSp_EduC`w@`E|iFtXtrAhNp}CciApuHpLtv@sQf^~C~yBtKdS",
+      "qrjwIumhlFe}AtIs~BpuBme@z}BvVxNz_@nkBhyBdfEnhBppBrNyLluAvbD",
+      "y}`vIilxrFdVljEfVpk@uPfGaq@vkCkm@IlZ~hCml@zC",
+      "qwewIyfflF|`@s@nWhl@fNvaB`y@gXtf@|c@"
+     ]
+    },
+    {
+     "filename": "Походы 2-3 дня МО/07-pojma-oki-meschera.kml",
+     "name": "7. Ока и Мещера",
+     "stats": {
+      "track_km": 263.7,
+      "span_km": 86.9,
+      "elevation_min_m": 97,
+      "elevation_max_m": 160,
+      "climb_m": 407,
+      "descent_m": 468
+     },
+     "mainKm": 139.2,
+     "poiCount": 55,
+     "segmentCount": 9,
+     "bbox": {
+      "minLat": 54.91645,
+      "maxLat": 55.559618,
+      "minLon": 38.839073,
+      "maxLon": 39.615755
+     },
+     "line": [
+      "{~inIao_oFnRuKpCy}Afe@{\\gOg~@w`@pm@dCnoAsZzI`Ax~@",
+      "compIi{{oFo[_U",
+      "eifqIu}}oFum@|_Csc@jy@uQr_CoIvDfLbjBxXiEnl@dh@vx@lnBjuAzbA",
+      "mvpqIqvomFgX~FoZm~E_qAgoCkReIayApiAybB_fB_a@eAicAtf@ei@du@uRb{@_{@{E",
+      "keenImgrnFwKk^wzAb_AwEcb@_h@at@q@_cCtS{lCcRo\\y@e~@ga@|BVwf@qHzg@_\\vAiw@ghAqdBsOkr@|WyGawBoPyw@{}Ag`BcrBy^}bBjIshBeRm]mhEqx@_rC{Te_CaVswEvGqiB{yBoyBYcwAkcBnXq_BaZ}Syu@{Gp@`Ljs@og@s_@sVrrAexBdgDsa@hpAomCz|DiyAdzA}QbjA{^dn@e_C}nA}\\se@c_C~[wq@ji@suC_MvOsjANopCma@u~ByEwuAzWgtCaFgkBikAeBeoFi~Bmd@ulBip@ynAy_B}cAce@|i@gt@oSikB|n@uh@`j@aGds@lOb|AU`{El[lrAqDjeD}z@jtBff@vFbW|_AdJpqEtl@jxDwHpl@fKp`B{Tn}DfCnmDoK|[o^lGap@vcBc|@pQbTjq@dHpeCyg@dRrGtwBeJhnCwJh~@iGwCpJ|dC_c@|vArGnhEw]bFmUb}Bm@`mBbIb\\w\\xjDil@g\\}qBzDvWjoB_h@xnFz`@lNfIrYkC~k@cJo@{Cnj@yHDxGrfB}r@loAm_@b}AlXleCwFprB",
+      "ewpqIus_mFa\\aL{gAzeEwHh`Aba@zQ",
+      "_{aoIccclFzFjDcUjbAcPen@_HyiCrHcYwHeOcKaxGrIse@m_@yiH`H}}AxhBsjHvjBsqAoGwc@aL_B`{AepGseBqk@gLcSjAouAd]o`BbsCqvFnNiuAyEyeEd^}uAll@ztD|[zu@xe@nY|u@GvcBgxBjn@rgBnj@{u@r}ByaG",
+      "kn}nIqsimF~s@d{Ax\\rU|jAsNw@olAnf@w}@~U{vBla@cyAumDooA",
+      "ou~nIsavmFa^_W|Vw|CgE{[jQdLl\\sy@aFyIhMyl@kNeVzi@qqAd`@u}DuDcjAhR{Im@}u@qWcXiEu_GxB{dAxWebA~lCvf@e|@hgBv^fz@rNj~Ah[fw@gHjOzGve@j`A~`CtoC{bEfUp@zg@si@x_@{oAac@{|AzzBa`F"
+     ]
+    },
+    {
+     "filename": "Походы 2-3 дня МО/08-reka-osetr.kml",
+     "name": "8. Осётр",
+     "stats": {
+      "track_km": 353.2,
+      "span_km": 118.8,
+      "elevation_min_m": 102,
+      "elevation_max_m": 259,
+      "climb_m": 2003,
+      "descent_m": 1731
+     },
+     "mainKm": 228.6,
+     "poiCount": 65,
+     "segmentCount": 14,
+     "bbox": {
+      "minLat": 54.338621,
+      "maxLat": 55.144104,
+      "minLon": 37.685273,
+      "maxLon": 38.897226
+     },
+     "line": [
+      "k~|jIeusgFm~@jDqw@z_BsXfnB|z@xwDaiCriDgTlhAuR|oCvp@tfGKntD",
+      "maqoIouvkFtaDnqDndAg^jPac@oU\\bF`~AhXsBvdA{gBjsA_dJvoAk{AddA|wA}AjaAka@bs@lcApqGx`Cpa@tz@gf@p@s\\pm@eLfNukAbxBiPbQuo@ndBvK|Lvp@pwAyRoZw|CbrAcx@jfBsxBb}ChMz}D}pAxq@v]d@vZuf@eGxJhnBpsCt|@vxA~lCvxDidF{Mgg@xG{zBxb@mcBlvAxl@`h@m_@tTjp@pb@khAf`@`GpH}b@rBvjArt@go@p_@jv@zw@dKjyFsqAfcAjaAhnAk[x[hhCxjEtiDjn@ekGsS_vClZad@ddCzqCzw@lsBdoAlu@vl@f_Bfv@ot@|NroAco@|F`DfYrY|UdL~nAzK{M~nAdoBf^lF|G_dA`i@o{A`M|b@|b@oFld@n{@reA`Y}CrdArn@mNhIx_AlVrH_Elz@rfDfrF}DvsCnNnp@ek@bcAgGxlBlp@neF_MdkAxPbK`PplMjp@vpB`aEbtFr~@ttCqmCrlDzb@rbAe`@xdBlCdsBl[jMuBrWv_@w_@yCzuBcg@v}@zs@vfA`f@im@bn@p]zoAcaEh\\jIxZzc@qBfdA||Ah~B`K|hCt}@`xEd`Cdx@_Nfv@qeBhaBakA}Aoo@pjB{U|FvH`_C~b@zZFd`AyUf\\rqAlfA^`vAqV[aHlr@vL`UwRht@qG|`Dm]nK}Lb}Ar`Av|@}FjYtUhVoEda@gc@vWvQla@hgAcOqFtaAbi@fvB}CrbBjhCy]ss@vkCjEpiBmkAdlEabBfs@eVjcA}l@dRi{@`rA{a@mEck@jt@cQa^ap@`IgBbgBcl@`|AinEtuDfUx_N}Tl`IkVpzCwrAbo@gPlgA",
+      "gngkImmbiFiGjpA`g@hgAgKllEni@d`AvMroD~l@}KvfChzEln@}W",
+      "qyekIyd`iFhJncBne@bv@zmBbPh`@pu@aVjmA~[~_AhNvfCjt@jl@cGj_C|OpN",
+      "s|nkI}vkkFojA``AvU`_Cc~@hvEjEprEwQfp@{nBtGsnAxyAwkBm~@",
+      "w|_lIm~ykFlQrxAdlAxmBpCzV{VrD|f@~mDiNbWv_AzbEqhA`rCfe@h_DiP~nE",
+      "ozknIcdwkF~KxQfp@}\\v`@vmAz|A~s@llAx~AvMfCnIml@|k@rx@dg@w|@hs@eOfzBzxAtHoRhdCjl@jd@hs@fc@sVeS}fDf^{e@dGmsC",
+      "cw{mI{{pkFsGqeD`QqsBh`BhtAtw@mgAbt@|bBnh@nQ",
+      "crmlIwy}kFzz@xCoRekB}VwM",
+      "oqckImvnfF`tAaTbk@hh@",
+      "wuzjIkcjgFufChtBgaAemC",
+      "sbzjIofuhF}KwXaa@tSeb@_Qke@bt@oFi{Bha@cLxl@weA",
+      "mtmkIafkjFgu@_g@oJ{qAso@zGeHorCi]{~@jBq{A",
+      "sfvlIizflFgs@dhAaYssA"
+     ]
+    },
+    {
+     "filename": "Походы 2-3 дня МО/09-kaluga-tarusa-protva.kml",
+     "name": "9. Калуга-Таруса-Протва",
+     "stats": {
+      "track_km": 337.0,
+      "span_km": 107.9,
+      "elevation_min_m": 112,
+      "elevation_max_m": 225,
+      "climb_m": 1861,
+      "descent_m": 1951
+     },
+     "mainKm": 214.2,
+     "poiCount": 73,
+     "segmentCount": 16,
+     "bbox": {
+      "minLat": 54.427311,
+      "maxLat": 55.055759,
+      "minLon": 36.199002,
+      "maxLon": 37.477573
+     },
+     "line": [
+      "_{lkIaiz}Ed~@wR``@sfBefA_|Dm`@cU",
+      "svgkIecv_FHm`@efAyn@cB_t@nrCo{C",
+      "}jvkIoay|EwIwh@`QigD`hAow@",
+      "a{zmIyeqaFpg@rhB",
+      "{gzkIapl|EoWiE{Hbx@zWnqBsMt|@rp@qB",
+      "skpkI_ad}EgHqeAbN}iA`z@ib@x[u|@",
+      "amynI}tp~EhQpuA{t@|o@",
+      "kg{nIoxjbFjJik@xhA}y@_Rck@|HohE~Q_aBds@auAbuDtqAl~AonAf`AqFvnAwgB~Tc|@zq@g\\bxB{kE}\\abAmN`|@kLaKsIqS`Z}b@yrBibF",
+      "ousmIgvxaFao@xL{jAqzAwWgc@~OmbAcJaDem@~|E",
+      "_}emI}|abFwUlfBkTkhA",
+      "ml}nI}qobFtgAnJ",
+      "ww{nIydobFc_@xuB",
+      "ymilIiv~{EpUiv@~~AvXtoAsj@pCde@zb@vGzaArlAbs@y|@xg@ilBtf@x[pi@a^p]q~Arf@`Un|@nwAzR}c@qYyXbCej@rY{_@}NEnC}\\nb@pk@|DeN{Lax@bQeoAmc@kuDsNhGiSqr@jFgcE~Bub@|^}XdJ`[nTmIpOkpHh_AtCpk@yh@vx@fNdl@jp@hy@w_@t[yo@hC}_AgV}YhE}}@i_A{BoCc`AiYsVb_@_aDi@gyAqWsjBjWsxAeAaTko@aPog@qqChl@mYuDgbBti@mCtUm{Bx_Ao^fWaeD`s@oSwa@coBrGwuFyl@_uBq}@q|@he@wkB_ScOxDoXvuAq`EyPyhEncA_}EhLcnC`n@mrBaX}lBqc@eeA{}BwRgUggApfAglAmoBshC{Fiu@am@yAslCm{Cy_Ahz@mb@_YkIin@~QaVhZ_hDeTajA{BmjDuyAtdCwhCj_AtSkxDuM}wByf@`R_b@cyAs~By|CmtBklEuApx@{rA`fAyqAlErDmqDkzAorBoa@Ocj@ei@mjAbFsHzy@as@`oAuo@z@iqCkqDow@wMsMaaAyl@jDa]dp@bMoDx@vZkZqQof@pWgQwi@qx@}^zTadAgdAysAoAja@{a@m_@sHj~@uRoQmzBxXi_@}eCqhAf|@ke@z}CyPqZyLpi@}p@g\\nItlBcm@~jB}@vsB_bAzlAkYnMeSsu@hNmyAkoAex@uTfdDce@dw@eT{AqB`fA}u@n}CpDdiDks@xyG|Hdu@}fAvlGlC~e@vY~GmV~yEgR`t@sPaMqI`Zk`@diEk`AjdDqd@tnHi_@zEguAnjBlSla@g{@trCku@lnAs_@hKk}@npCa_@kYsoAvfCdOtj@q{@ts@{UrzAavBr{Fi_@vaCshC|u@`ChfA{`@`vArJtmA",
+      "c`pnI_hbbF}]sw@{DwvEiaB~IoIiRgJ|cA",
+      "yf|mIovpaFc}Dox@yv@scA_g@x{@i`D`b@|@c|@{b@}xAnBe~@|u@in@x_@pTxAgxEobCrM_pBsvAaQzyBu[ts@wWq_Aev@}Z_\\u~BcZaa@dWiaCubEs~@wQfDgEzc@wZuGc@miAcc@}o@jtAg~IzD__B{i@wzAkv@mWwAiZ`Voy@wAa}EdLkZyOkeJrQiu@",
+      "owpnI}ncbF}lAhk@kVzhA"
+     ]
+    },
+    {
+     "filename": "Походы 2-3 дня МО/10-reka-ugra.kml",
+     "name": "10. Угра",
+     "stats": {
+      "track_km": 330.0,
+      "span_km": 161.7,
+      "elevation_min_m": 124,
+      "elevation_max_m": 246,
+      "climb_m": 869,
+      "descent_m": 1004
+     },
+     "mainKm": 214.3,
+     "poiCount": 39,
+     "segmentCount": 11,
+     "bbox": {
+      "minLat": 54.627959,
+      "maxLat": 55.544121,
+      "minLon": 34.304971,
+      "maxLon": 36.273884
+     },
+     "line": [
+      "g|{oI_impEzY|bAx_AkeAsz@unLta@c~EiColE~zA}cLc`@o|F_bAwyCoOqaHdq@cwHvX}JfuAdvA`qAa`A~oDixN|x@eoAzl@k`IuUqzFf[avAzGwkE_UgpCflBwjKp|@ew@b|CvrB~gF_oDfwBp`@|kAxpD|{BrmBn_Dr|G`iAwm@zfAowCp[xh@lmBoeAhKqp@ee@gwEvc@iRcSsfBp~Bv^jgAsjC|_Ceu@bs@}nA|vDqhCfoAsrBpqAhyFlkAoCj@}hCyr@owBjjAolBvjCybMqGyxA{y@o]s]oqAhF{q@_`@ecBq~AeeCbq@otE`|B_eDlBaqAs]goBuv@}[gh@gmAiZxNrYqjAmRgnCoGm^ybAjJd@swBdr@mS{@w|BbfBk|@beCwtMrCmaAgk@o_D{z@}~B`G_xCnq@q~Bp|AavBql@}{AhO}vBdf@{cA`pAci@kC}vCzj@t]rzC}}XvyC_bBobCcxHgMrQo{B_xCovC{rB_}@qcBfNyRyg@q|AhIsdDajAssBzs@__ClYcaDoc@gsBZguF`uAkpC\\adAy{BcvEeUi`D{s@as@{YmwA",
+      "ihkqI}j~tEd[`e@by@aZ|fAanB",
+      "{ukoIe`gsEti@_NnRetB}Ewh@m[{@",
+      "}~amIw`vzEvf@sX{_@zW",
+      "a{dmI{k`{E{}A{_LzbCi_A",
+      "_v`mIyg{{ErMy}@",
+      "cgnmI}{euEs_@usIzdGeiLVslD",
+      "wcmmIajfuE`jBwJ",
+      "cyanIk{rtEg]iz@~n@ie@",
+      "wm_rIujptEjE}\\hxDrdBl_Cc~GvlNkqIzlD|m@lcChtAxp@oTvjDh_BpcTg}Crw@cbCz{Ba~@to@|gArr@h_EnaAr|AvrDj^fOviBfj@vg@~wAoUvmDzg@",
+      "uq|lI}abyExmA~hCpdAhT|ZpsBhz@h}AvrB~n@|w@}_IaP_oEtyBawE{BmzF}fEa`J"
+     ]
+    },
+    {
+     "filename": "Походы 2-3 дня МО/11-borodino-obninsk.kml",
+     "name": "11. Бородино-Обнинск",
+     "stats": {
+      "track_km": 170.6,
+      "span_km": 74.7,
+      "elevation_min_m": 123,
+      "elevation_max_m": 237,
+      "climb_m": 620,
+      "descent_m": 669
+     },
+     "mainKm": 116.7,
+     "poiCount": 33,
+     "segmentCount": 4,
+     "bbox": {
+      "minLat": 55.007182,
+      "maxLat": 55.496215,
+      "minLon": 35.779772,
+      "maxLon": 36.586822
+     },
+     "line": [
+      "kbvqI_uzyEfEzg@nD{SrTnIzZdb@nCh_@fn@pm@pz@iWva@~D~|@rcDbzCv`Bb}@x_Ah]zF`Sb`@|@asBp`@giB`oAw}Cd[gF`Jcm@_MmzBbQswAwDuQbPg_BtU`Bv`@`XfMlhBtnEvsK`j@oy@zvAu{D`K{y@pM}dBs@ozEeIuk@rmBgaDtzDsfAliAoxEqDyoBhb@qiCfp@qw@ibA}sBf|CqkCnXsfAbRaK~c@kfAn\\{iB~l@yPbcAwcEaDunAyXq`Ai\\e~Cva@qtFwaAonAoYaImGwg@vDsh@dXHyQ}eCfBeaAg\\ebBxC{d@|ZsMvIooAge@mpCpHyl@mHs^m^xOrEia@}U}j@gBc}@wbBop@fn@ooBtZog@|K|Apo@uvFdYwy@hWwM~H`QoA_Sf_@}Oz@`QvOmFnDgj@nlAuuBjFiu@xv@wi@`p@ceBxMwAkByWxGmG~aB`V~a@hzAr_@|IdUz@vNuf@hYmBn]jZhaAsaAzz@zd@Fk_AmP}YeNqjBbn@os@pDsr@rMsF`_AfdAsCpaAuL~YbFzQvz@~BnSef@nJjZliABle@}y@zJpY?pr@",
+      "mjeoI}hc~Eh[yb@Vqb@lQhf@",
+      "}sapIilg{Exu@tKzPf^pl@zBxBvh@f\\hl@l`@ud@b}Eu{Aj|@miAfaB{j@|ZomBhMy~Bz`@w\\~r@rc@htArSp_ApgAxSmEv@ijEji@zHvMytBj[uNtDsm@au@ozDdA_y@dmAonDdX|A{\\atG{Ue]`@yl@bSoLdm@uzA`JurAdUmq@eMoh@pmAqc@hqAekAxXco@iG}LpJohAp_AibA_LuwA_N{QtDyz@hd@}}@`ViK`Qyz@}Vkg@zFaMlHbOjNsY}Msm@|Zqc@",
+      "oegqIc_myElHkFqDuk@d~@kQ"
+     ]
+    },
+    {
+     "filename": "Походы 2-3 дня МО/12-borodino-gagarin-dubosekowo.kml",
+     "name": "12. Бородино-Гагарин-Дубосеково",
+     "stats": {
+      "track_km": 207.2,
+      "span_km": 87.3,
+      "elevation_min_m": 180,
+      "elevation_max_m": 274,
+      "climb_m": 529,
+      "descent_m": 492
+     },
+     "mainKm": 181.3,
+     "poiCount": 22,
+     "segmentCount": 4,
+     "bbox": {
+      "minLat": 55.496269,
+      "maxLat": 56.009377,
+      "minLon": 34.98843,
+      "maxLon": 36.041744
+     },
+     "line": [
+      "ubvqI}uzyEq`A~iBiJvy@fV`aAyIb_Ee\\nxAm[lMvj@hvFg}Alr@eJ|lBqpAvx@yZjfAba@vuCrf@ro@Bf{Fib@fcBknArqAgf@rcDmfAh~AuJlr@`VhkAkMfiDdmEzkF~a@t{DdI|pDaSr_CaaD|dJs{@rbAvIp`Ci`@fs@oGh~@yPtrPbsAfjGjqAlzKoe@roI|@xuC}a@dI{GyfAiQ{Cwo@ha@_eA_Wge@vYaf@o^wr@vV}w@ka@ukAsrDoUunCiu@m|@k^uhAgoCjlE{tAhnAs~Axj@vc@~zFgk@u]i{@zXwsD{y@syG_rDu`B|h@{oAw{BmD_d@arAk~@mRi~Dwp@kpCkeAq`C{ReaBg^sk@yzA_~Gpl@wfFgo@swDzMy~Bim@m_IchAsxEaLg{H_hAymHjTmvGcDeaIyNcyAmm@usBm{@nQkz@wqB}t@mPmVyd@qAedH_YglAbDgtEjOu|@lk@uf@fwBad@[wpAbS_d@nTygF_^a|KkgCulNfC}h@k[_iEjRyeCca@qzAoB_|@yz@r\\sH{h@}x@uPccApb@me@o\\yVyz@",
+      "swdrImmtuEqbD_fA}WfqFuYv{AyqA|m@m~@x{Aqt@zj@gXtrB",
+      "{~ltI_|{xEwm@xe@m|CvZmlAx{A_rAjcD_{@`f@",
+      "gqxqIiluyEwhBnqA`}@xpG"
+     ]
+    }
+   ]
+  }
+ ]
 }

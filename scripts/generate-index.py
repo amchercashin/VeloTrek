@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-VeloTrek — генератор каталога маршрутов.
+Вёрсты — генератор каталога маршрутов.
 Сканирует подпапки routes/, парсит KML/KMZ файлы, создаёт routes/index.json.
 Имя подпапки = название раздела каталога.
 
@@ -97,6 +97,74 @@ def bbox_span_km(bbox: dict) -> float:
     mid_lat = (bbox["maxLat"] + bbox["minLat"]) / 2
     dlon_km = (bbox["maxLon"] - bbox["minLon"]) * 111.32 * math.cos(math.radians(mid_lat))
     return math.sqrt(dlat_km ** 2 + dlon_km ** 2)
+
+
+def simplify(points: list, tolerance_m: float) -> list:
+    """Douglas–Peucker в локальной метрической проекции. points: [(lat, lon, ...)]."""
+    if len(points) < 3:
+        return list(points)
+    lat0 = math.radians(points[0][0])
+    kx = 111320 * math.cos(lat0)
+    ky = 110540
+    xy = [((p[1]) * kx, (p[0]) * ky) for p in points]
+    keep = [False] * len(points)
+    keep[0] = keep[-1] = True
+    stack = [(0, len(points) - 1)]
+    tol2 = tolerance_m * tolerance_m
+    while stack:
+        a, b = stack.pop()
+        ax, ay = xy[a]
+        bx, by = xy[b]
+        dx, dy = bx - ax, by - ay
+        len2 = dx * dx + dy * dy
+        worst, worst_d = -1, tol2
+        for i in range(a + 1, b):
+            px, py = xy[i]
+            if len2 == 0:
+                d = (px - ax) ** 2 + (py - ay) ** 2
+            else:
+                t = max(0.0, min(1.0, ((px - ax) * dx + (py - ay) * dy) / len2))
+                d = (px - ax - t * dx) ** 2 + (py - ay - t * dy) ** 2
+            if d > worst_d:
+                worst, worst_d = i, d
+        if worst > 0:
+            keep[worst] = True
+            stack.append((a, worst))
+            stack.append((worst, b))
+    return [p for p, k in zip(points, keep) if k]
+
+
+def encode_polyline(points: list, precision: int = 5) -> str:
+    """Google Encoded Polyline (lat, lon)."""
+    factor = 10 ** precision
+    out = []
+    prev_lat = prev_lon = 0
+    for p in points:
+        lat = int(round(p[0] * factor))
+        lon = int(round(p[1] * factor))
+        for v in (lat - prev_lat, lon - prev_lon):
+            v = ~(v << 1) if v < 0 else (v << 1)
+            while v >= 0x20:
+                out.append(chr((0x20 | (v & 0x1F)) + 63))
+                v >>= 5
+            out.append(chr(v + 63))
+        prev_lat, prev_lon = lat, lon
+    return "".join(out)
+
+
+def build_preview_lines(segments: list, span_km: float) -> list:
+    """Упрощённая геометрия для силуэтов в каталоге и обзорной карты.
+
+    Допуск ~1/600 размаха, но не мельче 12 м — на обзорной карте и в
+    миниатюре 64 px разница неразличима, а index.json остаётся лёгким.
+    """
+    tol = max(12.0, span_km * 1000 / 600)
+    lines = []
+    for seg in segments:
+        simple = simplify(seg, tol)
+        if len(simple) >= 2:
+            lines.append(encode_polyline(simple))
+    return lines
 
 
 def parse_coordinates(coords_text: str):
@@ -199,13 +267,19 @@ def parse_kml(kml_text: str) -> dict:
         stats["span_km"] = round(bbox_span_km(bbox), 1)
     stats.update(calc_elevation_stats(segments))
 
+    seg_lengths = [segment_length_km(seg) for seg in segments]
+
     return {
         "name": doc_name,
         "description": re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", doc_desc)).strip(),
         "stats": stats,
         "pois": pois,
         "segmentCount": len(segments),
+        # Длина самого длинного трека — «основной» маршрут; остальные
+        # треки в KML обычно варианты, подъезды и сокращения.
+        "mainKm": round(max(seg_lengths), 1) if seg_lengths else 0,
         "bbox": bbox,
+        "line": build_preview_lines(segments, stats.get("span_km", 0)),
     }
 
 
@@ -262,11 +336,12 @@ def generate_index():
                     route_entry = {
                         "filename": f"{section_name}/{filepath.name}",
                         "name": meta["name"] or filepath.stem.replace("-", " ").replace("_", " "),
-                        "description": "",
                         "stats": meta["stats"],
+                        "mainKm": meta["mainKm"],
                         "poiCount": len(meta["pois"]),
                         "segmentCount": meta["segmentCount"],
                         "bbox": meta["bbox"],
+                        "line": meta["line"],
                     }
                     routes.append(route_entry)
                     track = meta["stats"].get("track_km", "?")
@@ -279,7 +354,6 @@ def generate_index():
                     routes.append({
                         "filename": f"{section_name}/{filepath.name}",
                         "name": filepath.stem.replace("-", " ").replace("_", " "),
-                        "description": "",
                         "stats": {},
                         "poiCount": 0,
                         "segmentCount": 0,
@@ -299,7 +373,7 @@ def generate_index():
     }
 
     OUTPUT_FILE.write_text(
-        json.dumps(index, ensure_ascii=False, indent=2),
+        json.dumps(index, ensure_ascii=False, indent=1),
         encoding="utf-8"
     )
     print(f"\nГотово: {OUTPUT_FILE}")
@@ -307,6 +381,6 @@ def generate_index():
 
 
 if __name__ == "__main__":
-    print("VeloTrek — генерация каталога маршрутов")
+    print("Вёрсты — генерация каталога маршрутов")
     print("=" * 40)
     generate_index()

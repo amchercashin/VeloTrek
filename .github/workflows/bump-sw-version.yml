@@ -2,7 +2,7 @@ name: Bump SW shell version
 
 # Запускается когда меняются файлы app shell (CSS, JS, HTML, манифест).
 # Инкрементирует SHELL_VERSION в sw.js → браузеры получат новый SW →
-# shell-кэш (CSS/JS/HTML) сбрасывается. Маршруты (velotrek-routes) и
+# shell-кэш (CSS/JS/HTML/шрифты) сбрасывается. Маршруты (velotrek-routes) и
 # тайлы карт (IndexedDB) при этом не затрагиваются.
 
 on:
@@ -11,6 +11,9 @@ on:
     paths:
       - 'css/**'
       - 'js/**'
+      - 'fonts/**'
+      - 'vendor/**'
+      - 'icons/**'
       - '*.html'
       - 'manifest.json'
 

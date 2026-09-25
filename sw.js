@@ -1,222 +1,133 @@
-const SHELL_VERSION = 25;
-const SHELL_CACHE = "velotrek-shell-v" + SHELL_VERSION;
-const ROUTES_CACHE = "velotrek-routes";
+/**
+ * Service Worker «Вёрст».
+ *
+ * - Оболочка приложения (HTML/CSS/JS/шрифты/Leaflet) — cache-first, версия
+ *   SHELL_VERSION поднимается GitHub Action при каждом изменении файлов.
+ * - Каталог и файлы маршрутов — network-first с таймаутом: при «лежащей»
+ *   связи в лесу не ждём минуту, а отдаём сохранённую копию.
+ * - Тайлы карты не трогаем: скачанные лежат в IndexedDB (см. js/data/tiles.js).
+ */
+const SHELL_VERSION = 26;
+const SHELL_CACHE = "versty-shell-v" + SHELL_VERSION;
+const ROUTES_CACHE = "velotrek-routes"; // имя сохранено: там файлы маршрутов прежней версии
+const NETWORK_TIMEOUT_MS = 4000;
 
 const SHELL_FILES = [
   "./",
   "./index.html",
   "./route.html",
-  "./css/style.css",
-  "./js/app.js",
-  "./js/route.js",
-  "./js/map.js",
-  "./js/kml-parser.js",
-  "./js/offline.js",
-  "./js/gps.js",
   "./manifest.json",
+  "./css/app.css",
+  "./fonts/onest-cyrillic.woff2",
+  "./fonts/onest-latin.woff2",
+  "./vendor/leaflet/leaflet.js",
+  "./vendor/leaflet/leaflet.css",
+  "./icons/icon.svg",
+  "./icons/favicon-32x32.png",
+  "./icons/icon-192.png",
+  "./js/main.js",
+  "./js/data/catalog.js",
+  "./js/data/downloads.js",
+  "./js/data/offline-store.js",
+  "./js/data/route.js",
+  "./js/data/tiles.js",
+  "./js/lib/dom.js",
+  "./js/lib/format.js",
+  "./js/lib/geo.js",
+  "./js/lib/idb.js",
+  "./js/lib/sanitize.js",
+  "./js/lib/unzip.js",
+  "./js/map/leaflet.js",
+  "./js/map/route-layer.js",
+  "./js/nav/navigator.js",
+  "./js/ui/feedback.js",
+  "./js/ui/icons.js",
+  "./js/ui/route-card.js",
+  "./js/ui/sheet.js",
+  "./js/views/catalog.js",
+  "./js/views/panels.js",
+  "./js/views/route.js",
 ];
 
-const CDN_FILES = [
-  "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css",
-  "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js",
-  "https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js",
-  "https://cdn.jsdelivr.net/npm/idb@8/build/umd.js",
-];
-
-// Install — кэшируем shell и CDN
 self.addEventListener("install", (event) => {
-  const bust = "?_sw=" + SHELL_CACHE;
-  event.waitUntil(
-    caches.open(SHELL_CACHE).then((cache) => {
-      const cdnPromise = Promise.allSettled(
-        CDN_FILES.map((url) => cache.add(url)),
-      );
-      const shellPromise = Promise.all(
-        SHELL_FILES.map((url) =>
-          fetch(url + bust, { cache: "no-cache" }).then((resp) => {
-            if (!resp.ok) throw new Error(url);
-            return cache.put(url, resp);
-          }),
-        ),
-      );
-      return Promise.all([cdnPromise, shellPromise]);
-    }),
-  );
-  self.skipWaiting();
-});
-
-// Activate — миграция маршрутов из старого кэша, очистка
-self.addEventListener("activate", (event) => {
   event.waitUntil(
     (async () => {
-      const keys = await caches.keys();
-
-      // Миграция: перенести KML/KMZ/index.json из старого единого кэша velotrek-vN
-      for (const key of keys) {
-        if (/^velotrek-v\d+$/.test(key)) {
-          await migrateRoutesFromOldCache(key);
-        }
-      }
-
-      // Удалить все кэши кроме текущего shell и routes
-      const allKeys = await caches.keys();
-      await Promise.all(
-        allKeys
-          .filter((k) => k !== SHELL_CACHE && k !== ROUTES_CACHE)
-          .map((k) => caches.delete(k)),
-      );
-
-      await self.clients.claim();
-
-      // Уведомить клиентов об обновлении
-      const clients = await self.clients.matchAll({ type: "window" });
-      for (const client of clients) {
-        client.postMessage({ type: "SW_UPDATED", version: SHELL_VERSION });
-      }
+      const cache = await caches.open(SHELL_CACHE);
+      // cache: "reload" — мимо HTTP-кэша GitHub Pages, чтобы не законсервировать старые файлы
+      await cache.addAll(SHELL_FILES.map((url) => new Request(url, { cache: "reload" })));
+      await self.skipWaiting();
     })(),
   );
 });
 
-async function migrateRoutesFromOldCache(oldCacheName) {
-  const oldCache = await caches.open(oldCacheName);
-  const routesCache = await caches.open(ROUTES_CACHE);
-  const requests = await oldCache.keys();
-
-  for (const request of requests) {
-    const url = new URL(request.url);
-    const isRoute =
-      url.pathname.endsWith(".kml") ||
-      url.pathname.endsWith(".kmz") ||
-      url.pathname.endsWith("index.json") ||
-      url.hostname === "raw.githubusercontent.com";
-    if (isRoute) {
-      const response = await oldCache.match(request);
-      if (response) {
-        await routesCache.put(request, response);
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    (async () => {
+      const keys = await caches.keys();
+      await Promise.all(
+        keys.filter((k) => k !== SHELL_CACHE && k !== ROUTES_CACHE).map((k) => caches.delete(k)),
+      );
+      if (self.registration.navigationPreload) {
+        await self.registration.navigationPreload.disable().catch(() => {});
       }
-    }
-  }
-}
-
-// Fetch
-self.addEventListener("fetch", (event) => {
-  const url = new URL(event.request.url);
-
-  // НЕ перехватываем тайловые запросы — они идут через IndexedDB в map.js
-  if (
-    url.hostname === "tile.openstreetmap.org" ||
-    url.hostname.includes("tile.") ||
-    url.pathname.match(/\/\d+\/\d+\/\d+\.(png|jpg|pbf)/)
-  ) {
-    return;
-  }
-
-  // GitHub API — network only (кэшируется в localStorage через app.js)
-  if (url.hostname === "api.github.com") {
-    return;
-  }
-
-  // index.json — network-first → ROUTES_CACHE
-  if (
-    url.pathname.endsWith("/routes/index.json") ||
-    url.pathname.endsWith("index.json")
-  ) {
-    event.respondWith(networkFirst(event.request, ROUTES_CACHE));
-    return;
-  }
-
-  // KML/KMZ файлы из routes/ — network-first → ROUTES_CACHE
-  if (
-    url.pathname.includes("/routes/") &&
-    (url.pathname.endsWith(".kml") || url.pathname.endsWith(".kmz"))
-  ) {
-    event.respondWith(networkFirst(event.request, ROUTES_CACHE));
-    return;
-  }
-
-  // Raw GitHub content (маршруты) — network-first → ROUTES_CACHE
-  if (url.hostname === "raw.githubusercontent.com") {
-    event.respondWith(networkFirst(event.request, ROUTES_CACHE));
-    return;
-  }
-
-  // Всё остальное — cache-first (app shell)
-  event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) return cached;
-      return fetch(event.request).then((response) => {
-        if (response.ok) {
-          const clone = response.clone();
-          caches
-            .open(SHELL_CACHE)
-            .then((cache) => cache.put(event.request, clone));
-        }
-        return response;
-      });
-    }),
+      await self.clients.claim();
+    })(),
   );
 });
 
-function networkFirst(request, cacheName) {
-  return fetch(request, { cache: "no-cache" })
-    .then((response) => {
-      if (response.ok) {
-        const clone = response.clone();
-        caches.open(cacheName).then((cache) => cache.put(request, clone));
-      }
-      return response;
-    })
-    .catch(() => caches.match(request));
+function isRouteData(url) {
+  return (
+    url.hostname === "raw.githubusercontent.com" ||
+    (url.origin === self.location.origin &&
+      url.pathname.includes("/routes/") &&
+      /\.(kml|kmz|json)$/i.test(url.pathname))
+  );
 }
 
-// Message API — запросы от клиентов
-self.addEventListener("message", (event) => {
-  const { type, payload } = event.data || {};
-  const port = (event.ports && event.ports[0]) || null;
+async function networkFirst(request) {
+  const cache = await caches.open(ROUTES_CACHE);
+  const network = fetch(request, { cache: "no-cache" }).then((response) => {
+    if (response.ok) cache.put(request, response.clone());
+    return response;
+  });
+  const cached = await cache.match(request);
+  if (!cached) return network;
+  // Есть сохранённая копия — ждём сеть не дольше таймаута
+  const timeout = new Promise((resolve) => setTimeout(() => resolve(cached), NETWORK_TIMEOUT_MS));
+  return Promise.race([network.catch(() => cached), timeout]);
+}
 
-  function reply(data) {
-    if (port) port.postMessage(data);
-    else if (event.source) event.source.postMessage(data);
+async function shellFirst(request) {
+  const cache = await caches.open(SHELL_CACHE);
+  const cached = await cache.match(request, { ignoreSearch: true });
+  if (cached) return cached;
+  const response = await fetch(request);
+  if (response.ok && request.method === "GET") cache.put(request, response.clone());
+  return response;
+}
+
+self.addEventListener("fetch", (event) => {
+  const { request } = event;
+  if (request.method !== "GET") return;
+  const url = new URL(request.url);
+
+  if (isRouteData(url)) {
+    event.respondWith(networkFirst(request));
+    return;
   }
 
-  if (type === "CHECK_ROUTE_CACHED") {
-    event.waitUntil(
-      (async () => {
-        const cache = await caches.open(ROUTES_CACHE);
-        const response = await cache.match(payload.url);
-        reply({
-          type: "ROUTE_CACHE_STATUS",
-          payload: { url: payload.url, cached: !!response },
-        });
-      })(),
+  if (url.origin !== self.location.origin) return; // тайлы и прочие внешние запросы — напрямую
+
+  if (request.mode === "navigate") {
+    // Одностраничное приложение: любая навигация внутри scope — это index.html
+    event.respondWith(
+      caches
+        .open(SHELL_CACHE)
+        .then((c) => c.match(url.pathname.endsWith("route.html") ? "./route.html" : "./index.html"))
+        .then((cached) => cached || fetch(request)),
     );
+    return;
   }
 
-  if (type === "CACHE_ROUTE") {
-    event.waitUntil(
-      (async () => {
-        try {
-          const cache = await caches.open(ROUTES_CACHE);
-          const response = await fetch(payload.url, { cache: "no-cache" });
-          if (response.ok) {
-            await cache.put(payload.url, response);
-            reply({
-              type: "ROUTE_CACHED",
-              payload: { url: payload.url, success: true },
-            });
-          } else {
-            reply({
-              type: "ROUTE_CACHED",
-              payload: { url: payload.url, success: false },
-            });
-          }
-        } catch (e) {
-          reply({
-            type: "ROUTE_CACHED",
-            payload: { url: payload.url, success: false, error: e.message },
-          });
-        }
-      })(),
-    );
-  }
+  event.respondWith(shellFirst(request));
 });
