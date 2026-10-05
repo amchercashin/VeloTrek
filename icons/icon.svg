@@ -1,22 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#155240"/>
-      <stop offset="1" stop-color="#0b2e22"/>
-    </linearGradient>
+    <linearGradient id="vk-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a2d22"/><stop offset=".72" stop-color="#1a6a4d"/><stop offset="1" stop-color="#2d8f66"/></linearGradient>
+    <radialGradient id="vk-sun" cx="50%" cy="40%" r="62%"><stop offset="0" stop-color="#ffd09a"/><stop offset=".5" stop-color="#ff7a3c"/><stop offset="1" stop-color="#ff4a10"/></radialGradient>
+    <linearGradient id="vk-hill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#11523b"/><stop offset="1" stop-color="#05201a"/></linearGradient>
+    <linearGradient id="vk-vol" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".22"/><stop offset=".4" stop-color="#fff" stop-opacity=".2"/><stop offset="1" stop-color="#000" stop-opacity=".34"/></linearGradient>
+    <clipPath id="vk-pc"><path d="M318 186a9 9 0 0 1 9-9H387a9 9 0 0 1 9 9V376H318Z"/></clipPath>
+    <clipPath id="vk-tile"><rect width="512" height="512" rx="116"/></clipPath>
   </defs>
-  <rect width="512" height="512" rx="116" fill="url(#bg)"/>
-  <g transform="translate(12 -8)">
-  <path d="M112 404C168 398 150 318 214 306S292 356 318 306" fill="none" stroke="#f4f3ee" stroke-width="30" stroke-linecap="round" stroke-dasharray="0.5 50"/>
-  <circle cx="112" cy="404" r="36" fill="#ff5a1f"/>
-  <circle cx="112" cy="404" r="13" fill="#0b2e22"/>
-  <g transform="rotate(6 368 190)">
-    <rect x="336" y="84" width="66" height="212" rx="15" fill="#f4f3ee"/>
-    <clipPath id="post"><rect x="336" y="84" width="66" height="212" rx="15"/></clipPath>
-    <g clip-path="url(#post)" stroke="#ff5a1f" stroke-width="23">
-      <path d="M324 146l96-42M324 210l96-42M324 274l96-42M324 338l96-42"/>
+  <g clip-path="url(#vk-tile)">
+    <rect width="512" height="512" fill="url(#vk-sky)"/>
+    <circle cx="228" cy="322" r="182" fill="url(#vk-sun)"/>
+    <path d="M0 384C84 352 176 344 262 360C352 376 430 362 512 340V512H0Z" fill="#1f7556" opacity=".75"/>
+    <path d="M0 398C120 352 380 346 512 378V512H0Z" fill="url(#vk-hill)"/>
+    <path d="M-10 512C120 484 262 442 330 380H398C330 456 236 496 150 512Z" fill="#f4f3ee"/>
+    <path d="M-10 512C120 484 262 442 330 380" stroke="#fff" stroke-width="3" fill="none" opacity=".9"/>
+    <path d="M60 512C190 478 290 436 362 382" stroke="#0f3d2c" stroke-opacity=".5" stroke-width="5" stroke-dasharray="14 15" fill="none"/>
+    <ellipse cx="358" cy="380" rx="66" ry="10" fill="#000" opacity=".42"/>
+    <g clip-path="url(#vk-pc)">
+      <rect x="310" y="170" width="94" height="212" fill="#f4f3ee"/>
+      <path d="M296 262l190-190M296 328l190-190M296 394l190-190M296 460l190-190M296 526l190-190M296 592l190-190" stroke="#0f3d2c" stroke-width="23.3" fill="none"/>
+      <rect x="310" y="170" width="94" height="212" fill="url(#vk-vol)"/>
+      <rect x="310" y="180" width="94" height="10" fill="#ff5a1f"/>
     </g>
-  </g>
-  <path d="M322 318c28 10 66 10 96 0" fill="none" stroke="#0b2e22" stroke-opacity=".35" stroke-width="10" stroke-linecap="round"/>
   </g>
 </svg>
